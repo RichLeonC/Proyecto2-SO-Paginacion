@@ -15,5 +15,6 @@ public class Main {
         
         Configuracion conf = new Configuracion();
         conf.setVisible(true);
+       
     }
 }
