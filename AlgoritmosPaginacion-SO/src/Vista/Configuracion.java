@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Backend.Computadora;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -20,6 +21,7 @@ public class Configuracion extends javax.swing.JFrame {
     int procesosSeleccionados;
     int operacionesSeleccionados;
     int semilla;
+    Computadora computadora;
     public Configuracion() {
         initComponents();
         archivoSeleccionado = null;
@@ -28,6 +30,7 @@ public class Configuracion extends javax.swing.JFrame {
         operacionesSeleccionados = 500;
         semilla = 1;
         txfArchivoSubido.setEditable(false);
+        computadora = new Computadora();
         this.setLocationRelativeTo(this);
     }
 
