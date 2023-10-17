@@ -5,17 +5,29 @@
  */
 package Vista;
 
+import java.io.File;
+import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author richa
  */
 public class Configuracion extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Configuracion
-     */
+    File archivoSeleccionado;
+    String algoritmoSeleccionado;
+    int procesosSeleccionados;
+    int operacionesSeleccionados;
+    int semilla;
     public Configuracion() {
         initComponents();
+        archivoSeleccionado = null;
+        algoritmoSeleccionado = "FIFO";
+        procesosSeleccionados= 10;
+        operacionesSeleccionados = 500;
+        semilla = 1;
+        txfArchivoSubido.setEditable(false);
         this.setLocationRelativeTo(this);
     }
 
@@ -106,12 +118,22 @@ public class Configuracion extends javax.swing.JFrame {
 
         cbProcesos1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbProcesos1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "10", "50", "100" }));
+        cbProcesos1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbProcesos1ActionPerformed(evt);
+            }
+        });
 
         btnCrearArchivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCrearArchivo.setText("Crear archivo");
 
         btnSubirArchivo2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSubirArchivo2.setText("Subir archivo");
+        btnSubirArchivo2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSubirArchivo2ActionPerformed(evt);
+            }
+        });
 
         jTextArea1.setColumns(20);
         jTextArea1.setRows(5);
@@ -239,6 +261,15 @@ public class Configuracion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfSemillaActionPerformed
 
+    private void btnSubirArchivo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirArchivo2ActionPerformed
+        // TODO add your handling code here:
+        subirArchivo();
+    }//GEN-LAST:event_btnSubirArchivo2ActionPerformed
+
+    private void cbProcesos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProcesos1ActionPerformed
+       cbProcesos1.getSelectedItem();
+    }//GEN-LAST:event_cbProcesos1ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -272,6 +303,41 @@ public class Configuracion extends javax.swing.JFrame {
                 new Configuracion().setVisible(true);
             }
         });
+    }
+    
+    
+    public void validarDatos(){
+    
+    }
+    
+    public void subirArchivo(){
+        archivoSeleccionado = null;
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
+        
+        int seleccion = fileChooser.showOpenDialog(this);
+        
+        if(seleccion == JFileChooser.APPROVE_OPTION){
+            archivoSeleccionado = fileChooser.getSelectedFile();
+            //Aca procesamos el archivo...
+            
+            JOptionPane.showMessageDialog(this, "Archivo seleccionado: "+archivoSeleccionado.getAbsolutePath());
+            txfArchivoSubido.setText(archivoSeleccionado.getAbsolutePath());
+            btnCrearArchivo.setEnabled(false);
+            btnDescargarArchivo.setEnabled(false);
+            cbOperaciones.setEnabled(false);
+            cbProcesos1.setEnabled(false);
+           
+        
+        }
+        else{
+            archivoSeleccionado = null;
+            txfArchivoSubido.setText("");
+            btnCrearArchivo.setEnabled(true);
+            btnDescargarArchivo.setEnabled(true);
+            cbOperaciones.setEnabled(true);
+            cbProcesos1.setEnabled(true);
+       }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
