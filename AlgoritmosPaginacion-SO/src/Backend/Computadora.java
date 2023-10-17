@@ -37,26 +37,26 @@ public class Computadora {
     
     }
     
-   public void selectAlgoritmo(TipoAlgoritmo algoritmo) {
+   public void setAlgoritmo(TipoAlgoritmo algoritmo) {
         this.algoritmo = algoritmo;
        
     }
    
-   public TipoAlgoritmo fifo(){ //*Por que retorna el tipo del algoritmo?
-       return TipoAlgoritmo.FIFO;
+   public void fifo(){ //*Por que retorna el tipo del algoritmo?
+ 
    
    }
    
-   public TipoAlgoritmo secondChance(){
-       return TipoAlgoritmo.SECOND_CHANCE;
+   public void secondChance(){
+      
    }
-   public TipoAlgoritmo mru(){
-       return TipoAlgoritmo.MRU;
+   public void mru(){
+      
    
    }
    
-   public TipoAlgoritmo rnd(){
-       return TipoAlgoritmo.RANDOM;
+   public void rnd(){
+       
    }
    
    public boolean ejecutarProceso(int idProceso){
