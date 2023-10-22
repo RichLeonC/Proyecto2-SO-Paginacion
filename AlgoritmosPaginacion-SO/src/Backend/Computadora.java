@@ -5,6 +5,7 @@
  */
 package Backend;
 
+import Modelo.Instruccion;
 import Modelo.MemoryManagementUnit;
 import Modelo.Proceso;
 import java.io.File;
@@ -47,9 +48,36 @@ public class Computadora {
    
    }
    
-   public void secondChance(){
+    public void secondChance(ArrayList<Instruccion> instrucciones){
+        for(Instruccion instr : instrucciones){
+            switch(instr.getTipoInstruccion()){
+                case NEW:
+                    System.out.println("New");
+                    mmu.intruccionNew(instr);
+                    break;
+                case USE:
+                    System.out.println("Use");
+                    break;
+                case DELETE:
+                    System.out.println("Delete");
+                    break;
+                case KILL:
+                    System.out.println("Kill");
+                    break;
+                default:
+                    throw new AssertionError(instr.getTipoInstruccion().name());
+            }
+        }
       
    }
+
+    public int getNucleosProcesamiento() {
+        return nucleosProcesamiento;
+    }
+
+    public int getPaginaSize() {
+        return paginaSize;
+    }
    public void mru(){
       
    
