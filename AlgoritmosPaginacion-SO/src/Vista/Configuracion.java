@@ -279,8 +279,8 @@ public class Configuracion extends javax.swing.JFrame {
     }//GEN-LAST:event_cbProcesos1ActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-       Simulacion pantallaSimulacion = new Simulacion();
-       pantallaSimulacion.setVisible(true);
+       Main.simulacion.setVisible(true);
+       Main.simulacion.showPages();
        this.dispose();
     }//GEN-LAST:event_btnIniciarActionPerformed
 

@@ -5,17 +5,22 @@
  */
 package Vista;
 
+import Modelo.MemoryManagementUnit;
+import Modelo.Pagina;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.Point;
 import java.util.HashMap;
 import java.util.Map;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
+import java.util.ArrayList;
+import java.util.HashMap;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTable;
-import javax.swing.table.TableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -984,4 +989,28 @@ public class Simulacion extends javax.swing.JFrame {
     private javax.swing.JTextField txfVramPercentOPT;
     private javax.swing.JPanel txtPagesUnloaded;
     // End of variables declaration//GEN-END:variables
+
+    public void showPages(){
+        MemoryManagementUnit mmu = Main.computadora.getMmu();
+        HashMap<String, ArrayList<Pagina>> map = mmu.getMapa();
+        ArrayList<Pagina> paginas = new ArrayList();
+        ArrayList<Integer> ids = new ArrayList();
+        for (int i = 0; i < map.size(); i++) {
+            if(map.get(String.valueOf(i))!= null){
+                paginas.addAll(map.get(String.valueOf(i)));
+                for(int j = 0; j < map.get(String.valueOf(i)).size(); j++){
+                    ids.add(i);
+                }
+            }
+            
+        }
+        System.out.println("YAY6");
+        DefaultTableModel model = (DefaultTableModel) algorithmTable.getModel();
+        System.out.println("YAY7");
+        for(int i = 0; i < paginas.size(); i++){
+            Pagina page = paginas.get(i);
+            model.addRow(new Object[]{page.id, String.valueOf(ids.get(i)),page.direccionFisica, page.direccionVirtual, page.marking});
+            System.out.println("Nice");
+        }
+    }
 }
