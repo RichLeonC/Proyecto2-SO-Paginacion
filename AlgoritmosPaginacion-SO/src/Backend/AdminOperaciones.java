@@ -4,6 +4,8 @@
  */
 package Backend;
 
+import Modelo.Instruccion;
+import Modelo.TipoInstruccion;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -89,8 +91,7 @@ public class AdminOperaciones {
         Random random = new Random();
         StringBuilder operacionesString = new StringBuilder();
         
-        ArrayList<Integer> posiblesNew = new ArrayList();        
-        ArrayList<Integer> procesos = new ArrayList();
+        ArrayList<Integer> posiblesNew = new ArrayList();
 
         ArrayList<Integer> posiblesKill = new ArrayList();       
       
@@ -99,7 +100,6 @@ public class AdminOperaciones {
         //Por cada proceso, todos pueden ser creados ahorita
         //posiblesNew.add(1);
         for(int i = 1; i <= numProcesos; i++){
-            procesos.add(i);
             posiblesNew.add(i);
         }
 
@@ -127,7 +127,7 @@ public class AdminOperaciones {
                 }*/
                 operacionesString.append(tipo).append("(").append(proceso); //Lo anota
                 anoto = true;
-                int tamano = random.nextInt(1000) + 1; //Elige un tamaño random
+                int tamano = random.nextInt(40); //Elige un tamaño random
                 operacionesString.append(",").append(tamano); //Se mete el tamaño
                 punteros++; //Eso genera un puntero posible de usar
                 posiblesUse.put(punteros,proceso); //Se mete a los posibles Use y lo asocia con el proceso que lo creo
