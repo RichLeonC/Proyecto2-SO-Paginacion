@@ -103,6 +103,11 @@ public class Configuracion extends javax.swing.JFrame {
 
         btnIniciar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         btnIniciar.setText("Iniciar");
+        btnIniciar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarActionPerformed(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -272,6 +277,12 @@ public class Configuracion extends javax.swing.JFrame {
     private void cbProcesos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProcesos1ActionPerformed
        cbProcesos1.getSelectedItem();
     }//GEN-LAST:event_cbProcesos1ActionPerformed
+
+    private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
+       Simulacion pantallaSimulacion = new Simulacion();
+       pantallaSimulacion.setVisible(true);
+       this.dispose();
+    }//GEN-LAST:event_btnIniciarActionPerformed
 
     /**
      * @param args the command line arguments

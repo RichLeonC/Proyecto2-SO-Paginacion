@@ -5,6 +5,12 @@
  */
 package Vista;
 
+import java.awt.Color;
+import java.awt.Dimension;
+import javax.swing.BoxLayout;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
 /**
  *
  * @author richa
@@ -16,6 +22,34 @@ public class Simulacion extends javax.swing.JFrame {
      */
     public Simulacion() {
         initComponents();
+        
+//        Color[] colores = {
+//            Color.GREEN, Color.YELLOW, Color.ORANGE, Color.RED, Color.PINK,
+//            Color.CYAN, Color.BLUE, Color.MAGENTA, Color.GRAY
+//            // Agrega más colores si es necesario
+//        };
+//
+//        for (Color color : colores) {
+//            JPanel colorPanel = new JPanel();
+//            colorPanel.setBackground(color);
+//            colorPanel.setPreferredSize(new Dimension(40, 60));  // Configura el tamaño según lo necesites
+//            mainPanel.add(colorPanel);
+//        }
+//
+        // Espacio en blanco
+        JPanel blancoPanel = new JPanel();
+        blancoPanel.setBackground(Color.WHITE);
+        blancoPanel.setPreferredSize(new Dimension(1,1));  // Configura el tamaño según lo necesites
+        txtPagesUnloaded.add(blancoPanel);
+
+        // Etiqueta "RAM - OPT"
+        javax.swing.JLabel label = new JLabel("RAM - OPT");
+        label.setForeground(Color.WHITE);
+        txtPagesUnloaded.add(label);
+        
+        //mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+
+        this.setLocationRelativeTo(this);
     }
 
     /**
@@ -27,47 +61,743 @@ public class Simulacion extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jPanel1 = new javax.swing.JPanel();
+        jLabel3 = new javax.swing.JLabel();
+        txtPagesUnloaded = new javax.swing.JPanel();
         lblSimulacion = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        OptTable = new javax.swing.JTable();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        algorithmTable = new javax.swing.JTable();
+        jLabel1 = new javax.swing.JLabel();
+        txfProcessesOPT = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        txfRamKBOPT = new javax.swing.JTextField();
+        txfSimTimeOPT = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        txfRamPercentOPT = new javax.swing.JTextField();
+        jLabel6 = new javax.swing.JLabel();
+        txfVramKbOPT = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        txfVramPercentOPT = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        txfPagesLoadedOPT = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        txfPagesUnloadedOPT = new javax.swing.JTextField();
+        jLabel10 = new javax.swing.JLabel();
+        txfTrashingTimeOPT = new javax.swing.JTextField();
+        jLabel11 = new javax.swing.JLabel();
+        txfFragmentationOPT = new javax.swing.JTextField();
+        jLabel12 = new javax.swing.JLabel();
+        txfTrashingPercentOPT = new javax.swing.JTextField();
+        txfRamPercent = new javax.swing.JTextField();
+        jLabel24 = new javax.swing.JLabel();
+        txfVramKB = new javax.swing.JTextField();
+        jLabel25 = new javax.swing.JLabel();
+        txfSimTime22 = new javax.swing.JTextField();
+        jLabel26 = new javax.swing.JLabel();
+        txfPagesLoaded = new javax.swing.JTextField();
+        jLabel27 = new javax.swing.JLabel();
+        txfPagesUnloaded = new javax.swing.JTextField();
+        jLabel28 = new javax.swing.JLabel();
+        txfTrashingTime = new javax.swing.JTextField();
+        jLabel29 = new javax.swing.JLabel();
+        txfFragmentation = new javax.swing.JTextField();
+        jLabel30 = new javax.swing.JLabel();
+        jLabel31 = new javax.swing.JLabel();
+        txfProcesses = new javax.swing.JTextField();
+        txfTrashingPercent = new javax.swing.JTextField();
+        jLabel32 = new javax.swing.JLabel();
+        txfRamKB = new javax.swing.JTextField();
+        txfSimTime = new javax.swing.JTextField();
+        jLabel33 = new javax.swing.JLabel();
+        jLabel34 = new javax.swing.JLabel();
+        btnVolver = new javax.swing.JButton();
+        jButton2 = new javax.swing.JButton();
+        jButton3 = new javax.swing.JButton();
+        lblSimulacion1 = new javax.swing.JLabel();
+        lblSimulacion2 = new javax.swing.JLabel();
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel3.setText("Sim-time");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jPanel1.setBackground(new java.awt.Color(40, 75, 99));
+        txtPagesUnloaded.setBackground(new java.awt.Color(40, 75, 99));
 
         lblSimulacion.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         lblSimulacion.setForeground(new java.awt.Color(255, 255, 255));
         lblSimulacion.setText("Simulación");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(604, Short.MAX_VALUE)
+        OptTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Page ID", "PID", "LOADED", "L-ADDR", "M-ADDR", "D-ADDR", "LOADED-T", "MARK"
+            }
+        ));
+        jScrollPane1.setViewportView(OptTable);
+
+        algorithmTable.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Page ID", "PID", "LOADED", "L-ADDR", "M-ADDR", "D-ADDR", "LOADED-T", "MARK"
+            }
+        ));
+        jScrollPane2.setViewportView(algorithmTable);
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("Processes");
+
+        txfProcessesOPT.setEditable(false);
+        txfProcessesOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfProcessesOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfProcessesOPTActionPerformed(evt);
+            }
+        });
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel2.setText("Ram KB");
+
+        txfRamKBOPT.setEditable(false);
+        txfRamKBOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfRamKBOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfRamKBOPTActionPerformed(evt);
+            }
+        });
+
+        txfSimTimeOPT.setEditable(false);
+        txfSimTimeOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfSimTimeOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfSimTimeOPTActionPerformed(evt);
+            }
+        });
+
+        jLabel4.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel4.setText("Sim-time");
+
+        jLabel5.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel5.setText("Ram %");
+
+        txfRamPercentOPT.setEditable(false);
+        txfRamPercentOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfRamPercentOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfRamPercentOPTActionPerformed(evt);
+            }
+        });
+
+        jLabel6.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setText("V-Ram KB");
+
+        txfVramKbOPT.setEditable(false);
+        txfVramKbOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfVramKbOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfVramKbOPTActionPerformed(evt);
+            }
+        });
+
+        jLabel7.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel7.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel7.setText("V-Ram %");
+
+        txfVramPercentOPT.setEditable(false);
+        txfVramPercentOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfVramPercentOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfVramPercentOPTActionPerformed(evt);
+            }
+        });
+
+        jLabel8.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel8.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel8.setText("P-Loaded");
+
+        txfPagesLoadedOPT.setEditable(false);
+        txfPagesLoadedOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfPagesLoadedOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfPagesLoadedOPTActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel9.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel9.setText("P-Unloaded");
+
+        txfPagesUnloadedOPT.setEditable(false);
+        txfPagesUnloadedOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfPagesUnloadedOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfPagesUnloadedOPTActionPerformed(evt);
+            }
+        });
+
+        jLabel10.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel10.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel10.setText("T-Time");
+
+        txfTrashingTimeOPT.setEditable(false);
+        txfTrashingTimeOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfTrashingTimeOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfTrashingTimeOPTActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel11.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel11.setText("Fragmentation");
+
+        txfFragmentationOPT.setEditable(false);
+        txfFragmentationOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfFragmentationOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfFragmentationOPTActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel12.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel12.setText("Trashing %");
+
+        txfTrashingPercentOPT.setEditable(false);
+        txfTrashingPercentOPT.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfTrashingPercentOPT.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfTrashingPercentOPTActionPerformed(evt);
+            }
+        });
+
+        txfRamPercent.setEditable(false);
+        txfRamPercent.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfRamPercent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfRamPercentActionPerformed(evt);
+            }
+        });
+
+        jLabel24.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel24.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel24.setText("V-Ram KB");
+
+        txfVramKB.setEditable(false);
+        txfVramKB.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfVramKB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfVramKBActionPerformed(evt);
+            }
+        });
+
+        jLabel25.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel25.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel25.setText("V-ram %");
+
+        txfSimTime22.setEditable(false);
+        txfSimTime22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfSimTime22.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfSimTime22ActionPerformed(evt);
+            }
+        });
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setText("P-Loaded");
+
+        txfPagesLoaded.setEditable(false);
+        txfPagesLoaded.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfPagesLoaded.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfPagesLoadedActionPerformed(evt);
+            }
+        });
+
+        jLabel27.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel27.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel27.setText("P-Unloaded");
+
+        txfPagesUnloaded.setEditable(false);
+        txfPagesUnloaded.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfPagesUnloaded.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfPagesUnloadedActionPerformed(evt);
+            }
+        });
+
+        jLabel28.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel28.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel28.setText("T-Time");
+
+        txfTrashingTime.setEditable(false);
+        txfTrashingTime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfTrashingTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfTrashingTimeActionPerformed(evt);
+            }
+        });
+
+        jLabel29.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel29.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel29.setText("Fragmentation");
+
+        txfFragmentation.setEditable(false);
+        txfFragmentation.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfFragmentation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfFragmentationActionPerformed(evt);
+            }
+        });
+
+        jLabel30.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel30.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel30.setText("Trashing %");
+
+        jLabel31.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel31.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel31.setText("Processes");
+
+        txfProcesses.setEditable(false);
+        txfProcesses.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfProcesses.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfProcessesActionPerformed(evt);
+            }
+        });
+
+        txfTrashingPercent.setEditable(false);
+        txfTrashingPercent.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfTrashingPercent.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfTrashingPercentActionPerformed(evt);
+            }
+        });
+
+        jLabel32.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel32.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel32.setText("Ram KB");
+
+        txfRamKB.setEditable(false);
+        txfRamKB.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfRamKB.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfRamKBActionPerformed(evt);
+            }
+        });
+
+        txfSimTime.setEditable(false);
+        txfSimTime.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfSimTime.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txfSimTimeActionPerformed(evt);
+            }
+        });
+
+        jLabel33.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel33.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel33.setText("Sim-time");
+
+        jLabel34.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel34.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel34.setText("Ram %");
+
+        btnVolver.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnVolver.setText("Volver");
+        btnVolver.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVolverActionPerformed(evt);
+            }
+        });
+
+        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton2.setText("Pausar/Reanudar");
+
+        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jButton3.setText("Iniciar");
+
+        lblSimulacion1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblSimulacion1.setForeground(new java.awt.Color(255, 255, 255));
+        lblSimulacion1.setText("MMU-[]");
+
+        lblSimulacion2.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblSimulacion2.setForeground(new java.awt.Color(255, 255, 255));
+        lblSimulacion2.setText("MMU-OPT");
+
+        javax.swing.GroupLayout txtPagesUnloadedLayout = new javax.swing.GroupLayout(txtPagesUnloaded);
+        txtPagesUnloaded.setLayout(txtPagesUnloadedLayout);
+        txtPagesUnloadedLayout.setHorizontalGroup(
+            txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                        .addGap(190, 190, 190)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfProcessesOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(53, 53, 53)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4)
+                            .addComponent(txfSimTimeOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGap(14, 14, 14)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txfVramKbOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel6))
+                                .addGap(79, 79, 79)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel7)
+                                    .addComponent(txfVramPercentOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                        .addGap(29, 29, 29)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txfRamKBOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel2))
+                                .addGap(73, 73, 73)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txfRamPercentOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel5)))
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txfPagesLoadedOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel8))
+                                .addGap(42, 42, 42)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel9)
+                                    .addComponent(txfPagesUnloadedOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(53, 53, 53)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel10)
+                                    .addComponent(txfTrashingTimeOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(68, 68, 68)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfTrashingPercentOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))
+                        .addGap(60, 60, 60)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfFragmentationOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 184, Short.MAX_VALUE)
+                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txfRamKB, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel32))
+                                .addGap(73, 73, 73)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txfRamPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel34)))
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(txfPagesLoaded, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel26))
+                                .addGap(42, 42, 42)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel27)
+                                    .addComponent(txfPagesUnloaded, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(53, 53, 53)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel28)
+                                    .addComponent(txfTrashingTime, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(68, 68, 68)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfTrashingPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel30))
+                        .addGap(49, 49, 49)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfFragmentation, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel29)))
+                    .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                        .addGap(161, 161, 161)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txfProcesses, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel31))
+                        .addGap(53, 53, 53)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel33)
+                            .addComponent(txfSimTime, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel24)
+                                    .addComponent(txfVramKB, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(91, 91, 91)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel25)
+                                    .addComponent(txfSimTime22, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addGap(21, 21, 21))
+            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                .addGap(21, 21, 21)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 614, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(93, 93, 93))
+            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                .addGap(663, 663, 663)
                 .addComponent(lblSimulacion)
-                .addGap(590, 590, 590))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(46, 46, 46)
+                .addComponent(jButton2)
+                .addGap(478, 478, 478)
+                .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
+                .addGap(305, 305, 305)
+                .addComponent(lblSimulacion2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(lblSimulacion1)
+                .addGap(353, 353, 353))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        txtPagesUnloadedLayout.setVerticalGroup(
+            txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(lblSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(585, Short.MAX_VALUE))
+                .addGap(55, 55, 55)
+                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblSimulacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblSimulacion2, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(41, 41, 41)
+                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txfProcessesOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txfSimTimeOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txfRamKBOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txfRamPercentOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jLabel6))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txfVramKbOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txfVramPercentOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(45, 45, 45)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jLabel9))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txfPagesLoadedOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txfPagesUnloadedOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel10)
+                                    .addComponent(jLabel11)
+                                    .addComponent(jLabel12))
+                                .addGap(6, 6, 6)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txfTrashingPercentOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txfTrashingTimeOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txfFragmentationOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                    .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel31)
+                            .addComponent(jLabel33))
+                        .addGap(18, 18, 18)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txfProcesses, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(txfSimTime, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(38, 38, 38)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addComponent(jLabel32)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txfRamKB, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addComponent(jLabel34)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(txfRamPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel25)
+                                    .addComponent(jLabel24))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txfVramKB, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txfSimTime22, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                        .addGap(45, 45, 45)
+                        .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel26)
+                                    .addComponent(jLabel27))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txfPagesLoaded, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txfPagesUnloaded, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel28)
+                                    .addComponent(jLabel29)
+                                    .addComponent(jLabel30))
+                                .addGap(6, 6, 6)
+                                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(txfTrashingPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txfTrashingTime, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txfFragmentation, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 156, Short.MAX_VALUE)
+                .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(29, 29, 29))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(txtPagesUnloaded, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(txtPagesUnloaded, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void txfProcessesOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfProcessesOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfProcessesOPTActionPerformed
+
+    private void txfRamKBOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfRamKBOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfRamKBOPTActionPerformed
+
+    private void txfSimTimeOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSimTimeOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfSimTimeOPTActionPerformed
+
+    private void txfRamPercentOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfRamPercentOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfRamPercentOPTActionPerformed
+
+    private void txfVramKbOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfVramKbOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfVramKbOPTActionPerformed
+
+    private void txfVramPercentOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfVramPercentOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfVramPercentOPTActionPerformed
+
+    private void txfPagesLoadedOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfPagesLoadedOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfPagesLoadedOPTActionPerformed
+
+    private void txfPagesUnloadedOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfPagesUnloadedOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfPagesUnloadedOPTActionPerformed
+
+    private void txfTrashingTimeOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfTrashingTimeOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfTrashingTimeOPTActionPerformed
+
+    private void txfFragmentationOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfFragmentationOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfFragmentationOPTActionPerformed
+
+    private void txfTrashingPercentOPTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfTrashingPercentOPTActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfTrashingPercentOPTActionPerformed
+
+    private void txfRamPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfRamPercentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfRamPercentActionPerformed
+
+    private void txfVramKBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfVramKBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfVramKBActionPerformed
+
+    private void txfSimTime22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSimTime22ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfSimTime22ActionPerformed
+
+    private void txfPagesLoadedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfPagesLoadedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfPagesLoadedActionPerformed
+
+    private void txfPagesUnloadedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfPagesUnloadedActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfPagesUnloadedActionPerformed
+
+    private void txfTrashingTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfTrashingTimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfTrashingTimeActionPerformed
+
+    private void txfFragmentationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfFragmentationActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfFragmentationActionPerformed
+
+    private void txfProcessesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfProcessesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfProcessesActionPerformed
+
+    private void txfTrashingPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfTrashingPercentActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfTrashingPercentActionPerformed
+
+    private void txfRamKBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfRamKBActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfRamKBActionPerformed
+
+    private void txfSimTimeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSimTimeActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txfSimTimeActionPerformed
+
+    private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
+        Configuracion conf = new Configuracion();
+        conf.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnVolverActionPerformed
 
     /**
      * @param args the command line arguments
@@ -105,7 +835,61 @@ public class Simulacion extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
+    private javax.swing.JTable OptTable;
+    private javax.swing.JTable algorithmTable;
+    private javax.swing.JButton btnVolver;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel24;
+    private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
+    private javax.swing.JLabel jLabel27;
+    private javax.swing.JLabel jLabel28;
+    private javax.swing.JLabel jLabel29;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel30;
+    private javax.swing.JLabel jLabel31;
+    private javax.swing.JLabel jLabel32;
+    private javax.swing.JLabel jLabel33;
+    private javax.swing.JLabel jLabel34;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblSimulacion;
+    private javax.swing.JLabel lblSimulacion1;
+    private javax.swing.JLabel lblSimulacion2;
+    private javax.swing.JTextField txfFragmentation;
+    private javax.swing.JTextField txfFragmentationOPT;
+    private javax.swing.JTextField txfPagesLoaded;
+    private javax.swing.JTextField txfPagesLoadedOPT;
+    private javax.swing.JTextField txfPagesUnloaded;
+    private javax.swing.JTextField txfPagesUnloadedOPT;
+    private javax.swing.JTextField txfProcesses;
+    private javax.swing.JTextField txfProcessesOPT;
+    private javax.swing.JTextField txfRamKB;
+    private javax.swing.JTextField txfRamKBOPT;
+    private javax.swing.JTextField txfRamPercent;
+    private javax.swing.JTextField txfRamPercentOPT;
+    private javax.swing.JTextField txfSimTime;
+    private javax.swing.JTextField txfSimTime22;
+    private javax.swing.JTextField txfSimTimeOPT;
+    private javax.swing.JTextField txfTrashingPercent;
+    private javax.swing.JTextField txfTrashingPercentOPT;
+    private javax.swing.JTextField txfTrashingTime;
+    private javax.swing.JTextField txfTrashingTimeOPT;
+    private javax.swing.JTextField txfVramKB;
+    private javax.swing.JTextField txfVramKbOPT;
+    private javax.swing.JTextField txfVramPercentOPT;
+    private javax.swing.JPanel txtPagesUnloaded;
     // End of variables declaration//GEN-END:variables
 }
