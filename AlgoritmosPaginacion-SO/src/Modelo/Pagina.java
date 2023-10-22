@@ -13,15 +13,15 @@ import java.util.ArrayList;
  */
 public class Pagina {
 
-    public int id;    
+    public int id;
     public int direccionFisica;
     public int direccionVirtual;
     public int direccionDisco;
     public boolean banderaRV;
     public String  marking;
-    public String timestamp;
+    public Time timestamp;
 
-    public Pagina(int id, int direccionFisica, int direccionVirtual, int direccionDisco, boolean banderaRV, String marking, String timestamp) {
+    public Pagina(int id, int direccionFisica, int direccionVirtual, int direccionDisco, boolean banderaRV, String marking, Time timestamp) {
         this.id = id;
         this.direccionFisica = direccionFisica;
         this.direccionVirtual = direccionVirtual;
@@ -79,11 +79,11 @@ public class Pagina {
         this.marking = marking;
     }
 
-    public String getTimestamp() {
+    public Time getTimestamp() {
         return timestamp;
     }
 
-    public void setTimestamp(String timestamp) {
+    public void setTimestamp(Time timestamp) {
         this.timestamp = timestamp;
     }
     

@@ -5,14 +5,6 @@
  */
 package Vista;
 
-import Backend.AdminOperaciones;
-import Backend.Computadora;
-import Modelo.Instruccion;
-import Modelo.MemoryManagementUnit;
-import Modelo.Pagina;
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
  *public void showPages(){
         MemoryManagementUnit mmu = Main.computadora.getMmu();
@@ -40,19 +32,11 @@ import java.util.HashMap;
  * @author richa
  */
 public class Main {
-    static Computadora computadora = new Computadora();    
-    static Simulacion simulacion = new Simulacion();
-    static Configuracion configuracion = new Configuracion();
-
-
-    
     public static void main(String[] args) {
-        configuracion.setVisible(true);
-        AdminOperaciones adminOperaciones = new AdminOperaciones();
-        String operacionesString = adminOperaciones.generarOperaciones(5,25);
-        ArrayList<Instruccion> instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
-        computadora.secondChance(instrucciones);
+        System.out.println("Hola");
         
+        Configuracion conf = new Configuracion();
+        conf.setVisible(true);
        
     }
 }

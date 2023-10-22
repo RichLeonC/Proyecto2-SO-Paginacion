@@ -7,7 +7,6 @@ package Vista;
 
 import Backend.Computadora;
 import java.io.File;
-import java.util.Random;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -22,8 +21,7 @@ public class Configuracion extends javax.swing.JFrame {
     int procesosSeleccionados;
     int operacionesSeleccionados;
     int semilla;
-    public Simulacion pantallaSimulacion;
-    
+    Computadora computadora;
     public Configuracion() {
         initComponents();
         archivoSeleccionado = null;
@@ -32,6 +30,7 @@ public class Configuracion extends javax.swing.JFrame {
         operacionesSeleccionados = 500;
         semilla = 1;
         txfArchivoSubido.setEditable(false);
+        computadora = new Computadora();
         this.setLocationRelativeTo(this);
     }
 
@@ -87,11 +86,6 @@ public class Configuracion extends javax.swing.JFrame {
 
         btnRandomSemilla.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRandomSemilla.setText("Random");
-        btnRandomSemilla.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnRandomSemillaActionPerformed(evt);
-            }
-        });
 
         btnInsertarSemilla.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnInsertarSemilla.setText("Insertar");
@@ -285,15 +279,10 @@ public class Configuracion extends javax.swing.JFrame {
     }//GEN-LAST:event_cbProcesos1ActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-       Main.simulacion.setVisible(true);
-       Main.simulacion.showPages();
+       Simulacion pantallaSimulacion = new Simulacion();
+       pantallaSimulacion.setVisible(true);
        this.dispose();
     }//GEN-LAST:event_btnIniciarActionPerformed
-
-    private void btnRandomSemillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomSemillaActionPerformed
-        Random rand = new Random();
-        txfSemilla.setText(String.valueOf(rand.nextInt()));
-    }//GEN-LAST:event_btnRandomSemillaActionPerformed
 
     /**
      * @param args the command line arguments

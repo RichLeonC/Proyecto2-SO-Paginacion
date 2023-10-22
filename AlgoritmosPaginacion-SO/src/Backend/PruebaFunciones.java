@@ -4,12 +4,8 @@
  */
 package Backend;
 
-import Modelo.Instruccion;
-import Modelo.MemoryManagementUnit;
-import Modelo.Pagina;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 /**
  *
@@ -27,19 +23,8 @@ public class PruebaFunciones {
         for(Instruccion ins : instrucciones){
             System.out.println("\n tipo: " + ins.tipoInstruccion + " Parametros: " + ins.parametros);
         }*/
-        String operacionesString = adminOperaciones.generarOperaciones(5,25,1);
-        
-        ArrayList<Instruccion> instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
-        System.out.println(instrucciones);
-        Computadora compu = new Computadora();
-        compu.secondChance(instrucciones);
-        MemoryManagementUnit mmu = compu.getMmu();
-        HashMap<String, ArrayList<Pagina>> map = mmu.getMapa();
-        for (int i = 0; i < map.size(); i++) {
-            System.out.println(map.get(String.valueOf(i)));
-        }
-        
-        //adminOperaciones.guardarArchivo("./archivos_instrucciones/contenido.txt", operacionesString);
+        String content = adminOperaciones.generarOperaciones(5,25);
+        adminOperaciones.guardarArchivo("./archivos_instrucciones/contenido.txt", content);
         
 
 
