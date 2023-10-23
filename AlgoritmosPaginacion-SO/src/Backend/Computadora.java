@@ -74,7 +74,7 @@ public void mru(){
        
    }
    
-   public void inicializar(int semilla,TipoAlgoritmo algoritmo,int nProcesos,int nOperaciones){
+   public void inicializar(int semilla,TipoAlgoritmo algoritmo,int nProcesos,int nOperaciones) throws InterruptedException{
        String operacionesString = adminOperaciones.generarOperaciones(10,200);
        ArrayList<Instruccion> instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
        for(Instruccion instr : instrucciones){

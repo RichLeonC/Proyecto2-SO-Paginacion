@@ -8,6 +8,8 @@ package Vista;
 import Backend.Computadora;
 import Backend.TipoAlgoritmo;
 import java.io.File;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
@@ -281,7 +283,11 @@ public class Configuracion extends javax.swing.JFrame {
         Main.simulacion.setVisible(true);
         Main.simulacion.showPages();
         this.dispose();
-        Main.computadora.inicializar(13, TipoAlgoritmo.SECOND_CHANCE, 10, 500);
+        try {
+            Main.computadora.inicializar(13, TipoAlgoritmo.SECOND_CHANCE, 10, 500);
+        } catch (InterruptedException ex) {
+            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     /**
