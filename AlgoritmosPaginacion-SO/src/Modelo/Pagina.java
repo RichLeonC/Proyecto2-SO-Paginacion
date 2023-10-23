@@ -13,20 +13,23 @@ import java.util.ArrayList;
  */
 public class Pagina {
 
-    public int id;
-    public int direccionFisica;
+    public int id;    
+    public String pid;
+    public String loaded;
     public int direccionVirtual;
-    public int direccionDisco;
-    public boolean banderaRV;
-    public String  marking;
+    public String direccionFisica;
+    public String direccionDisco;
     public String timestamp;
+    public String  marking;
+    
 
-    public Pagina(int id, int direccionFisica, int direccionVirtual, int direccionDisco, boolean banderaRV, String marking, String timestamp) {
+    public Pagina(int id, String pid, String loaded, int direccionVirtual,String direccionFisica,  String direccionDisco, String timestamp,String marking) {
         this.id = id;
-        this.direccionFisica = direccionFisica;
+        this.pid = pid;
+        this.loaded = loaded;
         this.direccionVirtual = direccionVirtual;
+        this.direccionFisica = direccionFisica;
         this.direccionDisco = direccionDisco;
-        this.banderaRV = banderaRV;
         this.marking = marking;
         this.timestamp = timestamp;
     }
@@ -39,11 +42,11 @@ public class Pagina {
         this.id = id;
     }
 
-    public int getDireccionFisica() {
+    public String getDireccionFisica() {
         return direccionFisica;
     }
 
-    public void setDireccionFisica(int direccionFisica) {
+    public void setDireccionFisica(String direccionFisica) {
         this.direccionFisica = direccionFisica;
     }
 
@@ -55,20 +58,20 @@ public class Pagina {
         this.direccionVirtual = direccionVirtual;
     }
 
-    public int getDireccionDisco() {
+    public String getDireccionDisco() {
         return direccionDisco;
     }
 
-    public void setDireccionDisco(int direccionDisco) {
+    public void setDireccionDisco(String direccionDisco) {
         this.direccionDisco = direccionDisco;
     }
 
-    public boolean isBanderaRV() {
-        return banderaRV;
+    public boolean isLoaded() {
+        return loaded.equals("X");
     }
 
-    public void setBanderaRV(boolean banderaRV) {
-        this.banderaRV = banderaRV;
+    public void setBanderaRV(String banderaRV) {
+        this.loaded = banderaRV;
     }
 
     public String getMarking() {
@@ -86,9 +89,6 @@ public class Pagina {
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
     }
-    
-    
-    public Pagina() {
-    }
+
     
 }

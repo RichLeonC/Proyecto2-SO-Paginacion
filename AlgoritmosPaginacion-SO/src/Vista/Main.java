@@ -30,7 +30,7 @@ public class Main {
         System.out.println("Hola");
         configuracion.setVisible(true);
         AdminOperaciones adminOperaciones = new AdminOperaciones();
-        String operacionesString = adminOperaciones.generarOperaciones(5,25);
+        String operacionesString = adminOperaciones.generarOperaciones(10,200);
         ArrayList<Instruccion> instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
         computadora.secondChance(instrucciones);
     }

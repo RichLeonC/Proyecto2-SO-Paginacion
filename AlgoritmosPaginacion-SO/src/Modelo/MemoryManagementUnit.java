@@ -26,6 +26,7 @@ public class MemoryManagementUnit {
         this.tablaSimbolos = new ArrayList();
         idActual = 0;
         this.memoriaReal = 100;
+        this.memoriaOcupada = 0;
     }
 
     public int getMemoriaOcupada() {
@@ -81,7 +82,7 @@ public class MemoryManagementUnit {
     }
      
     public String intruccionNew(Instruccion instruccion){
-        if(mapa.size() < memoriaReal){
+        if(memoriaOcupada < memoriaReal){
             int numPaginas = Integer.parseInt(instruccion.getParametros().get(1))%4==0 ? 
                                 Integer.parseInt(instruccion.getParametros().get(1))/4 
                                 : Integer.parseInt(instruccion.getParametros().get(1))/4 + 1;
@@ -91,7 +92,27 @@ public class MemoryManagementUnit {
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
-                Pagina pagina = new Pagina(idActual,1,1,1,true,"1",formattedDate);
+                Pagina pagina = new Pagina(idActual,instruccion.getParametros().get(0),"X",idActual,"","",formattedDate,"true");
+                paginasValores.add(pagina);
+                idActual++;
+            }
+            memoriaOcupada+=numPaginas;
+            if(mapa.get(instruccion.getParametros().get(0)) != null){
+                mapa.get(instruccion.getParametros().get(0)).addAll(paginasValores);
+            }else{
+                mapa.put(instruccion.getParametros().get(0), paginasValores);
+            }
+        }else{
+            int numPaginas = Integer.parseInt(instruccion.getParametros().get(1))%4==0 ? 
+                                Integer.parseInt(instruccion.getParametros().get(1))/4 
+                                : Integer.parseInt(instruccion.getParametros().get(1))/4 + 1;
+            System.out.println("Proceso: " + instruccion.getParametros().get(0) + " Numero de paginas necesarias: " + numPaginas);
+            ArrayList<Pagina> paginasValores = new ArrayList();
+            for(int i = 0; i < numPaginas; i++){
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+                String formattedDate = sdf.format(date);
+                Pagina pagina = new Pagina(idActual,instruccion.getParametros().get(0),"",idActual,"","",formattedDate,"true");
                 paginasValores.add(pagina);
                 idActual++;
             }
@@ -100,8 +121,6 @@ public class MemoryManagementUnit {
             }else{
                 mapa.put(instruccion.getParametros().get(0), paginasValores);
             }
-        }else{
-            System.out.println("Se quedo sin espacio");
         }
         return null;
     }
