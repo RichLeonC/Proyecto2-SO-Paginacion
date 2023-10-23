@@ -14,8 +14,9 @@ import static Modelo.TipoInstruccion.NEW;
 import static Modelo.TipoInstruccion.USE;
 import java.io.File;
 import java.util.ArrayList;
+import javax.swing.SwingWorker;
 
-public class Computadora {
+public class Computadora extends SwingWorker<Void,Void>{
     
     private final int nucleosProcesamiento;
     private TipoAlgoritmo algoritmo;
@@ -28,6 +29,11 @@ public class Computadora {
     private AdminOperaciones adminOperaciones;
     private int reloj;
     private ArrayList<Proceso> procesos;
+    
+        private int semilla;
+
+    private int nProcesos;
+    private int nOperaciones;
     
     public Computadora(){
         nucleosProcesamiento = 1;
@@ -86,7 +92,7 @@ public void mru(){
                     break;
                 case USE:
                     //System.out.println("Use");
-                    mmu.instruccionUse(instr);
+                   mmu.instruccionUse(instr);
                     break;
                 case DELETE:
                     //System.out.println("Delete");
@@ -102,6 +108,21 @@ public void mru(){
         }
    
    }
+   
+       @Override
+    protected Void doInBackground() throws Exception {
+        inicializar(semilla, algoritmo, nProcesos, nOperaciones);
+        return null;
+    }
+   
+   public void setInicializarAtributos(int semilla, TipoAlgoritmo algoritmo, int nProcesos, int nOperaciones){
+        this.semilla = semilla;
+        this.algoritmo = algoritmo;
+        this.nProcesos = nProcesos;
+        this.nOperaciones = nOperaciones;
+   }
+   
+
    
    public void pausar(){
    
@@ -180,6 +201,8 @@ public void mru(){
     public void setProcesos(ArrayList<Proceso> procesos) {
         this.procesos = procesos;
     }
+
+
     
     
     

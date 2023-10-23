@@ -283,11 +283,8 @@ public class Configuracion extends javax.swing.JFrame {
         Main.simulacion.setVisible(true);
         Main.simulacion.showPages();
         this.dispose();
-        try {
-            Main.computadora.inicializar(13, TipoAlgoritmo.SECOND_CHANCE, 10, 500);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(Configuracion.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        Main.computadora.setInicializarAtributos(13, TipoAlgoritmo.SECOND_CHANCE, 10, 500);
+        Main.computadora.execute();
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     /**

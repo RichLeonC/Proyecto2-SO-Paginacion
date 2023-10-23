@@ -107,6 +107,7 @@ public class MemoryManagementUnit {
                 idActual++;
                 memoriaOcupada++;
                 TimeUnit.SECONDS.sleep(1);
+            
             }else{
                 System.out.println("FAIL");
                 //LLAMA AL ALGORITMO
