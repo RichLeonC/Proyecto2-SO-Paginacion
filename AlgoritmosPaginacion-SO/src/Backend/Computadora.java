@@ -52,17 +52,17 @@ public class Computadora {
         for(Instruccion instr : instrucciones){
             switch(instr.getTipoInstruccion()){
                 case NEW:
-                    System.out.println("New");
+                    //System.out.println("New");
                     mmu.intruccionNew(instr);
                     break;
                 case USE:
-                    System.out.println("Use");
+                    //System.out.println("Use");
                     break;
                 case DELETE:
-                    System.out.println("Delete");
+                    //System.out.println("Delete");
                     break;
                 case KILL:
-                    System.out.println("Kill");
+                    //System.out.println("Kill");
                     break;
                 default:
                     throw new AssertionError(instr.getTipoInstruccion().name());

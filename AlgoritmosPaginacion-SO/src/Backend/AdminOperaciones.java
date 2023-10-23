@@ -137,12 +137,11 @@ public class AdminOperaciones {
                 }*/
                 operacionesString.append(tipo).append("(").append(proceso); //Lo anota
                 anoto = true;
-                int tamano = random.nextInt(40); //Elige un tamaño random
+                int tamano = random.nextInt(0,40); //Elige un tamaño random
                 operacionesString.append(",").append(tamano); //Se mete el tamaño
                 punteros++; //Eso genera un puntero posible de usar
                 posiblesUse.put(punteros,proceso); //Se mete a los posibles Use y lo asocia con el proceso que lo creo
                 if(!posiblesKill.contains(proceso)){
-                    System.out.println("Agrega el proceso " + proceso);
                     posiblesKill.add(proceso);
                 }
             }
@@ -189,7 +188,6 @@ public class AdminOperaciones {
         if(killsHechas == 0){
             for (int i = 0; i < killsAntes; i++) {
                 int proceso = posiblesKill.remove(random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
-                System.out.println("Esto jjd");
                 for(int x = 0; x < posiblesNew.size(); x++){
                     if(posiblesNew.get(x)== proceso){
                         System.out.println("Entro aqui kk");
@@ -209,19 +207,13 @@ public class AdminOperaciones {
                 operacionesString.append(")\n");
             }
         }
-        System.out.println("Asi quedo antes de los after kills: \n" + operacionesString.toString());
-        
-        System.out.println("Procesos faltantes por eliminar : " + posiblesKill);
         while(!posiblesKill.isEmpty()){
-            System.out.println("Asi van los posibles kills : " + posiblesKill);
             int proceso = posiblesKill.remove(random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
-            System.out.println("Se elimino el proceso de kills " + proceso);
             killsHechas++;
             operacionesString.append("kill").append("(").append(proceso); //Lo anota
             operacionesString.append(")\n");
         }
         // Ahora puedes imprimir o usar la cadena generada
-        System.out.println("Asi quedo despues de los after kills: \n" + operacionesString.toString());
 
         return operacionesString.toString();
     }
@@ -276,12 +268,11 @@ public class AdminOperaciones {
                 }*/
                 operacionesString.append(tipo).append("(").append(proceso); //Lo anota
                 anoto = true;
-                int tamano = random.nextInt(40); //Elige un tamaño random
+                int tamano = random.nextInt(0,40); //Elige un tamaño random
                 operacionesString.append(",").append(tamano); //Se mete el tamaño
                 punteros++; //Eso genera un puntero posible de usar
                 posiblesUse.put(punteros,proceso); //Se mete a los posibles Use y lo asocia con el proceso que lo creo
                 if(!posiblesKill.contains(proceso)){
-                    System.out.println("Agrega el proceso " + proceso);
                     posiblesKill.add(proceso);
                 }
             }
@@ -328,10 +319,8 @@ public class AdminOperaciones {
         if(killsHechas == 0){
             for (int i = 0; i < killsAntes; i++) {
                 int proceso = posiblesKill.remove(random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
-                System.out.println("Esto jjd");
                 for(int x = 0; x < posiblesNew.size(); x++){
                     if(posiblesNew.get(x)== proceso){
-                        System.out.println("Entro aqui kk");
                         posiblesNew.remove(x);
                     }
                 }
@@ -348,19 +337,13 @@ public class AdminOperaciones {
                 operacionesString.append(")\n");
             }
         }
-        System.out.println("Asi quedo antes de los after kills: \n" + operacionesString.toString());
-        
-        System.out.println("Procesos faltantes por eliminar : " + posiblesKill);
         while(!posiblesKill.isEmpty()){
-            System.out.println("Asi van los posibles kills : " + posiblesKill);
             int proceso = posiblesKill.remove(random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
-            System.out.println("Se elimino el proceso de kills " + proceso);
             killsHechas++;
             operacionesString.append("kill").append("(").append(proceso); //Lo anota
             operacionesString.append(")\n");
         }
         // Ahora puedes imprimir o usar la cadena generada
-        System.out.println("Asi quedo despues de los after kills: \n" + operacionesString.toString());
 
         return operacionesString.toString();
     }

@@ -83,10 +83,10 @@ public class MemoryManagementUnit {
      
     public String intruccionNew(Instruccion instruccion){
         if(memoriaOcupada < memoriaReal){
-            int numPaginas = Integer.parseInt(instruccion.getParametros().get(1))%4==0 ? 
+            int numPaginas = Integer.parseInt(instruccion.getParametros().get(1))/4 %4==0 ? 
                                 Integer.parseInt(instruccion.getParametros().get(1))/4 
                                 : Integer.parseInt(instruccion.getParametros().get(1))/4 + 1;
-            System.out.println("Proceso: " + instruccion.getParametros().get(0) + " Numero de paginas necesarias: " + numPaginas);
+            //System.out.println("Proceso: " + instruccion.getParametros().get(0) + " Numero de paginas necesarias: " + numPaginas);
             ArrayList<Pagina> paginasValores = new ArrayList();
             for(int i = 0; i < numPaginas; i++){
                 Date date = new Date();
@@ -103,10 +103,10 @@ public class MemoryManagementUnit {
                 mapa.put(instruccion.getParametros().get(0), paginasValores);
             }
         }else{
-            int numPaginas = Integer.parseInt(instruccion.getParametros().get(1))%4==0 ? 
+            int numPaginas = Integer.parseInt(instruccion.getParametros().get(1))/4%4==0 ? 
                                 Integer.parseInt(instruccion.getParametros().get(1))/4 
                                 : Integer.parseInt(instruccion.getParametros().get(1))/4 + 1;
-            System.out.println("Proceso: " + instruccion.getParametros().get(0) + " Numero de paginas necesarias: " + numPaginas);
+            //System.out.println("Proceso: " + instruccion.getParametros().get(0) + " Numero de paginas necesarias: " + numPaginas);
             ArrayList<Pagina> paginasValores = new ArrayList();
             for(int i = 0; i < numPaginas; i++){
                 Date date = new Date();

@@ -28,7 +28,11 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Simulacion extends javax.swing.JFrame {
 
-    private Map<Point, Color> cellColors = new HashMap<>();
+    private Map<Point, Color> cellColorsOPT = new HashMap<>();    
+    private Map<Point, Color> cellColorsALG = new HashMap<>();
+    private Map<Point, Color> cellColorsOPTPages = new HashMap<>();
+    private Map<Point, Color> cellColorsALGPages = new HashMap<>();
+
 
     public Simulacion() {
         initComponents();
@@ -40,11 +44,70 @@ public class Simulacion extends javax.swing.JFrame {
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-                label.setOpaque(true);
+               label.setOpaque(true);
                label.setText(value == null ? "" : value.toString());
 
 
-                Color color = cellColors.get(new Point(column, row));
+                Color color = cellColorsOPT.get(new Point(column, row));
+                if (color != null) {
+                    label.setBackground(color);
+                } else {
+                    label.setBackground(Color.WHITE); // O cualquier color por defecto
+                }
+
+                return label;
+            }
+        });
+        
+        tableRamALG.setDefaultRenderer(Object.class, new TableCellRenderer() {
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+               Color color = cellColorsALG.get(new Point(column, row));
+               table.getTableHeader().setOpaque(false);
+               table.getTableHeader().setBackground(color);
+
+
+                if (color != null) {
+                    table.getTableHeader().setBackground(color);
+                } else {
+                    table.getTableHeader().setBackground(Color.WHITE); // O cualquier color por defecto
+                }
+
+                return table.getTableHeader();
+            }
+        });
+        
+        OptTable.setDefaultRenderer(Object.class, new TableCellRenderer() {
+            private JLabel label = new JLabel();
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+               label.setOpaque(true);
+               label.setText(value == null ? "" : value.toString());
+
+
+                Color color = cellColorsOPTPages.get(new Point(column, row));
+                if (color != null) {
+                    label.setBackground(color);
+                } else {
+                    label.setBackground(Color.WHITE); // O cualquier color por defecto
+                }
+
+                return label;
+            }
+        });
+        
+        algorithmTable.setDefaultRenderer(Object.class, new TableCellRenderer() {
+            private JLabel label = new JLabel();
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+               label.setOpaque(true);
+               label.setText(value == null ? "" : value.toString());
+
+
+                Color color = cellColorsALGPages.get(new Point(column, row));
                 if (color != null) {
                     label.setBackground(color);
                 } else {
@@ -57,9 +120,37 @@ public class Simulacion extends javax.swing.JFrame {
         
 
     }
+    
+    public static Color getColorForNumber(int number) {
+        if (number < 1 || number > 100) {
+            throw new IllegalArgumentException("El número debe estar entre 1 y 100");
+        }
 
-    public void setCellColor(int row, int column, Color color) {
-        cellColors.put(new Point(column, row), color);
+        int red = (int) (Math.sin(number) * 127 + 128);
+        int green = (int) (Math.cos(number) * 127 + 128);
+        int blue = (number * 2) % 256;
+
+        return new Color(red, green, blue);
+    }
+
+    public void setCellColorOPT(int row, int column, int pid) {
+        Color color = getColorForNumber(pid);
+        cellColorsOPT.put(new Point(column, row), color);
+    }
+    
+    public void setCellColorALG(int row, int column, int pid) {
+        Color color = getColorForNumber(pid);
+        cellColorsALG.put(new Point(column, row), color);
+    }
+    
+    public void setCellColorOPTTable(int row, int column, int pid) {
+        Color color = getColorForNumber(pid);
+        cellColorsOPTPages.put(new Point(column, row), color);
+    }
+    
+    public void setCellColorALGTable(int row, int column, int pid) {
+        Color color = getColorForNumber(pid);
+        cellColorsALGPages.put(new Point(column, row), color);
     }
 
     /**
@@ -884,8 +975,9 @@ public class Simulacion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        setCellColor(0,0, Color.yellow);
-        tableRamOPT.repaint();
+        System.out.println("Llamar");
+        setCellColorALGTable(0,0, 1);
+        algorithmTable.repaint();
     }//GEN-LAST:event_jButton3ActionPerformed
 
     /**
@@ -998,17 +1090,27 @@ public class Simulacion extends javax.swing.JFrame {
                 paginas.addAll(map.get(String.valueOf(i)));
                 for(int j = 0; j < map.get(String.valueOf(i)).size(); j++){
                     ids.add(i);
+                    
                 }
             }
             
         }
-        DefaultTableModel modelRAM = (DefaultTableModel) tableRamOPT2.getModel();
+        DefaultTableModel modelRAM = (DefaultTableModel) tableRamALG.getModel();
         DefaultTableModel modelPages = (DefaultTableModel) algorithmTable.getModel();
         for(int i = 0; i < paginas.size(); i++){
             Pagina page = paginas.get(i);
             modelPages.addRow(new Object[]{page.id, page.pid, page.loaded ,page.direccionVirtual,page.direccionFisica, page.direccionDisco,page.timestamp, page.marking});
-            modelRAM.addColumn(page.pid);
+            for(int j = 0; j < 8; j++){
+                setCellColorALGTable(modelPages.getRowCount()-1,j,Integer.parseInt(page.pid));
+            }
+            if(page.loaded.equals("X")){
+                modelRAM.addColumn(page.pid);
+                System.out.println(modelRAM.getRowCount());
+                setCellColorALG(-1,i,Integer.parseInt(page.pid));
+            }
         
         }
+        algorithmTable.repaint();
+        tableRamALG.repaint();
     }
 }
