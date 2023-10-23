@@ -13,17 +13,17 @@ import java.util.ArrayList;
  */
 public class Pagina {
 
-    public int id;    
+    public String id;    
     public String pid;
     public String loaded;
-    public int direccionVirtual;
+    public String direccionVirtual;
     public String direccionFisica;
     public String direccionDisco;
     public String timestamp;
     public String  marking;
     
 
-    public Pagina(int id, String pid, String loaded, int direccionVirtual,String direccionFisica,  String direccionDisco, String timestamp,String marking) {
+    public Pagina(String id, String pid, String loaded, String direccionVirtual,String direccionFisica,  String direccionDisco, String timestamp,String marking) {
         this.id = id;
         this.pid = pid;
         this.loaded = loaded;
@@ -34,11 +34,11 @@ public class Pagina {
         this.timestamp = timestamp;
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -50,11 +50,11 @@ public class Pagina {
         this.direccionFisica = direccionFisica;
     }
 
-    public int getDireccionVirtual() {
+    public String getDireccionVirtual() {
         return direccionVirtual;
     }
 
-    public void setDireccionVirtual(int direccionVirtual) {
+    public void setDireccionVirtual(String direccionVirtual) {
         this.direccionVirtual = direccionVirtual;
     }
 

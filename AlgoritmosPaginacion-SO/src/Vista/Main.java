@@ -7,6 +7,7 @@ package Vista;
  */
 import Backend.AdminOperaciones;
 import Backend.Computadora;
+import Backend.TipoAlgoritmo;
 import Modelo.Instruccion;
 import Modelo.MemoryManagementUnit;
 import Modelo.Pagina;
@@ -27,11 +28,6 @@ public class Main {
 
     
     public static void main(String[] args) {
-        System.out.println("Hola");
         configuracion.setVisible(true);
-        AdminOperaciones adminOperaciones = new AdminOperaciones();
-        String operacionesString = adminOperaciones.generarOperaciones(10,200);
-        ArrayList<Instruccion> instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
-        computadora.secondChance(instrucciones);
     }
 }

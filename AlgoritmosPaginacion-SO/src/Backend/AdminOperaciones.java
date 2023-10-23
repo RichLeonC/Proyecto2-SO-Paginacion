@@ -137,7 +137,7 @@ public class AdminOperaciones {
                 }*/
                 operacionesString.append(tipo).append("(").append(proceso); //Lo anota
                 anoto = true;
-                int tamano = random.nextInt(0,40); //Elige un tamaño random
+                int tamano = random.nextInt(0,40960); //Elige un tamaño random
                 operacionesString.append(",").append(tamano); //Se mete el tamaño
                 punteros++; //Eso genera un puntero posible de usar
                 posiblesUse.put(punteros,proceso); //Se mete a los posibles Use y lo asocia con el proceso que lo creo
@@ -268,7 +268,7 @@ public class AdminOperaciones {
                 }*/
                 operacionesString.append(tipo).append("(").append(proceso); //Lo anota
                 anoto = true;
-                int tamano = random.nextInt(0,40); //Elige un tamaño random
+                int tamano = random.nextInt(0,40960); //Elige un tamaño random
                 operacionesString.append(",").append(tamano); //Se mete el tamaño
                 punteros++; //Eso genera un puntero posible de usar
                 posiblesUse.put(punteros,proceso); //Se mete a los posibles Use y lo asocia con el proceso que lo creo

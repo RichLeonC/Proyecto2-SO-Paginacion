@@ -8,6 +8,10 @@ package Backend;
 import Modelo.Instruccion;
 import Modelo.MemoryManagementUnit;
 import Modelo.Proceso;
+import static Modelo.TipoInstruccion.DELETE;
+import static Modelo.TipoInstruccion.KILL;
+import static Modelo.TipoInstruccion.NEW;
+import static Modelo.TipoInstruccion.USE;
 import java.io.File;
 import java.util.ArrayList;
 
@@ -21,7 +25,7 @@ public class Computadora {
     private int discoDuro;
     private final int paginaSize;
     private MemoryManagementUnit mmu;
-    private AdminOperaciones admOperaciones;
+    private AdminOperaciones adminOperaciones;
     private int reloj;
     private ArrayList<Proceso> procesos;
     
@@ -35,6 +39,7 @@ public class Computadora {
         mmu = new MemoryManagementUnit();
         reloj = 1; //segundos
         procesos = new ArrayList();
+        adminOperaciones = new AdminOperaciones();
     
     }
     
@@ -48,26 +53,8 @@ public class Computadora {
    
    }
    
-    public void secondChance(ArrayList<Instruccion> instrucciones){
-        for(Instruccion instr : instrucciones){
-            switch(instr.getTipoInstruccion()){
-                case NEW:
-                    //System.out.println("New");
-                    mmu.intruccionNew(instr);
-                    break;
-                case USE:
-                    //System.out.println("Use");
-                    break;
-                case DELETE:
-                    //System.out.println("Delete");
-                    break;
-                case KILL:
-                    //System.out.println("Kill");
-                    break;
-                default:
-                    throw new AssertionError(instr.getTipoInstruccion().name());
-            }
-        }
+    public void secondChance(){
+        
     }
         
 public void mru(){
@@ -87,7 +74,34 @@ public void mru(){
        
    }
    
-   public void inicializar(int semilla,TipoAlgoritmo algoritmo,int nProcesos,int nOperaciones){}
+   public void inicializar(int semilla,TipoAlgoritmo algoritmo,int nProcesos,int nOperaciones){
+       String operacionesString = adminOperaciones.generarOperaciones(10,200);
+       ArrayList<Instruccion> instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
+       for(Instruccion instr : instrucciones){
+            switch(instr.getTipoInstruccion()){
+                case NEW:
+                    System.out.println("New");
+                    System.out.println(instr.getParametros().get(0));
+                    mmu.intruccionNew(instr);
+                    break;
+                case USE:
+                    //System.out.println("Use");
+                    mmu.instruccionUse(instr);
+                    break;
+                case DELETE:
+                    //System.out.println("Delete");
+                    mmu.instruccionDelete(instr);
+                    break;
+                case KILL:
+                    //System.out.println("Kill");
+                    mmu.instruccionKill(instr);
+                    break;
+                default:
+                    throw new AssertionError(instr.getTipoInstruccion().name());
+            }
+        }
+   
+   }
    
    public void pausar(){
    
@@ -143,12 +157,12 @@ public void mru(){
         this.mmu = mmu;
     }
 
-    public AdminOperaciones getAdmOperaciones() {
-        return admOperaciones;
+    public AdminOperaciones getAdminOperaciones() {
+        return adminOperaciones;
     }
 
-    public void setAdmOperaciones(AdminOperaciones admOperaciones) {
-        this.admOperaciones = admOperaciones;
+    public void setAdminOperaciones(AdminOperaciones adminOperaciones) {
+        this.adminOperaciones = adminOperaciones;
     }
 
     public int getReloj() {

@@ -1082,21 +1082,23 @@ public class Simulacion extends javax.swing.JFrame {
 
     public void showPages(){
         MemoryManagementUnit mmu = Main.computadora.getMmu();
+        System.out.println(mmu.memoriaOcupada);
         HashMap<String, ArrayList<Pagina>> map = mmu.getMapa();
-        ArrayList<Pagina> paginas = new ArrayList();
-        ArrayList<Integer> ids = new ArrayList();
+        System.out.println("Size: " + map.size());
+        ArrayList<Pagina> paginas = Main.computadora.getMmu().tablaSimbolos;
+        /*ArrayList<Integer> ids = new ArrayList();
         for (int i = 0; i < map.size(); i++) {
             if(map.get(String.valueOf(i))!= null){
                 paginas.addAll(map.get(String.valueOf(i)));
                 for(int j = 0; j < map.get(String.valueOf(i)).size(); j++){
                     ids.add(i);
-                    
                 }
             }
             
-        }
+        }*/
         DefaultTableModel modelRAM = (DefaultTableModel) tableRamALG.getModel();
         DefaultTableModel modelPages = (DefaultTableModel) algorithmTable.getModel();
+        int n = 0;
         for(int i = 0; i < paginas.size(); i++){
             Pagina page = paginas.get(i);
             modelPages.addRow(new Object[]{page.id, page.pid, page.loaded ,page.direccionVirtual,page.direccionFisica, page.direccionDisco,page.timestamp, page.marking});
@@ -1107,8 +1109,12 @@ public class Simulacion extends javax.swing.JFrame {
                 modelRAM.addColumn(page.pid);
                 System.out.println(modelRAM.getRowCount());
                 setCellColorALG(-1,i,Integer.parseInt(page.pid));
+                n++;
             }
         
+        }
+        for(int i = 0; i < 100 - n; i++){
+            modelRAM.addColumn(" ");
         }
         algorithmTable.repaint();
         tableRamALG.repaint();

@@ -6,6 +6,7 @@
 package Vista;
 
 import Backend.Computadora;
+import Backend.TipoAlgoritmo;
 import java.io.File;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -21,7 +22,6 @@ public class Configuracion extends javax.swing.JFrame {
     int procesosSeleccionados;
     int operacionesSeleccionados;
     int semilla;
-    Computadora computadora;
     public Configuracion() {
         initComponents();
         archivoSeleccionado = null;
@@ -30,7 +30,6 @@ public class Configuracion extends javax.swing.JFrame {
         operacionesSeleccionados = 500;
         semilla = 1;
         txfArchivoSubido.setEditable(false);
-        computadora = new Computadora();
         this.setLocationRelativeTo(this);
     }
 
@@ -279,9 +278,10 @@ public class Configuracion extends javax.swing.JFrame {
     }//GEN-LAST:event_cbProcesos1ActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-       Main.simulacion.setVisible(true);
-       Main.simulacion.showPages();
-       this.dispose();
+        Main.simulacion.setVisible(true);
+        Main.simulacion.showPages();
+        this.dispose();
+        Main.computadora.inicializar(13, TipoAlgoritmo.SECOND_CHANCE, 10, 500);
     }//GEN-LAST:event_btnIniciarActionPerformed
 
     /**

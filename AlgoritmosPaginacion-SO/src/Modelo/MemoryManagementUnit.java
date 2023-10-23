@@ -8,6 +8,8 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Set;
+import java.util.concurrent.TimeUnit;
 
 /**
  *
@@ -18,8 +20,12 @@ public class MemoryManagementUnit {
     public int direccionVirtual;
     public int memoriaOcupada;
     public HashMap<String, ArrayList<Pagina>> mapa;
-    public ArrayList<String> tablaSimbolos;
+    public ArrayList<Pagina> tablaSimbolos;
     public int idActual;
+    public int direccionRamActualID = 1;
+    public int direccionVirtualActualID = 1;
+    public int direccionDiscoActualID = 1;
+    public int punteroActual = 1;
     
     public MemoryManagementUnit(){
         this.mapa = new HashMap();
@@ -70,71 +76,109 @@ public class MemoryManagementUnit {
         this.mapa = mapa;
     }
 
-    public ArrayList<String> getTablaSimbolos() {
+    public ArrayList<Pagina> getTablaSimbolos() {
         return tablaSimbolos;
     }
 
-    public void setTablaSimbolos(ArrayList<String> tablaSimbolos) {
+    public void setTablaSimbolos(ArrayList<Pagina> tablaSimbolos) {
         this.tablaSimbolos = tablaSimbolos;
     }
     
     public void ejecutarIntruccionesProceso(Proceso proceso){
     }
      
-    public String intruccionNew(Instruccion instruccion){
-        if(memoriaOcupada < memoriaReal){
-            int numPaginas = Integer.parseInt(instruccion.getParametros().get(1))/4 %4==0 ? 
-                                Integer.parseInt(instruccion.getParametros().get(1))/4 
-                                : Integer.parseInt(instruccion.getParametros().get(1))/4 + 1;
-            //System.out.println("Proceso: " + instruccion.getParametros().get(0) + " Numero de paginas necesarias: " + numPaginas);
-            ArrayList<Pagina> paginasValores = new ArrayList();
-            for(int i = 0; i < numPaginas; i++){
+    public int intruccionNew(Instruccion instruccion) throws InterruptedException{
+        int numPaginas = ((Integer)Integer.parseInt(instruccion.getParametros().get(1))/4096) % 4 == 0 &&
+                                ((Integer)Integer.parseInt(instruccion.getParametros().get(1))/4096)  != 0? 
+                               (Integer) Integer.parseInt(instruccion.getParametros().get(1))/4096
+                                : (Integer) Integer.parseInt(instruccion.getParametros().get(1))/4096 + 1;
+        ArrayList<Pagina> paginasValores = new ArrayList();
+        for(int i = 0; i < numPaginas; i++){
+            if(memoriaOcupada <= memoriaReal){
+                System.out.println("HIT");
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
-                Pagina pagina = new Pagina(idActual,instruccion.getParametros().get(0),"X",idActual,"","",formattedDate,"true");
+                Pagina pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(direccionRamActualID),"",formattedDate,"true");
                 paginasValores.add(pagina);
+                tablaSimbolos.add(pagina);
+                direccionRamActualID++;
+                direccionVirtualActualID++;
                 idActual++;
-            }
-            memoriaOcupada+=numPaginas;
-            if(mapa.get(instruccion.getParametros().get(0)) != null){
-                mapa.get(instruccion.getParametros().get(0)).addAll(paginasValores);
+                memoriaOcupada++;
+                TimeUnit.SECONDS.sleep(1);
             }else{
-                mapa.put(instruccion.getParametros().get(0), paginasValores);
-            }
-        }else{
-            int numPaginas = Integer.parseInt(instruccion.getParametros().get(1))/4%4==0 ? 
-                                Integer.parseInt(instruccion.getParametros().get(1))/4 
-                                : Integer.parseInt(instruccion.getParametros().get(1))/4 + 1;
-            //System.out.println("Proceso: " + instruccion.getParametros().get(0) + " Numero de paginas necesarias: " + numPaginas);
-            ArrayList<Pagina> paginasValores = new ArrayList();
-            for(int i = 0; i < numPaginas; i++){
+                System.out.println("FAIL");
+                //LLAMA AL ALGORITMO
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
-                Pagina pagina = new Pagina(idActual,instruccion.getParametros().get(0),"",idActual,"","",formattedDate,"true");
+                Pagina pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"",String.valueOf(direccionVirtualActualID), "",String.valueOf(direccionDiscoActualID) ,formattedDate,"true");
                 paginasValores.add(pagina);
+                tablaSimbolos.add(pagina);
+                direccionVirtualActualID++;
+                direccionDiscoActualID++;
                 idActual++;
-            }
-            if(mapa.get(instruccion.getParametros().get(0)) != null){
-                mapa.get(instruccion.getParametros().get(0)).addAll(paginasValores);
-            }else{
-                mapa.put(instruccion.getParametros().get(0), paginasValores);
+                TimeUnit.SECONDS.sleep(5);                
             }
         }
-        return null;
+        String ptr = String.valueOf(punteroActual);
+        punteroActual++;
+        mapa.put(ptr, paginasValores);
+        return direccionRamActualID;
     }
     
     public void guardarPuntero(String puntero){
     }
     
     public void instruccionUse(Instruccion instruccion){
+        if(mapa.get(instruccion.getParametros().get(0)) != null){
+            for(Pagina page : mapa.get(instruccion.getParametros().get(0))){
+                if(page.direccionFisica.equals("")){
+                    //LLAMA AL ALGORITMO
+                    String direccion = "-1";
+                    page.setDireccionFisica(direccion);
+                }
+            }
+        }
     }
     
     public void instruccionDelete(Instruccion instruccion){
+        System.out.println("Puntero a eliminar: " + instruccion.getParametros().get(0));
+        System.out.println(mapa.size());
+        ArrayList<Pagina> paginas = mapa.remove(instruccion.getParametros().get(0));
+        if(paginas != null){
+            for (int i = 0; i < tablaSimbolos.size(); i++) {
+                for (int j = 0; j < paginas.size(); j++) {
+                    if(tablaSimbolos.get(i).id.equals(paginas.get(j).id)){
+                        tablaSimbolos.remove(i);
+                    }
+                }
+            }
+        }
     }
      
-    public void instruccionKil(Instruccion instruccion){
+    public void instruccionKill(Instruccion instruccion){
+        Set<String> llavesSet = mapa.keySet();
+        ArrayList<String> llaves = new ArrayList<>(llavesSet);
+        for(String llave : llaves){
+            ArrayList<Pagina> paginas = mapa.get(llave);
+            for(int i = 0; i < paginas.size(); i++){
+                if(paginas.get(i).pid.equals(String.valueOf(instruccion.getParametros().get(0)))){
+                    mapa.remove(llave);
+                    break;
+                }
+            }
+        }
+        for(int j = 0; j < tablaSimbolos.size(); j++){
+            if(tablaSimbolos.get(j).pid.equals(instruccion.getParametros().get(0))){
+                tablaSimbolos.remove(j);
+            }
+        }
     }
-    
+ 
+    private void sleep(int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+   
 }
