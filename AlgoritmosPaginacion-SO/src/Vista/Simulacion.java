@@ -8,7 +8,13 @@ package Vista;
 import Modelo.MemoryManagementUnit;
 import Modelo.Pagina;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.Point;
+import java.util.HashMap;
+import java.util.Map;
+import javax.swing.JTable;
+import javax.swing.table.TableCellRenderer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.swing.BoxLayout;
@@ -22,39 +28,38 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Simulacion extends javax.swing.JFrame {
 
-    /**
-     * Creates new form Simulacion
-     */
+    private Map<Point, Color> cellColors = new HashMap<>();
+
     public Simulacion() {
         initComponents();
-        
-//        Color[] colores = {
-//            Color.GREEN, Color.YELLOW, Color.ORANGE, Color.RED, Color.PINK,
-//            Color.CYAN, Color.BLUE, Color.MAGENTA, Color.GRAY
-//            // Agrega más colores si es necesario
-//        };
-//
-//        for (Color color : colores) {
-//            JPanel colorPanel = new JPanel();
-//            colorPanel.setBackground(color);
-//            colorPanel.setPreferredSize(new Dimension(40, 60));  // Configura el tamaño según lo necesites
-//            mainPanel.add(colorPanel);
-//        }
-//
-        // Espacio en blanco
-        JPanel blancoPanel = new JPanel();
-        blancoPanel.setBackground(Color.WHITE);
-        blancoPanel.setPreferredSize(new Dimension(1,1));  // Configura el tamaño según lo necesites
-        txtPagesUnloaded.add(blancoPanel);
-
-        // Etiqueta "RAM - OPT"
-        javax.swing.JLabel label = new JLabel("RAM - OPT");
-        label.setForeground(Color.WHITE);
-        txtPagesUnloaded.add(label);
-        
-        //mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
 
         this.setLocationRelativeTo(this);
+
+        tableRamOPT.setDefaultRenderer(Object.class, new TableCellRenderer() {
+            private JLabel label = new JLabel();
+
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+                label.setOpaque(true);
+               label.setText(value == null ? "" : value.toString());
+
+
+                Color color = cellColors.get(new Point(column, row));
+                if (color != null) {
+                    label.setBackground(color);
+                } else {
+                    label.setBackground(Color.WHITE); // O cualquier color por defecto
+                }
+
+                return label;
+            }
+        });
+        
+
+    }
+
+    public void setCellColor(int row, int column, Color color) {
+        cellColors.put(new Point(column, row), color);
     }
 
     /**
@@ -125,7 +130,7 @@ public class Simulacion extends javax.swing.JFrame {
         jScrollPane4 = new javax.swing.JScrollPane();
         tableRamOPT = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
-        tableRamOPT2 = new javax.swing.JTable();
+        tableRamALG = new javax.swing.JTable();
         lblSimulacion3 = new javax.swing.JLabel();
         lblSimulacion4 = new javax.swing.JLabel();
 
@@ -441,6 +446,11 @@ public class Simulacion extends javax.swing.JFrame {
 
         jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton3.setText("Iniciar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
         lblSimulacion1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblSimulacion1.setForeground(new java.awt.Color(255, 255, 255));
@@ -461,7 +471,7 @@ public class Simulacion extends javax.swing.JFrame {
         tableRamOPT.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(tableRamOPT);
 
-        tableRamOPT2.setModel(new javax.swing.table.DefaultTableModel(
+        tableRamALG.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -469,7 +479,7 @@ public class Simulacion extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane6.setViewportView(tableRamOPT2);
+        jScrollPane6.setViewportView(tableRamALG);
 
         lblSimulacion3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblSimulacion3.setForeground(new java.awt.Color(255, 255, 255));
@@ -619,7 +629,7 @@ public class Simulacion extends javax.swing.JFrame {
                         .addGap(373, 373, 373))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
                         .addComponent(lblSimulacion)
-                        .addGap(677, 677, 677))))
+                        .addGap(733, 733, 733))))
             .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
                     .addGap(395, 395, 395)
@@ -873,6 +883,11 @@ public class Simulacion extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        setCellColor(0,0, Color.yellow);
+        tableRamOPT.repaint();
+    }//GEN-LAST:event_jButton3ActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -946,8 +961,8 @@ public class Simulacion extends javax.swing.JFrame {
     private javax.swing.JLabel lblSimulacion2;
     private javax.swing.JLabel lblSimulacion3;
     private javax.swing.JLabel lblSimulacion4;
+    private javax.swing.JTable tableRamALG;
     private javax.swing.JTable tableRamOPT;
-    private javax.swing.JTable tableRamOPT2;
     private javax.swing.JTextField txfFragmentation;
     private javax.swing.JTextField txfFragmentationOPT;
     private javax.swing.JTextField txfPagesLoaded;
