@@ -234,7 +234,7 @@
                   <EmptySpace min="437" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="1" attributes="0">
-                          <Component id="lblSimulacion1" min="-2" max="-2" attributes="0"/>
+                          <Component id="lblMmuALG" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="373" max="-2" attributes="0"/>
                       </Group>
                       <Group type="102" alignment="1" attributes="0">
@@ -274,7 +274,7 @@
                               <Component id="lblSimulacion2" min="-2" pref="48" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblSimulacion1" min="-2" pref="52" max="-2" attributes="0"/>
+                          <Component id="lblMmuALG" min="-2" pref="52" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="1" attributes="0">
                               <Group type="102" alignment="1" attributes="0">
@@ -1109,7 +1109,7 @@
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIniciarSimulacionActionPerformed"/>
           </Events>
         </Component>
-        <Component class="javax.swing.JLabel" name="lblSimulacion1">
+        <Component class="javax.swing.JLabel" name="lblMmuALG">
           <Properties>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Tahoma" size="18" style="1"/>

@@ -37,6 +37,8 @@ public class Simulacion extends javax.swing.JFrame {
         initComponents();
 
         this.setLocationRelativeTo(this);
+        
+       // lblMmuALG.setText(Main.computadora.getAlgoritmo().toString());
 
         tableRamOPT.setDefaultRenderer(Object.class, new TableCellRenderer() {
             private JLabel label = new JLabel();
@@ -218,7 +220,7 @@ public static Color getColorForNumber(int number) {
         btnVolver = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         btnIniciarSimulacion = new javax.swing.JButton();
-        lblSimulacion1 = new javax.swing.JLabel();
+        lblMmuALG = new javax.swing.JLabel();
         lblSimulacion2 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableRamOPT = new javax.swing.JTable();
@@ -545,9 +547,9 @@ public static Color getColorForNumber(int number) {
             }
         });
 
-        lblSimulacion1.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        lblSimulacion1.setForeground(new java.awt.Color(255, 255, 255));
-        lblSimulacion1.setText("MMU-[]");
+        lblMmuALG.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        lblMmuALG.setForeground(new java.awt.Color(255, 255, 255));
+        lblMmuALG.setText("MMU-[]");
 
         lblSimulacion2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         lblSimulacion2.setForeground(new java.awt.Color(255, 255, 255));
@@ -710,7 +712,7 @@ public static Color getColorForNumber(int number) {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
-                        .addComponent(lblSimulacion1)
+                        .addComponent(lblMmuALG)
                         .addGap(373, 373, 373))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
                         .addComponent(lblSimulacion)
@@ -740,7 +742,7 @@ public static Color getColorForNumber(int number) {
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblSimulacion2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblSimulacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblMmuALG, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)
                         .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
@@ -1046,8 +1048,8 @@ public static Color getColorForNumber(int number) {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JLabel lblMmuALG;
     private javax.swing.JLabel lblSimulacion;
-    private javax.swing.JLabel lblSimulacion1;
     private javax.swing.JLabel lblSimulacion2;
     private javax.swing.JLabel lblSimulacion3;
     private javax.swing.JLabel lblSimulacion4;

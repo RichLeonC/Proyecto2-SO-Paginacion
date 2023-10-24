@@ -16,8 +16,8 @@ import java.io.File;
 import java.util.ArrayList;
 import javax.swing.SwingWorker;
 
-public class Computadora extends SwingWorker<Void,Void>{
-    
+public class Computadora extends SwingWorker<Void, Void> {
+
     private final int nucleosProcesamiento;
     private TipoAlgoritmo algoritmo;
     private int instruccionesPorSegundo;
@@ -29,13 +29,13 @@ public class Computadora extends SwingWorker<Void,Void>{
     private AdminOperaciones adminOperaciones;
     private int reloj;
     private ArrayList<Proceso> procesos;
-    
-        private int semilla;
 
+    private int semilla;
     private int nProcesos;
     private int nOperaciones;
-    
-    public Computadora(){
+    ArrayList<Instruccion> instrucciones;
+
+    public Computadora() {
         nucleosProcesamiento = 1;
         instruccionesPorSegundo = 1;
         tiempoAccesoDisco = 5; //va de 5 en 5 segundos
@@ -46,45 +46,47 @@ public class Computadora extends SwingWorker<Void,Void>{
         reloj = 1; //segundos
         procesos = new ArrayList();
         adminOperaciones = new AdminOperaciones();
-    
+
     }
-    
-   public void setAlgoritmo(TipoAlgoritmo algoritmo) {
+
+    public void setAlgoritmo(TipoAlgoritmo algoritmo) {
         this.algoritmo = algoritmo;
-       
+
     }
-   
-   public void fifo(){ //*Por que retorna el tipo del algoritmo?
- 
-   
-   }
-   
-    public void secondChance(){
-        
+
+    public void fifo() { //*Por que retorna el tipo del algoritmo?
+
     }
-        
-public void mru(){
-      
-   
-   }
-   
-   public void rnd(){
-       
-   }
-   
-   public boolean ejecutarProceso(int idProceso){
-       return true;
-   }
-   
-   public void inicializar(int semilla,TipoAlgoritmo algoritmo,File archivo){
-       
-   }
-   
-   public void inicializar(int semilla,TipoAlgoritmo algoritmo,int nProcesos,int nOperaciones) throws InterruptedException{
-       String operacionesString = adminOperaciones.generarOperaciones(10,200);
-       ArrayList<Instruccion> instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
-       for(Instruccion instr : instrucciones){
-            switch(instr.getTipoInstruccion()){
+
+    public void secondChance() {
+
+    }
+
+    public void mru() {
+
+    }
+
+    public void rnd() {
+
+    }
+
+    public boolean ejecutarProceso(int idProceso) {
+        return true;
+    }
+
+    public void inicializar(TipoAlgoritmo algoritmo, ArrayList<Instruccion> instrucciones) throws InterruptedException {
+  
+    }
+
+    public void inicializar() throws InterruptedException {
+        if (instrucciones.size() <= 0 || instrucciones.isEmpty()) {
+            System.out.println("Entro");
+            String operacionesString = adminOperaciones.generarOperaciones(nProcesos, nOperaciones);
+            instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
+        }
+
+        for (Instruccion instr : instrucciones) {
+            switch (instr.getTipoInstruccion()) {
                 case NEW:
                     System.out.println("New");
                     System.out.println(instr.getParametros().get(0));
@@ -92,7 +94,7 @@ public void mru(){
                     break;
                 case USE:
                     //System.out.println("Use");
-                   mmu.instruccionUse(instr);
+                    mmu.instruccionUse(instr);
                     break;
                 case DELETE:
                     //System.out.println("Delete");
@@ -106,37 +108,35 @@ public void mru(){
                     throw new AssertionError(instr.getTipoInstruccion().name());
             }
         }
-   
-   }
-   
-       @Override
+
+    }
+
+    @Override
     protected Void doInBackground() throws Exception {
-        inicializar(semilla, algoritmo, nProcesos, nOperaciones);
+        inicializar();
         return null;
     }
-   
-   public void setInicializarAtributos(int semilla, TipoAlgoritmo algoritmo, int nProcesos, int nOperaciones){
+
+    public void setInicializarAtributos(int semilla, TipoAlgoritmo algoritmo, int nProcesos, int nOperaciones,ArrayList<Instruccion> instrucciones) {
         this.semilla = semilla;
         this.algoritmo = algoritmo;
         this.nProcesos = nProcesos;
         this.nOperaciones = nOperaciones;
-   }
-   
+        this.instrucciones =  instrucciones;
+       
+    }
 
-   
-   public void pausar(){
-   
-   }
-   
-   public void reanudar(){
-   
-   }
-    
+    public void pausar() {
+
+    }
+
+    public void reanudar() {
+
+    }
 
     public TipoAlgoritmo getAlgoritmo() {
         return algoritmo;
     }
-
 
     public int getInstruccionesPorSegundo() {
         return instruccionesPorSegundo;
@@ -202,8 +202,4 @@ public void mru(){
         this.procesos = procesos;
     }
 
-
-    
-    
-    
 }

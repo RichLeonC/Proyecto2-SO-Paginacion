@@ -7,7 +7,10 @@ package Vista;
 
 import Backend.Computadora;
 import Backend.TipoAlgoritmo;
+import Modelo.Instruccion;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JFileChooser;
@@ -20,18 +23,23 @@ import javax.swing.JOptionPane;
 public class Configuracion extends javax.swing.JFrame {
 
     File archivoSeleccionado;
-    String algoritmoSeleccionado;
+    TipoAlgoritmo algoritmoSeleccionado;
     int procesosSeleccionados;
     int operacionesSeleccionados;
     int semilla;
+    String operacionesArchivoGenerado;
+    ArrayList<Instruccion> instrucciones;
+
     public Configuracion() {
         initComponents();
         archivoSeleccionado = null;
-        algoritmoSeleccionado = "FIFO";
-        procesosSeleccionados= 10;
+        algoritmoSeleccionado = TipoAlgoritmo.FIFO;
+        procesosSeleccionados = 10;
         operacionesSeleccionados = 500;
         semilla = 1;
         txfArchivoSubido.setEditable(false);
+        operacionesArchivoGenerado = "";
+        instrucciones = new ArrayList();
         this.setLocationRelativeTo(this);
     }
 
@@ -49,7 +57,6 @@ public class Configuracion extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         txfSemilla = new javax.swing.JTextField();
         btnRandomSemilla = new javax.swing.JButton();
-        btnInsertarSemilla = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
         cbAlgoritmo = new javax.swing.JComboBox<>();
         jLabel4 = new javax.swing.JLabel();
@@ -63,7 +70,7 @@ public class Configuracion extends javax.swing.JFrame {
         btnCrearArchivo = new javax.swing.JButton();
         btnSubirArchivo2 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTextArea1 = new javax.swing.JTextArea();
+        txaTextoArchivo = new javax.swing.JTextArea();
         btnDescargarArchivo = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -87,9 +94,11 @@ public class Configuracion extends javax.swing.JFrame {
 
         btnRandomSemilla.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRandomSemilla.setText("Random");
-
-        btnInsertarSemilla.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        btnInsertarSemilla.setText("Insertar");
+        btnRandomSemilla.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRandomSemillaActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(255, 255, 255));
@@ -135,6 +144,11 @@ public class Configuracion extends javax.swing.JFrame {
 
         btnCrearArchivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnCrearArchivo.setText("Crear archivo");
+        btnCrearArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearArchivoActionPerformed(evt);
+            }
+        });
 
         btnSubirArchivo2.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnSubirArchivo2.setText("Subir archivo");
@@ -144,9 +158,9 @@ public class Configuracion extends javax.swing.JFrame {
             }
         });
 
-        jTextArea1.setColumns(20);
-        jTextArea1.setRows(5);
-        jScrollPane1.setViewportView(jTextArea1);
+        txaTextoArchivo.setColumns(20);
+        txaTextoArchivo.setRows(5);
+        jScrollPane1.setViewportView(txaTextoArchivo);
 
         btnDescargarArchivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnDescargarArchivo.setText("Descargar Archivo");
@@ -165,13 +179,11 @@ public class Configuracion extends javax.swing.JFrame {
                                 .addComponent(btnSubirArchivo2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txfArchivoSubido, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                                     .addComponent(jLabel2)
                                     .addGap(18, 18, 18)
-                                    .addComponent(btnRandomSemilla)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(btnInsertarSemilla))
+                                    .addComponent(btnRandomSemilla))
                                 .addComponent(txfSemilla, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(447, 447, 447)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -218,7 +230,6 @@ public class Configuracion extends javax.swing.JFrame {
                 .addGap(39, 39, 39)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnRandomSemilla)
-                    .addComponent(btnInsertarSemilla)
                     .addComponent(jLabel6)
                     .addComponent(jLabel2))
                 .addGap(18, 18, 18)
@@ -267,7 +278,7 @@ public class Configuracion extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void txfSemillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSemillaActionPerformed
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_txfSemillaActionPerformed
 
     private void btnSubirArchivo2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSubirArchivo2ActionPerformed
@@ -276,16 +287,39 @@ public class Configuracion extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSubirArchivo2ActionPerformed
 
     private void cbProcesos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbProcesos1ActionPerformed
-       cbProcesos1.getSelectedItem();
+        cbProcesos1.getSelectedItem();
     }//GEN-LAST:event_cbProcesos1ActionPerformed
 
     private void btnIniciarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarActionPerformed
-        Main.simulacion.setVisible(true);
-        Main.simulacion.showPages();
-        this.dispose();
-        Main.computadora.setInicializarAtributos(13, TipoAlgoritmo.SECOND_CHANCE, 10, 500);
-        Main.computadora.execute();
+
+        //Main.computadora.setInicializarAtributos(13, TipoAlgoritmo.SECOND_CHANCE, 10, 500);
+        if (validarDatos()) {
+            Main.computadora.setInicializarAtributos(semilla, algoritmoSeleccionado, procesosSeleccionados, operacionesSeleccionados, instrucciones);
+            Main.simulacion.setVisible(true);
+            Main.computadora.execute();
+            Main.simulacion.showPages();
+            this.dispose();
+        }
     }//GEN-LAST:event_btnIniciarActionPerformed
+
+    private void btnRandomSemillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomSemillaActionPerformed
+        Random rand = new Random();
+        semilla = rand.nextInt(100) + 1;
+        txfSemilla.setText(String.valueOf(semilla));
+    }//GEN-LAST:event_btnRandomSemillaActionPerformed
+
+    private void btnCrearArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearArchivoActionPerformed
+        if (txfSemilla.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Debe escojer una semilla");
+        } else {
+            semilla = Integer.parseInt(txfSemilla.getText());
+            operacionesSeleccionados = Integer.parseInt(cbOperaciones.getSelectedItem().toString());
+            procesosSeleccionados = Integer.parseInt(cbProcesos1.getSelectedItem().toString());
+            operacionesArchivoGenerado = Main.computadora.getAdminOperaciones().generarOperaciones(procesosSeleccionados, operacionesSeleccionados, semilla);
+            txaTextoArchivo.setText(operacionesArchivoGenerado);
+        }
+
+    }//GEN-LAST:event_btnCrearArchivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -321,47 +355,77 @@ public class Configuracion extends javax.swing.JFrame {
             }
         });
     }
-    
-    
-    public void validarDatos(){
-    
+
+    public boolean validarDatos() {
+        String algoritmo = (String) cbAlgoritmo.getSelectedItem();
+        switch (algoritmo) {
+            case "FIFO":
+                algoritmoSeleccionado = TipoAlgoritmo.FIFO;
+                break;
+            case "Second Chance":
+                algoritmoSeleccionado = TipoAlgoritmo.SECOND_CHANCE;
+                break;
+            case "MRU":
+                algoritmoSeleccionado = TipoAlgoritmo.MRU;
+                break;
+            case "RND":
+                algoritmoSeleccionado = TipoAlgoritmo.RANDOM;
+                break;
+        }
+
+        if (archivoSeleccionado != null) {
+            String textoArchivo = Main.computadora.getAdminOperaciones().cargarArchivoOperaciones(archivoSeleccionado);
+            instrucciones = Main.computadora.getAdminOperaciones().stringToOperaciones(textoArchivo);
+            return true;
+        } else if (operacionesArchivoGenerado.isEmpty()) {
+
+            JOptionPane.showMessageDialog(this, "Debe seleccionar o crear un archivo");
+            instrucciones = null;
+            return false;
+        }
+        return true;
     }
-    
-    public void subirArchivo(){
+
+    public void subirArchivo() {
         archivoSeleccionado = null;
         JFileChooser fileChooser = new JFileChooser();
         fileChooser.setFileFilter(new javax.swing.filechooser.FileNameExtensionFilter("Archivos de texto (*.txt)", "txt"));
-        
+
         int seleccion = fileChooser.showOpenDialog(this);
-        
-        if(seleccion == JFileChooser.APPROVE_OPTION){
+
+        if (seleccion == JFileChooser.APPROVE_OPTION) {
             archivoSeleccionado = fileChooser.getSelectedFile();
             //Aca procesamos el archivo...
-            
-            JOptionPane.showMessageDialog(this, "Archivo seleccionado: "+archivoSeleccionado.getAbsolutePath());
+
+            JOptionPane.showMessageDialog(this, "Archivo seleccionado: " + archivoSeleccionado.getAbsolutePath());
             txfArchivoSubido.setText(archivoSeleccionado.getAbsolutePath());
             btnCrearArchivo.setEnabled(false);
             btnDescargarArchivo.setEnabled(false);
             cbOperaciones.setEnabled(false);
             cbProcesos1.setEnabled(false);
-           
-        
-        }
-        else{
+            btnRandomSemilla.setEnabled(false);
+            txfSemilla.setEnabled(false);
+
+            txaTextoArchivo.setText(Main.computadora.getAdminOperaciones().cargarArchivoOperaciones(archivoSeleccionado));
+
+        } else {
             archivoSeleccionado = null;
             txfArchivoSubido.setText("");
             btnCrearArchivo.setEnabled(true);
             btnDescargarArchivo.setEnabled(true);
             cbOperaciones.setEnabled(true);
             cbProcesos1.setEnabled(true);
-       }
+
+            btnRandomSemilla.setEnabled(true);
+            txfSemilla.setEnabled(true);
+            txaTextoArchivo.setText("");
+        }
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCrearArchivo;
     private javax.swing.JButton btnDescargarArchivo;
     private javax.swing.JButton btnIniciar;
-    private javax.swing.JButton btnInsertarSemilla;
     private javax.swing.JButton btnRandomSemilla;
     private javax.swing.JButton btnSubirArchivo2;
     private javax.swing.JComboBox<String> cbAlgoritmo;
@@ -376,7 +440,7 @@ public class Configuracion extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextArea jTextArea1;
+    private javax.swing.JTextArea txaTextoArchivo;
     private javax.swing.JTextField txfArchivoSubido;
     private javax.swing.JTextField txfSemilla;
     // End of variables declaration//GEN-END:variables
