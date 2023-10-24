@@ -28,11 +28,10 @@ import javax.swing.table.DefaultTableModel;
  */
 public class Simulacion extends javax.swing.JFrame {
 
-    private Map<Point, Color> cellColorsOPT = new HashMap<>();    
+    private Map<Point, Color> cellColorsOPT = new HashMap<>();
     private Map<Point, Color> cellColorsALG = new HashMap<>();
     private Map<Point, Color> cellColorsOPTPages = new HashMap<>();
     private Map<Point, Color> cellColorsALGPages = new HashMap<>();
-
 
     public Simulacion() {
         initComponents();
@@ -44,9 +43,8 @@ public class Simulacion extends javax.swing.JFrame {
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-               label.setOpaque(true);
-               label.setText(value == null ? "" : value.toString());
-
+                label.setOpaque(true);
+                label.setText(value == null ? "" : value.toString());
 
                 Color color = cellColorsOPT.get(new Point(column, row));
                 if (color != null) {
@@ -58,34 +56,33 @@ public class Simulacion extends javax.swing.JFrame {
                 return label;
             }
         });
-        
+
         tableRamALG.setDefaultRenderer(Object.class, new TableCellRenderer() {
+            private JLabel label = new JLabel();
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-               Color color = cellColorsALG.get(new Point(column, row));
-               table.getTableHeader().setOpaque(false);
-               table.getTableHeader().setBackground(color);
+                label.setOpaque(true);
+                label.setText(value == null ? "" : value.toString());
 
-
+                Color color = cellColorsALG.get(new Point(column, row));
                 if (color != null) {
-                    table.getTableHeader().setBackground(color);
+                    label.setBackground(color);
                 } else {
-                    table.getTableHeader().setBackground(Color.WHITE); // O cualquier color por defecto
+                    label.setBackground(Color.WHITE); // O cualquier color por defecto
                 }
 
-                return table.getTableHeader();
+                return label;
             }
         });
-        
+
         OptTable.setDefaultRenderer(Object.class, new TableCellRenderer() {
             private JLabel label = new JLabel();
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-               label.setOpaque(true);
-               label.setText(value == null ? "" : value.toString());
-
+                label.setOpaque(true);
+                label.setText(value == null ? "" : value.toString());
 
                 Color color = cellColorsOPTPages.get(new Point(column, row));
                 if (color != null) {
@@ -97,15 +94,14 @@ public class Simulacion extends javax.swing.JFrame {
                 return label;
             }
         });
-        
+
         algorithmTable.setDefaultRenderer(Object.class, new TableCellRenderer() {
             private JLabel label = new JLabel();
 
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
-               label.setOpaque(true);
-               label.setText(value == null ? "" : value.toString());
-
+                label.setOpaque(true);
+                label.setText(value == null ? "" : value.toString());
 
                 Color color = cellColorsALGPages.get(new Point(column, row));
                 if (color != null) {
@@ -117,10 +113,8 @@ public class Simulacion extends javax.swing.JFrame {
                 return label;
             }
         });
-        
-
     }
-    
+
     public static Color getColorForNumber(int number) {
         if (number < 1 || number > 100) {
             throw new IllegalArgumentException("El número debe estar entre 1 y 100");
@@ -137,17 +131,17 @@ public class Simulacion extends javax.swing.JFrame {
         Color color = getColorForNumber(pid);
         cellColorsOPT.put(new Point(column, row), color);
     }
-    
+
     public void setCellColorALG(int row, int column, int pid) {
         Color color = getColorForNumber(pid);
         cellColorsALG.put(new Point(column, row), color);
     }
-    
+
     public void setCellColorOPTTable(int row, int column, int pid) {
         Color color = getColorForNumber(pid);
         cellColorsOPTPages.put(new Point(column, row), color);
     }
-    
+
     public void setCellColorALGTable(int row, int column, int pid) {
         Color color = getColorForNumber(pid);
         cellColorsALGPages.put(new Point(column, row), color);
@@ -215,7 +209,7 @@ public class Simulacion extends javax.swing.JFrame {
         jLabel34 = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
+        btnIniciarSimulacion = new javax.swing.JButton();
         lblSimulacion1 = new javax.swing.JLabel();
         lblSimulacion2 = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -535,11 +529,11 @@ public class Simulacion extends javax.swing.JFrame {
         jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         jButton2.setText("Pausar/Reanudar");
 
-        jButton3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton3.setText("Iniciar");
-        jButton3.addActionListener(new java.awt.event.ActionListener() {
+        btnIniciarSimulacion.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnIniciarSimulacion.setText("Iniciar");
+        btnIniciarSimulacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton3ActionPerformed(evt);
+                btnIniciarSimulacionActionPerformed(evt);
             }
         });
 
@@ -551,23 +545,15 @@ public class Simulacion extends javax.swing.JFrame {
         lblSimulacion2.setForeground(new java.awt.Color(255, 255, 255));
         lblSimulacion2.setText("Ram-[ALG]");
 
-        tableRamOPT.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {}
-            },
-            new String [] {
-
-            }
-        ));
         tableRamOPT.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(tableRamOPT);
 
         tableRamALG.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10", "Title 11", "Title 12", "Title 13", "Title 14", "Title 15", "Title 16", "Title 17", "Title 18", "Title 19", "Title 20", "Title 21", "Title 22", "Title 23", "Title 24", "Title 25", "Title 26", "Title 27", "Title 28", "Title 29", "Title 30", "Title 31", "Title 32", "Title 33", "Title 34", "Title 35", "Title 36", "Title 37", "Title 38", "Title 39", "Title 40", "Title 41", "Title 42", "Title 43", "Title 44", "Title 45", "Title 46", "Title 47", "Title 48", "Title 49", "Title 50", "Title 51", "Title 52", "Title 53", "Title 54", "Title 55", "Title 56", "Title 57", "Title 58", "Title 59", "Title 60", "Title 61", "Title 62", "Title 63", "Title 64", "Title 65", "Title 66", "Title 67", "Title 68", "Title 69", "Title 70", "Title 71", "Title 72", "Title 73", "Title 74", "Title 75", "Title 76", "Title 77", "Title 78", "Title 79", "Title 80", "Title 81", "Title 82", "Title 83", "Title 84", "Title 85", "Title 86", "Title 87", "Title 88", "Title 89", "Title 90", "Title 91", "Title 92", "Title 93", "Title 94", "Title 95", "Title 96", "Title 97", "Title 98", "Title 99", "Title 100"
             }
         ));
         jScrollPane6.setViewportView(tableRamALG);
@@ -649,7 +635,7 @@ public class Simulacion extends javax.swing.JFrame {
                                         .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txfFragmentationOPT, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(jLabel11)
-                                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                            .addComponent(btnIniciarSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE))))
                                 .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
@@ -848,7 +834,7 @@ public class Simulacion extends javax.swing.JFrame {
                                             .addComponent(txfTrashingTime, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))))))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
                         .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton3, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnIniciarSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -974,11 +960,15 @@ public class Simulacion extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
-    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        System.out.println("Llamar");
-        setCellColorALGTable(0,0, 1);
+    private void btnIniciarSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSimulacionActionPerformed
+        showPages();
+       // setCellColorALG(0, 0,1);
+        //  setCellColorOPTTable(0,0,3);
         algorithmTable.repaint();
-    }//GEN-LAST:event_jButton3ActionPerformed
+        OptTable.repaint();
+        tableRamALG.repaint();
+        tableRamOPT.repaint();
+    }//GEN-LAST:event_btnIniciarSimulacionActionPerformed
 
     /**
      * @param args the command line arguments
@@ -1018,9 +1008,9 @@ public class Simulacion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable OptTable;
     private javax.swing.JTable algorithmTable;
+    private javax.swing.JButton btnIniciarSimulacion;
     private javax.swing.JButton btnVolver;
     private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1080,9 +1070,9 @@ public class Simulacion extends javax.swing.JFrame {
     private javax.swing.JPanel txtPagesUnloaded;
     // End of variables declaration//GEN-END:variables
 
-    public void showPages(){
+    public void showPages() {
         MemoryManagementUnit mmu = Main.computadora.getMmu();
-        System.out.println(mmu.memoriaOcupada);
+        // System.out.println(mmu.memoriaOcupada);
         HashMap<String, ArrayList<Pagina>> map = mmu.getMapa();
         System.out.println("Size: " + map.size());
         ArrayList<Pagina> paginas = Main.computadora.getMmu().tablaSimbolos;
@@ -1096,27 +1086,20 @@ public class Simulacion extends javax.swing.JFrame {
             }
             
         }*/
-        DefaultTableModel modelRAM = (DefaultTableModel) tableRamALG.getModel();
         DefaultTableModel modelPages = (DefaultTableModel) algorithmTable.getModel();
         int n = 0;
-        for(int i = 0; i < paginas.size(); i++){
+        for (int i = 0; i < paginas.size(); i++) {
             Pagina page = paginas.get(i);
-            modelPages.addRow(new Object[]{page.id, page.pid, page.loaded ,page.direccionVirtual,page.direccionFisica, page.direccionDisco,page.timestamp, page.marking});
-            for(int j = 0; j < 8; j++){
-                setCellColorALGTable(modelPages.getRowCount()-1,j,Integer.parseInt(page.pid));
+            modelPages.addRow(new Object[]{page.id, page.pid, page.loaded, page.direccionVirtual, page.direccionFisica, page.direccionDisco, page.timestamp, page.marking});
+            for (int j = 0; j < 8; j++) {
+                setCellColorALGTable(modelPages.getRowCount() - 1, j, Integer.parseInt(page.pid));
             }
-            if(page.loaded.equals("X")){
-                modelRAM.addColumn(page.pid);
-                System.out.println(modelRAM.getRowCount());
-                setCellColorALG(-1,i,Integer.parseInt(page.pid));
+            if (page.loaded.equals("X")) {
+                setCellColorALG(0, n, Integer.parseInt(page.pid));
                 n++;
             }
-        
+            
         }
-        for(int i = 0; i < 100 - n; i++){
-            modelRAM.addColumn(" ");
-        }
-        algorithmTable.repaint();
-        tableRamALG.repaint();
+
     }
 }
