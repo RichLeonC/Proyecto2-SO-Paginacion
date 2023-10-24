@@ -115,17 +115,25 @@ public class Simulacion extends javax.swing.JFrame {
         });
     }
 
-    public static Color getColorForNumber(int number) {
-        if (number < 1 || number > 100) {
-            throw new IllegalArgumentException("El número debe estar entre 1 y 100");
-        }
-
-        int red = (int) (Math.sin(number) * 127 + 128);
-        int green = (int) (Math.cos(number) * 127 + 128);
-        int blue = (number * 2) % 256;
-
-        return new Color(red, green, blue);
+public static Color getColorForNumber(int number) {
+    if (number < 1 || number > 100) {
+        throw new IllegalArgumentException("El número debe estar entre 1 y 100");
     }
+
+    int segment = 256 / 10;  
+
+
+    int red = (number % 10) * segment;
+    int green = ((number * 3) % 10) * segment;
+    int blue = ((number * 7) % 10) * segment;
+
+    red = Math.min(red + 120, 255);
+    green = Math.min(green + 120, 255);
+    blue = Math.min(blue + 120, 255);
+
+    return new Color(red, green, blue);
+}
+
 
     public void setCellColorOPT(int row, int column, int pid) {
         Color color = getColorForNumber(pid);
@@ -962,7 +970,7 @@ public class Simulacion extends javax.swing.JFrame {
 
     private void btnIniciarSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSimulacionActionPerformed
         showPages();
-       // setCellColorALG(0, 0,1);
+        // setCellColorALG(0, 0,1);
         //  setCellColorOPTTable(0,0,3);
         algorithmTable.repaint();
         OptTable.repaint();
@@ -1098,7 +1106,7 @@ public class Simulacion extends javax.swing.JFrame {
                 setCellColorALG(0, n, Integer.parseInt(page.pid));
                 n++;
             }
-            
+
         }
 
     }
