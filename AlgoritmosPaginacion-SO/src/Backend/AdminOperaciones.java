@@ -6,6 +6,7 @@ package Backend;
 
 import Modelo.Instruccion;
 import Modelo.TipoInstruccion;
+import Vista.Main;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -87,7 +88,6 @@ public class AdminOperaciones {
     }
     
     public String generarOperaciones(int numProcesos, int numOperaciones){
-        Random random = new Random();
         StringBuilder operacionesString = new StringBuilder();
         
         ArrayList<Integer> posiblesNew = new ArrayList();        
@@ -117,7 +117,7 @@ public class AdminOperaciones {
         int killsHechas =0;
         
         for (int i = 0; i < numOperaciones - killsDespues; i++) {
-            String tipo = tiposInstruccion[random.nextInt(tiposInstruccion.length)];
+            String tipo = tiposInstruccion[Main.computadora.random.nextInt(tiposInstruccion.length)];
             //operacionesString.append(tipo).append("(").append(proceso);
             boolean anoto = false;
             if (tipo.equals("new") && !posiblesNew.isEmpty()) { //Si es new y aun no se ha hecho kill de todos los procesos
@@ -127,16 +127,16 @@ public class AdminOperaciones {
                     procesos.add(procesos.size()+1);
                     posiblesNew.add(proceso);
                 }else{
-                    proceso = posiblesNew.get(random.nextInt(posiblesNew.size()));
+                    proceso = posiblesNew.get(Main.computadora.random.nextInt(posiblesNew.size()));
                 } //Elijo uno de los posibles procesos
-                /*if(posiblesNew.size() < numProcesos && random.nextInt(2)==1){
+                /*if(posiblesNew.size() < numProcesos && Main.computadora.random.nextInt(2)==1){
                     proceso = procesos.get(posiblesNew.size()-1);
                     proceso++;
                     posiblesNew.add(proceso);
                 }*/
                 operacionesString.append(tipo).append("(").append(proceso); //Lo anota
                 anoto = true;
-                int tamano = random.nextInt(40960); //Elige un tamaño random
+                int tamano = Main.computadora.random.nextInt(40960); //Elige un tamaño random
                 operacionesString.append(",").append(tamano); //Se mete el tamaño
                 punteros++; //Eso genera un puntero posible de usar
                 posiblesUse.put(punteros,proceso); //Se mete a los posibles Use y lo asocia con el proceso que lo creo
@@ -146,20 +146,20 @@ public class AdminOperaciones {
             }
             else if(tipo.equals("use") && !posiblesUse.isEmpty()){ //Si hay punteros creados y va a usar uno
                 ArrayList<Integer> punterosActuales = new ArrayList<>(posiblesUse.keySet()); //Obtiene los posibles punteros
-                int puntero = punterosActuales.get(random.nextInt(punterosActuales.size())); // Elige un puntero random a usar
+                int puntero = punterosActuales.get(Main.computadora.random.nextInt(punterosActuales.size())); // Elige un puntero random a usar
                 operacionesString.append(tipo).append("(").append(puntero); // Lo anota
                 anoto = true;
             }
             else if(tipo.equals("delete") && !posiblesUse.isEmpty()){ //Si hay punteros creados y va a borrar uno
                 ArrayList<Integer> punterosActuales = new ArrayList<>(posiblesUse.keySet()); //Obtiene los posibles punteros
-                int puntero = punterosActuales.get(random.nextInt(punterosActuales.size())); // Elige un ptr a borrar
+                int puntero = punterosActuales.get(Main.computadora.random.nextInt(punterosActuales.size())); // Elige un ptr a borrar
                 operacionesString.append(tipo).append("(").append(puntero); // Lo anota
                 posiblesUse.remove(puntero);
                 anoto = true;
             }
             else if(tipo.equals("kill") && 
                     ! posiblesKill.isEmpty() && killsHechas < killsAntes){
-                int proceso = posiblesKill.remove(random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
+                int proceso = posiblesKill.remove(Main.computadora.random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
                 for(int x = 0; x < posiblesNew.size(); x++){
                     if(posiblesNew.get(x)== proceso){
                         posiblesNew.remove(x);
@@ -186,7 +186,7 @@ public class AdminOperaciones {
         }
         if(killsHechas == 0){
             for (int i = 0; i < killsAntes; i++) {
-                int proceso = posiblesKill.remove(random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
+                int proceso = posiblesKill.remove(Main.computadora.random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
                 for(int x = 0; x < posiblesNew.size(); x++){
                     if(posiblesNew.get(x)== proceso){
                         System.out.println("Entro aqui kk");
@@ -207,7 +207,7 @@ public class AdminOperaciones {
             }
         }
         while(!posiblesKill.isEmpty()){
-            int proceso = posiblesKill.remove(random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
+            int proceso = posiblesKill.remove(Main.computadora.random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
             killsHechas++;
             operacionesString.append("kill").append("(").append(proceso); //Lo anota
             operacionesString.append(")\n");
@@ -218,7 +218,6 @@ public class AdminOperaciones {
     }
     
     public String generarOperaciones(int numProcesos, int numOperaciones, int seed){
-        Random random = new Random(seed);
         StringBuilder operacionesString = new StringBuilder();
         
         ArrayList<Integer> posiblesNew = new ArrayList();        
@@ -248,7 +247,7 @@ public class AdminOperaciones {
         int killsHechas =0;
         
         for (int i = 0; i < numOperaciones - killsDespues; i++) {
-            String tipo = tiposInstruccion[random.nextInt(tiposInstruccion.length)];
+            String tipo = tiposInstruccion[Main.computadora.random.nextInt(tiposInstruccion.length)];
             //operacionesString.append(tipo).append("(").append(proceso);
             boolean anoto = false;
             if (tipo.equals("new") && !posiblesNew.isEmpty()) { //Si es new y aun no se ha hecho kill de todos los procesos
@@ -258,7 +257,7 @@ public class AdminOperaciones {
                     procesos.add(procesos.size()+1);
                     posiblesNew.add(proceso);
                 }else{
-                    proceso = posiblesNew.get(random.nextInt(posiblesNew.size()));
+                    proceso = posiblesNew.get(Main.computadora.random.nextInt(posiblesNew.size()));
                 } //Elijo uno de los posibles procesos
                 /*if(posiblesNew.size() < numProcesos && random.nextInt(2)==1){
                     proceso = procesos.get(posiblesNew.size()-1);
@@ -267,7 +266,7 @@ public class AdminOperaciones {
                 }*/
                 operacionesString.append(tipo).append("(").append(proceso); //Lo anota
                 anoto = true;
-                int tamano = random.nextInt(40960); //Elige un tamaño random
+                int tamano = Main.computadora.random.nextInt(40960); //Elige un tamaño random
                 operacionesString.append(",").append(tamano); //Se mete el tamaño
                 punteros++; //Eso genera un puntero posible de usar
                 posiblesUse.put(punteros,proceso); //Se mete a los posibles Use y lo asocia con el proceso que lo creo
@@ -277,20 +276,20 @@ public class AdminOperaciones {
             }
             else if(tipo.equals("use") && !posiblesUse.isEmpty()){ //Si hay punteros creados y va a usar uno
                 ArrayList<Integer> punterosActuales = new ArrayList<>(posiblesUse.keySet()); //Obtiene los posibles punteros
-                int puntero = punterosActuales.get(random.nextInt(punterosActuales.size())); // Elige un puntero random a usar
+                int puntero = punterosActuales.get(Main.computadora.random.nextInt(punterosActuales.size())); // Elige un puntero random a usar
                 operacionesString.append(tipo).append("(").append(puntero); // Lo anota
                 anoto = true;
             }
             else if(tipo.equals("delete") && !posiblesUse.isEmpty()){ //Si hay punteros creados y va a borrar uno
                 ArrayList<Integer> punterosActuales = new ArrayList<>(posiblesUse.keySet()); //Obtiene los posibles punteros
-                int puntero = punterosActuales.get(random.nextInt(punterosActuales.size())); // Elige un ptr a borrar
+                int puntero = punterosActuales.get(Main.computadora.random.nextInt(punterosActuales.size())); // Elige un ptr a borrar
                 operacionesString.append(tipo).append("(").append(puntero); // Lo anota
                 posiblesUse.remove(puntero);
                 anoto = true;
             }
             else if(tipo.equals("kill") && 
                     ! posiblesKill.isEmpty() && killsHechas < killsAntes){
-                int proceso = posiblesKill.remove(random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
+                int proceso = posiblesKill.remove(Main.computadora.random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
                 for(int x = 0; x < posiblesNew.size(); x++){
                     if(posiblesNew.get(x)== proceso){
                         posiblesNew.remove(x);
@@ -317,7 +316,7 @@ public class AdminOperaciones {
         }
         if(killsHechas == 0){
             for (int i = 0; i < killsAntes; i++) {
-                int proceso = posiblesKill.remove(random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
+                int proceso = posiblesKill.remove(Main.computadora.random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
                 for(int x = 0; x < posiblesNew.size(); x++){
                     if(posiblesNew.get(x)== proceso){
                         posiblesNew.remove(x);
@@ -337,7 +336,7 @@ public class AdminOperaciones {
             }
         }
         while(!posiblesKill.isEmpty()){
-            int proceso = posiblesKill.remove(random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
+            int proceso = posiblesKill.remove(Main.computadora.random.nextInt(posiblesKill.size())); //Elige un proceso random a eliminar
             killsHechas++;
             operacionesString.append("kill").append("(").append(proceso); //Lo anota
             operacionesString.append(")\n");

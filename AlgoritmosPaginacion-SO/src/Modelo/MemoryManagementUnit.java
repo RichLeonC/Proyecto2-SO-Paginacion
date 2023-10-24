@@ -17,6 +17,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
@@ -169,7 +170,14 @@ public class MemoryManagementUnit {
     }
 
     public int random() {
-        return -1;
+        ArrayList<Pagina> paginas = new ArrayList();
+        for(Pagina page: tablaSimbolos){
+            if(page.isLoaded()){
+                paginas.add(page);
+            }
+        }
+        int index = Main.computadora.random.nextInt(0, paginas.size()-1);
+        return Integer.parseInt(paginas.get(index).id);
     }
     
     public int optimum(){

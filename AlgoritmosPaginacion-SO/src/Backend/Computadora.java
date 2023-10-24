@@ -16,6 +16,7 @@ import Vista.Main;
 import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Random;
 import javax.swing.SwingWorker;
 
 public class Computadora extends SwingWorker<Void, Void> {
@@ -32,6 +33,7 @@ public class Computadora extends SwingWorker<Void, Void> {
     private ArrayList<Proceso> procesos;
 
     private int semilla;
+    public Random random;
     private int nProcesos;
     private int nOperaciones;
     ArrayList<Instruccion> instrucciones;
@@ -93,6 +95,47 @@ public class Computadora extends SwingWorker<Void, Void> {
 
     }
 
+    public int getSemilla() {
+        return semilla;
+    }
+
+    public void setSemilla(int semilla) {
+        this.semilla = semilla;
+        setRandom(new Random(semilla));
+    }
+
+    public Random getRandom() {
+        return random;
+    }
+
+    public void setRandom(Random random) {
+        this.random = random;
+    }
+
+    public int getnProcesos() {
+        return nProcesos;
+    }
+
+    public void setnProcesos(int nProcesos) {
+        this.nProcesos = nProcesos;
+    }
+
+    public int getnOperaciones() {
+        return nOperaciones;
+    }
+
+    public void setnOperaciones(int nOperaciones) {
+        this.nOperaciones = nOperaciones;
+    }
+
+    public ArrayList<Instruccion> getInstrucciones() {
+        return instrucciones;
+    }
+
+    public void setInstrucciones(ArrayList<Instruccion> instrucciones) {
+        this.instrucciones = instrucciones;
+    }
+
     @Override
     protected Void doInBackground() throws Exception {
         inicializar();
@@ -101,6 +144,7 @@ public class Computadora extends SwingWorker<Void, Void> {
 
     public void setInicializarAtributos(int semilla, TipoAlgoritmo algoritmo, int nProcesos, int nOperaciones,ArrayList<Instruccion> instrucciones) {
         this.semilla = semilla;
+        this.random = new Random(semilla);
         mmu.algoritmo = algoritmo;
         this.nProcesos = nProcesos;
         this.nOperaciones = nOperaciones;

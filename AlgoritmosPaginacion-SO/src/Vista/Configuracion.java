@@ -91,6 +91,11 @@ public class Configuracion extends javax.swing.JFrame {
                 txfSemillaActionPerformed(evt);
             }
         });
+        txfSemilla.addPropertyChangeListener(new java.beans.PropertyChangeListener() {
+            public void propertyChange(java.beans.PropertyChangeEvent evt) {
+                txfSemillaPropertyChange(evt);
+            }
+        });
 
         btnRandomSemilla.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnRandomSemilla.setText("Random");
@@ -179,12 +184,11 @@ public class Configuracion extends javax.swing.JFrame {
                                 .addComponent(btnSubirArchivo2, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addComponent(txfArchivoSubido, javax.swing.GroupLayout.PREFERRED_SIZE, 188, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                    .addComponent(jLabel2)
-                                    .addGap(18, 18, 18)
-                                    .addComponent(btnRandomSemilla))
-                                .addComponent(txfSemilla, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnRandomSemilla))
+                            .addComponent(txfSemilla, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(447, 447, 447)
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 310, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -305,6 +309,7 @@ public class Configuracion extends javax.swing.JFrame {
     private void btnRandomSemillaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRandomSemillaActionPerformed
         Random rand = new Random();
         semilla = rand.nextInt(100) + 1;
+        Main.computadora.setSemilla(semilla);
         txfSemilla.setText(String.valueOf(semilla));
     }//GEN-LAST:event_btnRandomSemillaActionPerformed
 
@@ -320,6 +325,16 @@ public class Configuracion extends javax.swing.JFrame {
         }
 
     }//GEN-LAST:event_btnCrearArchivoActionPerformed
+
+    private void txfSemillaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txfSemillaPropertyChange
+        // TODO add your handling code here:
+        if(!txfSemilla.getText().equals("")){
+            semilla = Integer.parseInt(txfSemilla.getText());
+            Main.computadora.setSemilla(semilla);
+        }else{
+            Main.computadora.setSemilla(new Random().nextInt(10));
+        }
+    }//GEN-LAST:event_txfSemillaPropertyChange
 
     /**
      * @param args the command line arguments
