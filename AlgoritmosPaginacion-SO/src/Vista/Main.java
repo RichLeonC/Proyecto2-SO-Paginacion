@@ -21,9 +21,9 @@ import java.util.HashMap;
  * @author richa
  */
 public class Main {
-    static Computadora computadora = new Computadora();    
-    static Simulacion simulacion = new Simulacion();
-    static Configuracion configuracion = new Configuracion();
+    public static Computadora computadora = new Computadora();    
+    public static Simulacion simulacion = new Simulacion();
+    public static Configuracion configuracion = new Configuracion();
 
 
     

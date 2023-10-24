@@ -146,6 +146,15 @@ public static Color getColorForNumber(int number) {
         Color color = getColorForNumber(pid);
         cellColorsALG.put(new Point(column, row), color);
     }
+    
+    public void setCellColorALG(int row, int column, Color color) {
+        cellColorsALG.put(new Point(column, row), color);
+    }
+    
+    public Color getCellColorALG(int row, int column) {
+        return cellColorsALG.get(new Point(column, row));
+    }
+    
 
     public void setCellColorOPTTable(int row, int column, int pid) {
         Color color = getColorForNumber(pid);
@@ -975,10 +984,6 @@ public static Color getColorForNumber(int number) {
         showPages();
         // setCellColorALG(0, 0,1);
         //  setCellColorOPTTable(0,0,3);
-        algorithmTable.repaint();
-        OptTable.repaint();
-        tableRamALG.repaint();
-        tableRamOPT.repaint();
     }//GEN-LAST:event_btnIniciarSimulacionActionPerformed
 
     /**
@@ -1087,17 +1092,8 @@ public static Color getColorForNumber(int number) {
         HashMap<String, ArrayList<Pagina>> map = mmu.getMapa();
         System.out.println("Size: " + map.size());
         ArrayList<Pagina> paginas = Main.computadora.getMmu().tablaSimbolos;
-        /*ArrayList<Integer> ids = new ArrayList();
-        for (int i = 0; i < map.size(); i++) {
-            if(map.get(String.valueOf(i))!= null){
-                paginas.addAll(map.get(String.valueOf(i)));
-                for(int j = 0; j < map.get(String.valueOf(i)).size(); j++){
-                    ids.add(i);
-                }
-            }
-            
-        }*/
         DefaultTableModel modelPages = (DefaultTableModel) algorithmTable.getModel();
+        modelPages.setNumRows(0);
         int n = 0;
         for (int i = 0; i < paginas.size(); i++) {
             Pagina page = paginas.get(i);
@@ -1106,11 +1102,17 @@ public static Color getColorForNumber(int number) {
                 setCellColorALGTable(modelPages.getRowCount() - 1, j, Integer.parseInt(page.pid));
             }
             if (page.loaded.equals("X")) {
-                setCellColorALG(0, n, Integer.parseInt(page.pid));
+                int ptr = Integer.parseInt(page.direccionFisica);
+                System.out.println("Direccion a pintar: " + (ptr-1));
+                setCellColorALG(0, ptr-1, Integer.parseInt(page.pid));
                 n++;
             }
 
         }
+        algorithmTable.repaint();
+        OptTable.repaint();
+        tableRamALG.repaint();
+        tableRamOPT.repaint();
 
     }
 }

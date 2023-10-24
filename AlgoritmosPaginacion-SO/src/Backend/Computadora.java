@@ -12,6 +12,8 @@ import static Modelo.TipoInstruccion.DELETE;
 import static Modelo.TipoInstruccion.KILL;
 import static Modelo.TipoInstruccion.NEW;
 import static Modelo.TipoInstruccion.USE;
+import Vista.Main;
+import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import javax.swing.SwingWorker;
@@ -54,10 +56,6 @@ public class Computadora extends SwingWorker<Void, Void> {
 
     }
 
-    public void fifo() { //*Por que retorna el tipo del algoritmo?
-
-    }
-
     public void secondChance() {
 
     }
@@ -79,6 +77,9 @@ public class Computadora extends SwingWorker<Void, Void> {
     }
 
     public void inicializar() throws InterruptedException {
+        for(int dir = 0; dir <= 101; dir++){
+            Main.simulacion.setCellColorALG(0, dir, Color.WHITE);
+        }
         if (instrucciones.isEmpty()) {
             String operacionesString = adminOperaciones.generarOperaciones(nProcesos, nOperaciones);
             instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
