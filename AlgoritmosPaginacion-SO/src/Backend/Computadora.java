@@ -79,8 +79,7 @@ public class Computadora extends SwingWorker<Void, Void> {
     }
 
     public void inicializar() throws InterruptedException {
-        if (instrucciones.size() <= 0 || instrucciones.isEmpty()) {
-            System.out.println("Entro");
+        if (instrucciones.isEmpty()) {
             String operacionesString = adminOperaciones.generarOperaciones(nProcesos, nOperaciones);
             instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
         }

@@ -971,6 +971,7 @@ public static Color getColorForNumber(int number) {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnIniciarSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSimulacionActionPerformed
+        lblMmuALG.setText("MMU - "+Main.computadora.getAlgoritmo().name());
         showPages();
         // setCellColorALG(0, 0,1);
         //  setCellColorOPTTable(0,0,3);
