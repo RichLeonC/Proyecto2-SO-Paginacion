@@ -12,5 +12,6 @@ public enum TipoAlgoritmo {
     SECOND_CHANCE,
     FIFO,
     MRU,
-    RANDOM
+    RANDOM,
+    OPT
 }

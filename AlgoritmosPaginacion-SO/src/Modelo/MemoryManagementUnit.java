@@ -4,8 +4,10 @@
  */
 package Modelo;
 
+import Backend.TipoAlgoritmo;
 import Vista.Main;
 import java.awt.Color;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -28,6 +30,7 @@ public class MemoryManagementUnit {
     public int direccionVirtualActualID = 1;
     public int direccionDiscoActualID = 1;
     public int punteroActual = 1;
+    public TipoAlgoritmo algoritmo;
     
     public MemoryManagementUnit(){
         this.mapa = new HashMap();
@@ -35,6 +38,46 @@ public class MemoryManagementUnit {
         idActual = 0;
         this.memoriaReal = 100;
         this.memoriaOcupada = 0;
+    }
+
+    public int getDireccionRamActualID() {
+        return direccionRamActualID;
+    }
+
+    public void setDireccionRamActualID(int direccionRamActualID) {
+        this.direccionRamActualID = direccionRamActualID;
+    }
+
+    public int getDireccionVirtualActualID() {
+        return direccionVirtualActualID;
+    }
+
+    public void setDireccionVirtualActualID(int direccionVirtualActualID) {
+        this.direccionVirtualActualID = direccionVirtualActualID;
+    }
+
+    public int getDireccionDiscoActualID() {
+        return direccionDiscoActualID;
+    }
+
+    public void setDireccionDiscoActualID(int direccionDiscoActualID) {
+        this.direccionDiscoActualID = direccionDiscoActualID;
+    }
+
+    public int getPunteroActual() {
+        return punteroActual;
+    }
+
+    public void setPunteroActual(int punteroActual) {
+        this.punteroActual = punteroActual;
+    }
+
+    public TipoAlgoritmo getAlgoritmo() {
+        return algoritmo;
+    }
+
+    public void setAlgoritmo(TipoAlgoritmo algoritmo) {
+        this.algoritmo = algoritmo;
     }
 
     public int getMemoriaOcupada() {
@@ -88,21 +131,90 @@ public class MemoryManagementUnit {
     
     public void ejecutarIntruccionesProceso(Proceso proceso){
     }
+    
+    public Pagina getPageByID(int id){
+        for(Pagina page: tablaSimbolos){
+            if(page.id.equals(String.valueOf(id))){
+                return page;
+            }
+        }
+        return null;
+    }
    
-    public void fifo() {
+    public int fifo() {
+        Pagina pageFIActual = tablaSimbolos.get(0);
+        for(Pagina page : tablaSimbolos){
+            //System.out.println("Comparando pagina elegida actual" + pageFIActual.id + " con la pagina " + page.id);
+            if(!pageFIActual.isLoaded() || page.loaded.equals("X") && esMasVieja(pageFIActual.timestamp, page.timestamp)){
+                //System.out.println("Se reemplazan");
+                pageFIActual = page;
+            }else{
+                //System.out.println("Se mantiene");
+            }
+        }
+        return Integer.parseInt(pageFIActual.id);
+    }
+    
+    public int secondChance() {
+        return -1;
+    }
 
+    public int mru() {
+        return -1;
+    }
+
+    public int random() {
+        return -1;
+    }
+    
+    public int optimum(){
+        return -1;
     }
     
     public int getDireccionLibre(){
         int dir;
-        for(dir = 0; dir <= 101; dir++){
+        for(dir = 0; dir <= 100; dir++){
             if(Main.simulacion.getCellColorALG(0, dir) == Color.WHITE){
                 return dir;
             }
         }
         return dir;
     }
-     
+    
+    public int llamarAlgoritmo(){
+        switch(algoritmo){
+            case SECOND_CHANCE:
+                return secondChance();
+            case FIFO:
+                return fifo();
+            case MRU:
+                return mru();
+            case RANDOM:
+                return random();
+            case OPT:
+                return optimum();
+            default:
+                return -1;
+        
+        }
+    }
+    
+    public static boolean esMasVieja(String fechaFIActual, String fecha2) {
+        System.out.println("Fecha vieja: " + fechaFIActual + " Fecha nueva: " + fecha2);
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+        try {
+            Date date1 = sdf.parse(fechaFIActual);
+            Date date2 = sdf.parse(fecha2);
+            // Compara las dos fechas
+            if (date2.before(date1)) {
+                return true;
+            }
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
+    
     public int intruccionNew(Instruccion instruccion) throws InterruptedException{
         int numPaginas = ((Integer)Integer.parseInt(instruccion.getParametros().get(1))/4096) % 4 == 0 &&
                                 ((Integer)Integer.parseInt(instruccion.getParametros().get(1))/4096)  != 0? 
@@ -112,8 +224,8 @@ public class MemoryManagementUnit {
         ArrayList<Pagina> paginasValores = new ArrayList();
         for(int i = 0; i < numPaginas; i++){
             int dir = getDireccionLibre();
-            System.out.println("Direccion libre: " + dir);
-            if(dir <= 100){
+            //System.out.println("Direccion libre: " + dir);
+            if(dir < 100){
                 System.out.println("HIT");
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
@@ -129,24 +241,36 @@ public class MemoryManagementUnit {
             
             }else{
                 System.out.println("FAIL");
+                int idReemplazo = llamarAlgoritmo();
+                System.out.println("Pagina a reemplazar: " + idReemplazo);
+                int direccionRAM = reemplazar(idReemplazo);
+                System.out.println("Direccion a usar : " + direccionRAM );
                 //LLAMA AL ALGORITMO
-                /*Date date = new Date();
+                Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
-                Pagina pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"",String.valueOf(direccionVirtualActualID), "",String.valueOf(direccionDiscoActualID) ,formattedDate,"true");
+                Pagina pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID),String.valueOf(direccionRAM),String.valueOf(direccionDiscoActualID) ,formattedDate,"true");
                 paginasValores.add(pagina);
                 tablaSimbolos.add(pagina);
                 direccionVirtualActualID++;
                 direccionDiscoActualID++;
                 idActual++;
-                TimeUnit.SECONDS.sleep(5);*/
+                TimeUnit.SECONDS.sleep(5);
             }
         Main.simulacion.showPages();
         }
         String ptr = String.valueOf(punteroActual);
         punteroActual++;
         mapa.put(ptr, paginasValores);
+        Main.simulacion.showPages();
         return direccionRamActualID;
+    }
+    
+    public int reemplazar(int idReemplazo){
+        getPageByID(idReemplazo).loaded = "";;
+        int dir = Integer.parseInt(getPageByID(idReemplazo).direccionFisica);
+        getPageByID(idReemplazo).direccionFisica = "";
+        return dir;
     }
     
     public void guardarPuntero(String puntero){
@@ -156,13 +280,13 @@ public class MemoryManagementUnit {
         if(mapa.get(instruccion.getParametros().get(0)) != null){
             for(Pagina page : mapa.get(instruccion.getParametros().get(0))){ //Por cada una de las paginas asignadas a ese puntero
                 if(page.direccionFisica.equals("")){
-                    System.out.println("No está en RAM");
+                    //System.out.println("No está en RAM");
                     //LLAMA AL ALGORITMO
                     String direccion = "-1";
                     page.setDireccionFisica(direccion);
                 }
                 else{
-                    System.out.println("Si está en RAM");
+                    //System.out.println("Si está en RAM");
                 }
                 TimeUnit.SECONDS.sleep(1);
                 Main.simulacion.showPages();

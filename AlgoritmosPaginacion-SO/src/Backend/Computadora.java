@@ -21,7 +21,6 @@ import javax.swing.SwingWorker;
 public class Computadora extends SwingWorker<Void, Void> {
 
     private final int nucleosProcesamiento;
-    private TipoAlgoritmo algoritmo;
     private int instruccionesPorSegundo;
     private int tiempoAccesoDisco;
     private int ram;
@@ -48,23 +47,6 @@ public class Computadora extends SwingWorker<Void, Void> {
         reloj = 1; //segundos
         procesos = new ArrayList();
         adminOperaciones = new AdminOperaciones();
-
-    }
-
-    public void setAlgoritmo(TipoAlgoritmo algoritmo) {
-        this.algoritmo = algoritmo;
-
-    }
-
-    public void secondChance() {
-
-    }
-
-    public void mru() {
-
-    }
-
-    public void rnd() {
 
     }
 
@@ -119,7 +101,7 @@ public class Computadora extends SwingWorker<Void, Void> {
 
     public void setInicializarAtributos(int semilla, TipoAlgoritmo algoritmo, int nProcesos, int nOperaciones,ArrayList<Instruccion> instrucciones) {
         this.semilla = semilla;
-        this.algoritmo = algoritmo;
+        mmu.algoritmo = algoritmo;
         this.nProcesos = nProcesos;
         this.nOperaciones = nOperaciones;
         this.instrucciones =  instrucciones;
@@ -132,10 +114,6 @@ public class Computadora extends SwingWorker<Void, Void> {
 
     public void reanudar() {
 
-    }
-
-    public TipoAlgoritmo getAlgoritmo() {
-        return algoritmo;
     }
 
     public int getInstruccionesPorSegundo() {

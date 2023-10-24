@@ -980,7 +980,7 @@ public static Color getColorForNumber(int number) {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnIniciarSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSimulacionActionPerformed
-        lblMmuALG.setText("MMU - "+Main.computadora.getAlgoritmo().name());
+        lblMmuALG.setText("MMU - " +Main.computadora.getMmu().getAlgoritmo().name());
         showPages();
         // setCellColorALG(0, 0,1);
         //  setCellColorOPTTable(0,0,3);
@@ -1090,7 +1090,6 @@ public static Color getColorForNumber(int number) {
         MemoryManagementUnit mmu = Main.computadora.getMmu();
         // System.out.println(mmu.memoriaOcupada);
         HashMap<String, ArrayList<Pagina>> map = mmu.getMapa();
-        System.out.println("Size: " + map.size());
         ArrayList<Pagina> paginas = Main.computadora.getMmu().tablaSimbolos;
         DefaultTableModel modelPages = (DefaultTableModel) algorithmTable.getModel();
         modelPages.setNumRows(0);
@@ -1103,7 +1102,6 @@ public static Color getColorForNumber(int number) {
             }
             if (page.loaded.equals("X")) {
                 int ptr = Integer.parseInt(page.direccionFisica);
-                System.out.println("Direccion a pintar: " + (ptr-1));
                 setCellColorALG(0, ptr-1, Integer.parseInt(page.pid));
                 n++;
             }
