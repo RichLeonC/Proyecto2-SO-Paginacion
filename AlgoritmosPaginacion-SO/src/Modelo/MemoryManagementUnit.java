@@ -5,6 +5,11 @@
 package Modelo;
 
 import Backend.TipoAlgoritmo;
+import static Backend.TipoAlgoritmo.FIFO;
+import static Backend.TipoAlgoritmo.MRU;
+import static Backend.TipoAlgoritmo.OPT;
+import static Backend.TipoAlgoritmo.RANDOM;
+import static Backend.TipoAlgoritmo.SECOND_CHANCE;
 import Vista.Main;
 import java.awt.Color;
 import java.text.ParseException;
@@ -246,6 +251,7 @@ public class MemoryManagementUnit {
                 int direccionRAM = reemplazar(idReemplazo);
                 System.out.println("Direccion a usar : " + direccionRAM );
                 //LLAMA AL ALGORITMO
+                //DETERMINAR MARKING
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
@@ -276,12 +282,44 @@ public class MemoryManagementUnit {
     public void guardarPuntero(String puntero){
     }
     
+    public String secondChanceMarking(){
+        return "";
+    }
+    
+    public String mruMarking(){
+        return "";
+    }
+    
+    public String optimumMarking(){
+        return "";
+    }
+    
+    public String determinarMarking(){
+        switch(algoritmo){
+            case SECOND_CHANCE:
+                return secondChanceMarking();
+            case FIFO:
+                return "";
+            case MRU:
+                return mruMarking();
+            case RANDOM:
+                return "";
+            case OPT:
+                return optimumMarking();
+            default:
+                return "";
+        
+        }
+    }
+    
     public void instruccionUse(Instruccion instruccion) throws InterruptedException{
         if(mapa.get(instruccion.getParametros().get(0)) != null){
             for(Pagina page : mapa.get(instruccion.getParametros().get(0))){ //Por cada una de las paginas asignadas a ese puntero
                 if(page.direccionFisica.equals("")){
                     //System.out.println("No está en RAM");
                     //LLAMA AL ALGORITMO
+                    //DETERMINAR EL MARKING
+                    determinarMarking();
                     String direccion = "-1";
                     page.setDireccionFisica(direccion);
                 }
