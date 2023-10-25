@@ -5,6 +5,7 @@
  */
 package Vista;
 
+import Backend.TipoAlgoritmo;
 import Modelo.MemoryManagementUnit;
 import Modelo.Pagina;
 import java.awt.Color;
@@ -37,9 +38,8 @@ public class Simulacion extends javax.swing.JFrame {
         initComponents();
 
         this.setLocationRelativeTo(this);
-        
-       // lblMmuALG.setText(Main.computadora.getAlgoritmo().toString());
 
+        // lblMmuALG.setText(Main.computadora.getAlgoritmo().toString());
         tableRamOPT.setDefaultRenderer(Object.class, new TableCellRenderer() {
             private JLabel label = new JLabel();
 
@@ -117,25 +117,23 @@ public class Simulacion extends javax.swing.JFrame {
         });
     }
 
-public static Color getColorForNumber(int number) {
-    if (number < 1 || number > 100) {
-        throw new IllegalArgumentException("El número debe estar entre 1 y 100");
+    public static Color getColorForNumber(int number) {
+        if (number < 1 || number > 100) {
+            throw new IllegalArgumentException("El número debe estar entre 1 y 100");
+        }
+
+        int segment = 256 / 10;
+
+        int red = (number % 10) * segment;
+        int green = ((number * 3) % 10) * segment;
+        int blue = ((number * 7) % 10) * segment;
+
+        red = Math.min(red + 120, 255);
+        green = Math.min(green + 120, 255);
+        blue = Math.min(blue + 120, 255);
+
+        return new Color(red, green, blue);
     }
-
-    int segment = 256 / 10;  
-
-
-    int red = (number % 10) * segment;
-    int green = ((number * 3) % 10) * segment;
-    int blue = ((number * 7) % 10) * segment;
-
-    red = Math.min(red + 120, 255);
-    green = Math.min(green + 120, 255);
-    blue = Math.min(blue + 120, 255);
-
-    return new Color(red, green, blue);
-}
-
 
     public void setCellColorOPT(int row, int column, int pid) {
         Color color = getColorForNumber(pid);
@@ -146,15 +144,14 @@ public static Color getColorForNumber(int number) {
         Color color = getColorForNumber(pid);
         cellColorsALG.put(new Point(column, row), color);
     }
-    
+
     public void setCellColorALG(int row, int column, Color color) {
         cellColorsALG.put(new Point(column, row), color);
     }
-    
+
     public Color getCellColorALG(int row, int column) {
         return cellColorsALG.get(new Point(column, row));
     }
-    
 
     public void setCellColorOPTTable(int row, int column, int pid) {
         Color color = getColorForNumber(pid);
@@ -164,6 +161,19 @@ public static Color getColorForNumber(int number) {
     public void setCellColorALGTable(int row, int column, int pid) {
         Color color = getColorForNumber(pid);
         cellColorsALGPages.put(new Point(column, row), color);
+    }
+
+    public void setAlgoritmoText(TipoAlgoritmo algoritmo) {
+        if (algoritmo.equals(TipoAlgoritmo.SECOND_CHANCE)) {
+            lblRamALG.setText("Ram - SC");
+            lblMmuALG.setText("MMU - SC");
+
+        } else {
+            lblRamALG.setText("Ram - " + algoritmo.name());
+            lblMmuALG.setText("MMU - " + algoritmo.name());
+
+        }
+
     }
 
     /**
@@ -230,7 +240,7 @@ public static Color getColorForNumber(int number) {
         jButton2 = new javax.swing.JButton();
         btnIniciarSimulacion = new javax.swing.JButton();
         lblMmuALG = new javax.swing.JLabel();
-        lblSimulacion2 = new javax.swing.JLabel();
+        lblRamALG = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
         tableRamOPT = new javax.swing.JTable();
         jScrollPane6 = new javax.swing.JScrollPane();
@@ -560,9 +570,9 @@ public static Color getColorForNumber(int number) {
         lblMmuALG.setForeground(new java.awt.Color(255, 255, 255));
         lblMmuALG.setText("MMU-[]");
 
-        lblSimulacion2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
-        lblSimulacion2.setForeground(new java.awt.Color(255, 255, 255));
-        lblSimulacion2.setText("Ram-[ALG]");
+        lblRamALG.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
+        lblRamALG.setForeground(new java.awt.Color(255, 255, 255));
+        lblRamALG.setText("Ram-[ALG]");
 
         tableRamOPT.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(tableRamOPT);
@@ -591,7 +601,7 @@ public static Color getColorForNumber(int number) {
             txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(lblSimulacion2)
+                .addComponent(lblRamALG)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
@@ -749,7 +759,7 @@ public static Color getColorForNumber(int number) {
                         .addGap(16, 16, 16)
                         .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lblSimulacion2, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(lblRamALG, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(lblMmuALG, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(1, 1, 1)
@@ -980,7 +990,7 @@ public static Color getColorForNumber(int number) {
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnIniciarSimulacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSimulacionActionPerformed
-        lblMmuALG.setText("MMU - " +Main.computadora.getMmu().getAlgoritmo().name());
+        lblMmuALG.setText("MMU - " + Main.computadora.getMmu().getAlgoritmo().name());
         showPages();
         // setCellColorALG(0, 0,1);
         //  setCellColorOPTTable(0,0,3);
@@ -1055,8 +1065,8 @@ public static Color getColorForNumber(int number) {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JLabel lblMmuALG;
+    private javax.swing.JLabel lblRamALG;
     private javax.swing.JLabel lblSimulacion;
-    private javax.swing.JLabel lblSimulacion2;
     private javax.swing.JLabel lblSimulacion3;
     private javax.swing.JLabel lblSimulacion4;
     private javax.swing.JTable tableRamALG;
@@ -1102,7 +1112,7 @@ public static Color getColorForNumber(int number) {
             }
             if (page.loaded.equals("X")) {
                 int ptr = Integer.parseInt(page.direccionFisica);
-                setCellColorALG(0, ptr-1, Integer.parseInt(page.pid));
+                setCellColorALG(0, ptr - 1, Integer.parseInt(page.pid));
                 n++;
             }
 

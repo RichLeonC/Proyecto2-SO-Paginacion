@@ -302,6 +302,7 @@ public class Configuracion extends javax.swing.JFrame {
             Main.simulacion.setVisible(true);
             Main.computadora.execute();
             Main.simulacion.showPages();
+            Main.simulacion.setAlgoritmoText(algoritmoSeleccionado);
             this.dispose();
         }
     }//GEN-LAST:event_btnIniciarActionPerformed

@@ -176,7 +176,7 @@ public class MemoryManagementUnit {
                 paginas.add(page);
             }
         }
-        int index = Main.computadora.random.nextInt(0, paginas.size()-1);
+        int index = Main.computadora.random.nextInt(paginas.size()-1);
         return Integer.parseInt(paginas.get(index).id);
     }
     
