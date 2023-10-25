@@ -34,6 +34,7 @@ public class Configuracion extends javax.swing.JFrame {
         initComponents();
         archivoSeleccionado = null;
         algoritmoSeleccionado = TipoAlgoritmo.FIFO;
+         algoritmoSeleccionado = TipoAlgoritmo.SECOND_CHANCE;
         procesosSeleccionados = 10;
         operacionesSeleccionados = 500;
         semilla = 1;

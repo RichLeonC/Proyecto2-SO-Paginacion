@@ -20,6 +20,8 @@ import java.util.HashMap;
 import java.util.Random;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -162,10 +164,39 @@ public class MemoryManagementUnit {
     }
     
     public int secondChance() {
-        return -1;
+         Pagina pageSCActual = tablaSimbolos.get(0);
+         for (Pagina page: tablaSimbolos){
+             if (!pageSCActual.isLoaded() || page.loaded.equals("X") && esMasVieja(pageSCActual.timestamp, page.timestamp ) && "1".equals(page.getMarking())){
+                  pageSCActual = page; 
+                  
+             } else {
+                 System.out.println("MANTENER PERO OCUPA SER MARCADO COMO VISITADO ");
+                 pageSCActual.setMarking("1");
+             }        
+         }
+        
+        return Integer.parseInt(pageSCActual.id);
     }
 
     public int mru() {
+         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+        
+         Pagina paginaMasReciente = tablaSimbolos.get(0);
+
+        for (Pagina pagina : tablaSimbolos) {
+             try {
+                 Date fechaPagina = sdf.parse(pagina.getTimestamp());
+                 Date fechaMasReciente = sdf.parse(paginaMasReciente.getTimestamp());
+                 
+                 if (fechaPagina.after(fechaMasReciente)) {
+                     paginaMasReciente = pagina;
+                 }} catch (ParseException ex) {
+                 Logger.getLogger(MemoryManagementUnit.class.getName()).log(Level.SEVERE, null, ex);
+             }
+        }
+
+        System.out.println("La página más reciente es: " + paginaMasReciente.getId());
+    
         return -1;
     }
 
@@ -291,10 +322,19 @@ public class MemoryManagementUnit {
     }
     
     public String secondChanceMarking(){
-        return "";
+         for (Pagina page: tablaSimbolos){
+                page.setMarking("0");
+         }
+          
+        return  "0";
     }
     
     public String mruMarking(){
+       
+         
+        
+        
+        
         return "";
     }
     
