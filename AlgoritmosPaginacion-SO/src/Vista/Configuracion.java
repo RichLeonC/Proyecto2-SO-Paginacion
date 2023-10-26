@@ -326,6 +326,7 @@ public class Configuracion extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Debe escojer una semilla");
         } else {
             semilla = Integer.parseInt(txfSemilla.getText());
+            Main.computadora.setSemilla(semilla);
             operacionesSeleccionados = Integer.parseInt(cbOperaciones.getSelectedItem().toString());
             procesosSeleccionados = Integer.parseInt(cbProcesos1.getSelectedItem().toString());
             operacionesArchivoGenerado = Main.computadora.getAdminOperaciones().generarOperaciones(procesosSeleccionados, operacionesSeleccionados, semilla);

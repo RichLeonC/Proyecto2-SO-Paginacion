@@ -1105,6 +1105,8 @@ public class Simulacion extends javax.swing.JFrame {
         //ESTADISTICAS
         txfProcesses.setText(String.valueOf(Main.estadisticasAlg.nProcesos));
         txfSimTime.setText(String.valueOf(Main.estadisticasAlg.simTiempo)+"s");
+        txfPagesLoaded.setText(String.valueOf(Main.estadisticasAlg.paginasCargadas));
+        txfPagesUnloaded.setText(String.valueOf(Main.estadisticasAlg.paginasSinCargar));
         
         algorithmTable.repaint();
        // OptTable.repaint();
@@ -1138,6 +1140,8 @@ public class Simulacion extends javax.swing.JFrame {
         //ESTADISTICAS
         txfProcessesOPT.setText(String.valueOf(Main.estadisticasOPT.nProcesos));
         txfSimTimeOPT.setText(String.valueOf(Main.estadisticasOPT.simTiempo)+"s");
+        txfPagesLoadedOPT.setText(String.valueOf(Main.estadisticasOPT.paginasCargadas));
+        txfPagesUnloadedOPT.setText(String.valueOf(Main.estadisticasOPT.paginasSinCargar));
         
        // algorithmTable.repaint();
         OptTable.repaint();

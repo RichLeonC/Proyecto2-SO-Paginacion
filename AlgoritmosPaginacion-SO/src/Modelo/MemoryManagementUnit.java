@@ -373,6 +373,7 @@ public class MemoryManagementUnit {
                 memoriaOcupada++;
                 TimeUnit.SECONDS.sleep(1);
                 Main.estadisticasAlg.simTiempo += 1;
+                Main.estadisticasAlg.paginasCargadas++;
 
             } else {
                 System.out.println("FAIL");
@@ -393,6 +394,7 @@ public class MemoryManagementUnit {
                 idActual++;
                 TimeUnit.SECONDS.sleep(5);
                 Main.estadisticasAlg.simTiempo += 5;
+                Main.estadisticasAlg.paginasSinCargar++;
             }
             Main.simulacion.showPages();
         }
@@ -427,6 +429,7 @@ public class MemoryManagementUnit {
                 memoriaOcupadaOPT++;
                 TimeUnit.SECONDS.sleep(1);
                 Main.estadisticasOPT.simTiempo += 1;
+                Main.estadisticasOPT.paginasCargadas++;
 
             } else {
                 System.out.println("FAIL");
@@ -447,6 +450,7 @@ public class MemoryManagementUnit {
                 idActualOPT++;
                 TimeUnit.SECONDS.sleep(5);
                 Main.estadisticasOPT.simTiempo += 5;
+                Main.estadisticasOPT.paginasSinCargar++;
             }
             Main.simulacion.showPagesOpt();
         }
@@ -599,6 +603,11 @@ public class MemoryManagementUnit {
                     Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasAlg.simTiempo += 1;
+                    if(tablaSimbolos.get(i).isLoaded()){
+                        Main.estadisticasAlg.paginasCargadas--;
+                    }else{
+                        Main.estadisticasAlg.paginasSinCargar--;
+                    }
                     Main.simulacion.showPages();
 
                 }
@@ -619,6 +628,11 @@ public class MemoryManagementUnit {
                     Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasOPT.simTiempo += 1;
+                    if(tablaSimbolos.get(i).isLoaded()){
+                        Main.estadisticasOPT.paginasCargadas--;
+                    }else{
+                        Main.estadisticasOPT.paginasSinCargar--;
+                    }
                     Main.simulacion.showPagesOpt();
 
                 }
@@ -640,6 +654,11 @@ public class MemoryManagementUnit {
                     Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasAlg.simTiempo += 1;
+                    if(tablaSimbolos.get(i).isLoaded()){
+                        Main.estadisticasAlg.paginasCargadas--;
+                    }else{
+                        Main.estadisticasAlg.paginasSinCargar--;
+                    }
                     Main.simulacion.showPages();
 
                 }
@@ -661,6 +680,11 @@ public class MemoryManagementUnit {
                     Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasOPT.simTiempo += 1;
+                    if(tablaSimbolos.get(i).isLoaded()){
+                        Main.estadisticasOPT.paginasCargadas--;
+                    }else{
+                        Main.estadisticasOPT.paginasSinCargar--;
+                    }
                     Main.simulacion.showPagesOpt();
 
                 }
