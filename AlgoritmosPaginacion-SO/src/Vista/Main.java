@@ -1,5 +1,5 @@
-
 package Vista;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -22,14 +22,21 @@ import java.util.HashMap;
  * @author richa
  */
 public class Main {
-    public static Computadora computadora = new Computadora();    
+
+    public static Computadora computadora = new Computadora();
     public static Simulacion simulacion = new Simulacion();
     public static Configuracion configuracion = new Configuracion();
     public static Estadisticas estadisticasAlg = new Estadisticas();
     public static Estadisticas estadisticasOPT = new Estadisticas();
 
+    public void reiniciarMain() {
+        computadora = new Computadora();
+        simulacion = new Simulacion();
+        configuracion = new Configuracion();
+        estadisticasAlg = new Estadisticas();
+        estadisticasOPT = new Estadisticas();
+    }
 
-    
     public static void main(String[] args) {
         configuracion.setVisible(true);
     }

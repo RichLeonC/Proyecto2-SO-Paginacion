@@ -5,7 +5,9 @@
  */
 package Vista;
 
+import Backend.Computadora;
 import Backend.TipoAlgoritmo;
+import Modelo.Estadisticas;
 import Modelo.MemoryManagementUnit;
 import Modelo.Pagina;
 import java.awt.Color;
@@ -985,8 +987,13 @@ public class Simulacion extends javax.swing.JFrame {
     }//GEN-LAST:event_txfSimTimeActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        Configuracion conf = new Configuracion();
-        conf.setVisible(true);
+       Main.computadora.cancel(true);
+        Main.computadora = new Computadora();
+        Main.configuracion = new Configuracion();
+        Main.estadisticasAlg = new Estadisticas();
+        Main.estadisticasOPT = new Estadisticas();
+        Main.simulacion = new Simulacion();
+        Main.configuracion.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
