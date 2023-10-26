@@ -10,6 +10,7 @@ import static Backend.TipoAlgoritmo.MRU;
 import static Backend.TipoAlgoritmo.OPT;
 import static Backend.TipoAlgoritmo.RANDOM;
 import static Backend.TipoAlgoritmo.SECOND_CHANCE;
+import Vista.Configuracion;
 import Vista.Main;
 import java.awt.Color;
 import java.text.ParseException;
@@ -39,7 +40,6 @@ public class MemoryManagementUnit {
     public ArrayList<Pagina> tablaSimbolos;
     public HashMap<String, ArrayList<Pagina>> mapaOPT;
     public ArrayList<Pagina> tablaSimbolosOPT;
-
     public int idActual;
     public int idActualOPT;
     public int direccionRamActualID = 1;
@@ -193,12 +193,12 @@ public class MemoryManagementUnit {
     public int secondChance() {
          Pagina pageSCActual = tablaSimbolos.get(0);
          for (Pagina page: tablaSimbolos){
-             if (!pageSCActual.isLoaded() || page.loaded.equals("X") && esMasVieja(pageSCActual.timestamp, page.timestamp ) && "1".equals(page.getMarking())){
+             if (!pageSCActual.isLoaded() || (page.loaded.equals("X") && esMasVieja(pageSCActual.timestamp, page.timestamp ) && "1".equals(page.getMarking()))){
                   pageSCActual = page; 
                   
              } else {
                  System.out.println("MANTENER PERO OCUPA SER MARCADO COMO VISITADO ");
-                 pageSCActual.setMarking("1");
+                 
              }        
          }
         
@@ -206,14 +206,14 @@ public class MemoryManagementUnit {
     }
 
     public int mru() {
-         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+        SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
         
-         Pagina paginaMasReciente = tablaSimbolos.get(0);
+        Pagina paginaMasReciente = tablaSimbolos.get(0);
 
         for (Pagina pagina : tablaSimbolos) {
              try {
-                 Date fechaPagina = sdf.parse(pagina.getTimestamp());
-                 Date fechaMasReciente = sdf.parse(paginaMasReciente.getTimestamp());
+                 Date fechaPagina = sdf.parse(pagina.getMarking());
+                 Date fechaMasReciente = sdf.parse(paginaMasReciente.getMarking());
                  
                  if (fechaPagina.after(fechaMasReciente)) {
                      paginaMasReciente = pagina;
@@ -224,7 +224,7 @@ public class MemoryManagementUnit {
 
         System.out.println("La página más reciente es: " + paginaMasReciente.getId());
     
-        return -1;
+        return Integer.parseInt(paginaMasReciente.id);
     }
 
     public int random() {
@@ -318,11 +318,35 @@ public class MemoryManagementUnit {
         for(int i = 0; i < numPaginas; i++){
             int dir = getDireccionLibre();
             //System.out.println("Direccion libre: " + dir);
-            if(dir < 100){
+            if(dir < 10){
                 System.out.println("HIT");
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
+               
+                if (algoritmo == TipoAlgoritmo.SECOND_CHANCE ){
+                Pagina pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,"0");
+                paginasValores.add(pagina);
+                tablaSimbolos.add(pagina);
+                direccionRamActualID++;
+                direccionVirtualActualID++;
+                idActual++;
+                memoriaOcupada++;
+                TimeUnit.SECONDS.sleep(1);                   
+                
+                } if (algoritmo == TipoAlgoritmo.MRU){
+                Pagina pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,formattedDate);
+                paginasValores.add(pagina);
+                tablaSimbolos.add(pagina);
+                direccionRamActualID++;
+                direccionVirtualActualID++;
+                idActual++;
+                memoriaOcupada++;
+                TimeUnit.SECONDS.sleep(1);                   
+                
+                }
+                
+                else{
                 Pagina pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,"true");
                 paginasValores.add(pagina);
                 tablaSimbolos.add(pagina);
@@ -331,6 +355,7 @@ public class MemoryManagementUnit {
                 idActual++;
                 memoriaOcupada++;
                 TimeUnit.SECONDS.sleep(1);
+                }
             
             }else{
                 System.out.println("FAIL");
@@ -422,14 +447,15 @@ public class MemoryManagementUnit {
     public void guardarPuntero(String puntero) {
     }
     
-    public String secondChanceMarking(){
-         for (Pagina page: tablaSimbolos){
-                page.setMarking("0");
-         }
-          
-        return  "0";
+    public String secondChanceMarking(Pagina pagina){
+         if (pagina.loaded.equals("X")) {
+                pagina.setMarking("1");
+    } else {
+        
     }
-    
+     return pagina.getMarking(); // Devuelve el marcado calculado
+    }
+
     public String mruMarking(){
        
          
@@ -443,10 +469,10 @@ public class MemoryManagementUnit {
         return "";
     }
 
-    public String determinarMarking() {
+    public String determinarMarking(Pagina pagina) {
         switch (algoritmo) {
             case SECOND_CHANCE:
-                return secondChanceMarking();
+                return secondChanceMarking(pagina);
             case FIFO:
                 return "";
             case MRU:
@@ -478,7 +504,7 @@ public class MemoryManagementUnit {
                     //System.out.println("No está en RAM");
                     //LLAMA AL ALGORITMO
                     //DETERMINAR EL MARKING
-                    determinarMarking();
+                    determinarMarking(page);
                     String direccion = "-1";
                     page.setDireccionFisica(direccion);
                 } else {
