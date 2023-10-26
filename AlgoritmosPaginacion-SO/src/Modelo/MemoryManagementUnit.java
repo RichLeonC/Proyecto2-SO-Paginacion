@@ -448,21 +448,28 @@ public class MemoryManagementUnit {
     }
     
     public String secondChanceMarking(Pagina pagina){
-         if (pagina.loaded.equals("X")) {
+       if (pagina.loaded.equals("X")) {
                 pagina.setMarking("1");
+                System.out.println("Marcado 1 second");
     } else {
         
     }
      return pagina.getMarking(); // Devuelve el marcado calculado
     }
 
-    public String mruMarking(){
+    public String mruMarking(Pagina pagina){
+         Date date = new Date();
+         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+         String formattedDate = sdf.format(date);
+       if (pagina.loaded.equals("X")) {
+                pagina.setMarking(formattedDate);
+                System.out.println("Marcado fecha nueva" + formattedDate );
+    } 
+          else {
+        
+    }
+     return pagina.getMarking(); // Devuelve el marcado calculado
        
-         
-        
-        
-        
-        return "";
     }
 
     public String optimumMarking() {
@@ -476,7 +483,7 @@ public class MemoryManagementUnit {
             case FIFO:
                 return "";
             case MRU:
-                return mruMarking();
+                return mruMarking(pagina);
             case RANDOM:
                 return "";
             case OPT:
