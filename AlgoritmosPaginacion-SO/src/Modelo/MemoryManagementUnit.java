@@ -330,7 +330,7 @@ public class MemoryManagementUnit {
         for(int i = 0; i < numPaginas; i++){
             int dir = getDireccionLibre();
             //System.out.println("Direccion libre: " + dir);
-            if(dir < 10){
+            if(dir < 100){
                 System.out.println("HIT");
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
@@ -515,6 +515,7 @@ public class MemoryManagementUnit {
         }
         if (mapa1.get(instruccion.getParametros().get(0)) != null) {
             if (!futuresReferences.isEmpty()) {
+                System.out.println("A eliminar: "+instruccion.getParametros());
                 futuresReferences.remove(instruccion);
             }
             for (Pagina page : mapa1.get(instruccion.getParametros().get(0))) { //Por cada una de las paginas asignadas a ese puntero

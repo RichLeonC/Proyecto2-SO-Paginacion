@@ -64,6 +64,8 @@ public class Computadora extends SwingWorker<Void, Void> {
         for (Instruccion instr : instrucciones) {
             if (instr.getTipoInstruccion().equals(USE)) {
                 mmu.futuresReferences.add(instr);
+              //  System.out.println("instr: "+instr.getTipoInstruccion()+" ("+instr.getParametros());
+             
             }
 
         }
@@ -87,15 +89,15 @@ public class Computadora extends SwingWorker<Void, Void> {
                     System.out.println("New");
                     System.out.println(instr.getParametros().get(0));
                     mmu.intruccionNewOPT(instr);
-                    //mmu.intruccionNew(instr);
+                    mmu.intruccionNew(instr);
 
                     break;
                 case USE:
                     //System.out.println("Use");
                     mmu.isOpt = true;
                     mmu.instruccionUse(instr);
-                    //mmu.isOpt = false;
-                   // mmu.instruccionUse(instr);
+                    mmu.isOpt = false;
+                    mmu.instruccionUse(instr);
 
                     break;
                 case DELETE:
