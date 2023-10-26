@@ -388,13 +388,13 @@ public class MemoryManagementUnit {
                 String formattedDate = sdf.format(date);
                 Pagina pagina = new Pagina();
                 if (algoritmo == TipoAlgoritmo.SECOND_CHANCE) {
-                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, "0");
+                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(direccionRAM), "", formattedDate, "0");
 
                 } else if (algoritmo == TipoAlgoritmo.MRU) {
-                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, formattedDate);
+                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(direccionRAM), "", formattedDate, formattedDate);
                     System.out.println("MRU");
                 } else if (algoritmo == TipoAlgoritmo.RANDOM || algoritmo == TipoAlgoritmo.FIFO) {
-                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, "true");
+                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(direccionRAM), "", formattedDate, "true");
                     System.out.println("cualquier otro");
                 }
                 paginasValores.add(pagina);
@@ -635,12 +635,14 @@ public class MemoryManagementUnit {
                 if (tablaSimbolosOPT.get(i).id.equals(paginas.get(j).id)) {
                     if(tablaSimbolosOPT.get(i).isLoaded()){
                         Main.estadisticasOPT.paginasCargadas--;
+                        int ptr = Integer.parseInt(tablaSimbolosOPT.get(i).direccionFisica) - 1;
+                        Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
                     }else{
                         Main.estadisticasOPT.paginasSinCargar--;
                     }
-                    int ptr = Integer.parseInt(tablaSimbolosOPT.get(i).direccionFisica) - 1;
+                    
                     tablaSimbolosOPT.remove(i);
-                    Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
+                    
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasOPT.simTiempo += 1;
                     Main.simulacion.showPagesOpt();
@@ -661,14 +663,18 @@ public class MemoryManagementUnit {
                 if (tablaSimbolos.get(i).id.equals(paginas.get(j).id)) {
                     if(tablaSimbolos.get(i).isLoaded()){
                         Main.estadisticasAlg.paginasCargadas--;
+                        int ptr = Integer.parseInt(tablaSimbolos.get(i).direccionFisica) - 1;
+                        Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
                     }else{
                         Main.estadisticasAlg.paginasSinCargar--;
                     }
-                    int ptr = Integer.parseInt(tablaSimbolos.get(i).direccionFisica) - 1;
                     tablaSimbolos.remove(i);
-                    Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
+                    System.out.println("Entra a borrar no opt1");
+                    System.out.println("Entra a borrar no opt2");
                     TimeUnit.SECONDS.sleep(1);
+                    System.out.println("Entra a borrar no opt");
                     Main.estadisticasAlg.simTiempo += 1;
+                    System.out.println("Entra a borrar no opt");
                     Main.simulacion.showPages();
 
                 }
@@ -688,12 +694,15 @@ public class MemoryManagementUnit {
                 if (tablaSimbolosOPT.get(i).id.equals(paginas.get(j).id)) {
                     if(tablaSimbolosOPT.get(i).isLoaded()){
                         Main.estadisticasOPT.paginasCargadas--;
+                        int ptr = Integer.parseInt(tablaSimbolosOPT.get(i).direccionFisica) - 1;
+                        Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
                     }else{
                         Main.estadisticasOPT.paginasSinCargar--;
                     }
-                    int ptr = Integer.parseInt(tablaSimbolosOPT.get(i).direccionFisica) - 1;
+                    System.out.println("Entra a borrar opt");
+                    
                     tablaSimbolosOPT.remove(i);
-                    Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
+                    
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasOPT.simTiempo += 1;
                     Main.simulacion.showPagesOpt();
