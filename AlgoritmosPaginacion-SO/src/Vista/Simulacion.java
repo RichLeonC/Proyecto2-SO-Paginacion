@@ -139,6 +139,10 @@ public class Simulacion extends javax.swing.JFrame {
         Color color = getColorForNumber(pid);
         cellColorsOPT.put(new Point(column, row), color);
     }
+    
+        public void setCellColorOPT(int row, int column, Color color) {
+        cellColorsOPT.put(new Point(column, row), color);
+    }
 
     public void setCellColorALG(int row, int column, int pid) {
         Color color = getColorForNumber(pid);
@@ -262,10 +266,7 @@ public class Simulacion extends javax.swing.JFrame {
 
         OptTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null}
+
             },
             new String [] {
                 "Page ID", "PID", "LOADED", "L-ADDR", "M-ADDR", "D-ADDR", "LOADED-T", "MARK"
@@ -574,6 +575,14 @@ public class Simulacion extends javax.swing.JFrame {
         lblRamALG.setForeground(new java.awt.Color(255, 255, 255));
         lblRamALG.setText("Ram-[ALG]");
 
+        tableRamOPT.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4", "Title 5", "Title 6", "Title 7", "Title 8", "Title 9", "Title 10", "Title 11", "Title 12", "Title 13", "Title 14", "Title 15", "Title 16", "Title 17", "Title 18", "Title 19", "Title 20", "Title 21", "Title 22", "Title 23", "Title 24", "Title 25", "Title 26", "Title 27", "Title 28", "Title 29", "Title 30", "Title 31", "Title 32", "Title 33", "Title 34", "Title 35", "Title 36", "Title 37", "Title 38", "Title 39", "Title 40", "Title 41", "Title 42", "Title 43", "Title 44", "Title 45", "Title 46", "Title 47", "Title 48", "Title 49", "Title 50", "Title 51", "Title 52", "Title 53", "Title 54", "Title 55", "Title 56", "Title 57", "Title 58", "Title 59", "Title 60", "Title 61", "Title 62", "Title 63", "Title 64", "Title 65", "Title 66", "Title 67", "Title 68", "Title 69", "Title 70", "Title 71", "Title 72", "Title 73", "Title 74", "Title 75", "Title 76", "Title 77", "Title 78", "Title 79", "Title 80", "Title 81", "Title 82", "Title 83", "Title 84", "Title 85", "Title 86", "Title 87", "Title 88", "Title 89", "Title 90", "Title 91", "Title 92", "Title 93", "Title 94", "Title 95", "Title 96", "Title 97", "Title 98", "Title 99", "Title 100"
+            }
+        ));
         tableRamOPT.getTableHeader().setReorderingAllowed(false);
         jScrollPane4.setViewportView(tableRamOPT);
 
@@ -1118,8 +1127,36 @@ public class Simulacion extends javax.swing.JFrame {
 
         }
         algorithmTable.repaint();
-        OptTable.repaint();
+       // OptTable.repaint();
         tableRamALG.repaint();
+        //tableRamOPT.repaint();
+
+    }
+    
+    public void showPagesOpt() {
+        MemoryManagementUnit mmu = Main.computadora.getMmu();
+        // System.out.println(mmu.memoriaOcupada);
+        HashMap<String, ArrayList<Pagina>> map = mmu.getMapaOPT();
+        ArrayList<Pagina> paginas = Main.computadora.getMmu().tablaSimbolosOPT;
+        DefaultTableModel modelPages = (DefaultTableModel) OptTable.getModel();
+        modelPages.setNumRows(0);
+        int n = 0;
+        for (int i = 0; i < paginas.size(); i++) {
+            Pagina page = paginas.get(i);
+            modelPages.addRow(new Object[]{page.id, page.pid, page.loaded, page.direccionVirtual, page.direccionFisica, page.direccionDisco, page.timestamp, page.marking});
+            for (int j = 0; j < 8; j++) {
+                setCellColorOPTTable(modelPages.getRowCount() - 1, j, Integer.parseInt(page.pid));
+            }
+            if (page.loaded.equals("X")) {
+                int ptr = Integer.parseInt(page.direccionFisica);
+                setCellColorOPT(0, ptr - 1, Integer.parseInt(page.pid));
+                n++;
+            }
+
+        }
+       // algorithmTable.repaint();
+        OptTable.repaint();
+      //  tableRamALG.repaint();
         tableRamOPT.repaint();
 
     }

@@ -5,6 +5,7 @@
 package Modelo;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /**
  *
@@ -46,5 +47,17 @@ public class Instruccion {
     public Instruccion(TipoInstruccion tipo, ArrayList<String> params){
         this.tipoInstruccion = tipo;
         this.parametros = params;
+    }
+    
+    
+    public boolean esReferenciaAPagina(Pagina page,HashMap<String, ArrayList<Pagina>> mapa){
+        if(tipoInstruccion!=TipoInstruccion.USE)
+            return false;
+        
+        ArrayList<Pagina> paginasAsociadas = mapa.get(parametros.get(0));
+        if(paginasAsociadas == null) return false;
+        
+        return paginasAsociadas.contains(page);
+   
     }
 }

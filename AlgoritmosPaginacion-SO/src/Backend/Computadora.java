@@ -56,13 +56,25 @@ public class Computadora extends SwingWorker<Void, Void> {
         return true;
     }
 
-    public void inicializar(TipoAlgoritmo algoritmo, ArrayList<Instruccion> instrucciones) throws InterruptedException {
-  
+    public void setFuturesReferences() {
+        if (instrucciones.isEmpty()) {
+            String operacionesString = adminOperaciones.generarOperaciones(nProcesos, nOperaciones);
+            instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
+        }
+        for (Instruccion instr : instrucciones) {
+            if (instr.getTipoInstruccion().equals(USE)) {
+                mmu.futuresReferences.add(instr);
+            }
+
+        }
+
     }
 
     public void inicializar() throws InterruptedException {
-        for(int dir = 0; dir <= 101; dir++){
+        for (int dir = 0; dir <= 101; dir++) {
             Main.simulacion.setCellColorALG(0, dir, Color.WHITE);
+            Main.simulacion.setCellColorOPT(0, dir, Color.WHITE);
+
         }
         if (instrucciones.isEmpty()) {
             String operacionesString = adminOperaciones.generarOperaciones(nProcesos, nOperaciones);
@@ -74,18 +86,29 @@ public class Computadora extends SwingWorker<Void, Void> {
                 case NEW:
                     System.out.println("New");
                     System.out.println(instr.getParametros().get(0));
-                    mmu.intruccionNew(instr);
+                    mmu.intruccionNew(instr);     
+                    mmu.intruccionNewOPT(instr);
+
                     break;
                 case USE:
                     //System.out.println("Use");
+                    mmu.isOpt = false;
                     mmu.instruccionUse(instr);
+                    mmu.isOpt = true;
+                   mmu.instruccionUse(instr);
                     break;
                 case DELETE:
                     //System.out.println("Delete");
+                    mmu.isOpt = false;
+                    mmu.instruccionDelete(instr);
+                    mmu.isOpt = true;
                     mmu.instruccionDelete(instr);
                     break;
                 case KILL:
                     //System.out.println("Kill");
+                    mmu.isOpt = false;
+                    mmu.instruccionKill(instr);
+                    mmu.isOpt = true;
                     mmu.instruccionKill(instr);
                     break;
                 default:
@@ -142,14 +165,14 @@ public class Computadora extends SwingWorker<Void, Void> {
         return null;
     }
 
-    public void setInicializarAtributos(int semilla, TipoAlgoritmo algoritmo, int nProcesos, int nOperaciones,ArrayList<Instruccion> instrucciones) {
+    public void setInicializarAtributos(int semilla, TipoAlgoritmo algoritmo, int nProcesos, int nOperaciones, ArrayList<Instruccion> instrucciones) {
         this.semilla = semilla;
         this.random = new Random(semilla);
         mmu.algoritmo = algoritmo;
         this.nProcesos = nProcesos;
         this.nOperaciones = nOperaciones;
-        this.instrucciones =  instrucciones;
-       
+        this.instrucciones = instrucciones;
+
     }
 
     public void pausar() {

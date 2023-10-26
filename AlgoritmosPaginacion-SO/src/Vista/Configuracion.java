@@ -298,12 +298,15 @@ public class Configuracion extends javax.swing.JFrame {
 
         //Main.computadora.setInicializarAtributos(13, TipoAlgoritmo.SECOND_CHANCE, 10, 500);
         if (validarDatos()) {
+            this.dispose();
             Main.computadora.setInicializarAtributos(semilla, algoritmoSeleccionado, procesosSeleccionados, operacionesSeleccionados, instrucciones);
+            Main.computadora.setFuturesReferences();
             Main.simulacion.setVisible(true);
             Main.computadora.execute();
             Main.simulacion.showPages();
+            Main.simulacion.showPagesOpt();
             Main.simulacion.setAlgoritmoText(algoritmoSeleccionado);
-            this.dispose();
+            
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
 

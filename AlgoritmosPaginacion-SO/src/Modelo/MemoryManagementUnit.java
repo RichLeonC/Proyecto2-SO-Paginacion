@@ -26,24 +26,48 @@ import java.util.concurrent.TimeUnit;
  * @author megui
  */
 public class MemoryManagementUnit {
+
     public int memoriaReal;
+    public int memoriaRealOPT;
     public int direccionVirtual;
+    public int direccionVirtualOPT;
     public int memoriaOcupada;
+    public int memoriaOcupadaOPT;
     public HashMap<String, ArrayList<Pagina>> mapa;
     public ArrayList<Pagina> tablaSimbolos;
+    public HashMap<String, ArrayList<Pagina>> mapaOPT;
+    public ArrayList<Pagina> tablaSimbolosOPT;
+
     public int idActual;
+    public int idActualOPT;
     public int direccionRamActualID = 1;
+    public int direccionRamActualOPT = 1;
     public int direccionVirtualActualID = 1;
+    public int direccionVirtualActualOPT = 1;
+
     public int direccionDiscoActualID = 1;
+    public int direccionDiscoActualOPT = 1;
+
     public int punteroActual = 1;
+    public int punteroActualOPT = 1;
+
     public TipoAlgoritmo algoritmo;
-    
-    public MemoryManagementUnit(){
+
+    public ArrayList<Instruccion> futuresReferences;
+    public boolean isOpt = false;
+
+    public MemoryManagementUnit() {
         this.mapa = new HashMap();
         this.tablaSimbolos = new ArrayList();
+        this.mapaOPT = new HashMap();
+        this.tablaSimbolosOPT = new ArrayList();
         idActual = 0;
+        idActualOPT = 0;
         this.memoriaReal = 100;
+        this.memoriaRealOPT = 100;
         this.memoriaOcupada = 0;
+        this.memoriaOcupadaOPT = 0;
+        futuresReferences = new ArrayList();
     }
 
     public int getDireccionRamActualID() {
@@ -101,8 +125,7 @@ public class MemoryManagementUnit {
     public void setIdActual(int idActual) {
         this.idActual = idActual;
     }
-    
-    
+
     public int getMemoriaReal() {
         return memoriaReal;
     }
@@ -123,6 +146,10 @@ public class MemoryManagementUnit {
         return mapa;
     }
 
+    public HashMap<String, ArrayList<Pagina>> getMapaOPT() {
+        return mapaOPT;
+    }
+
     public void setMapa(HashMap<String, ArrayList<Pagina>> mapa) {
         this.mapa = mapa;
     }
@@ -134,33 +161,33 @@ public class MemoryManagementUnit {
     public void setTablaSimbolos(ArrayList<Pagina> tablaSimbolos) {
         this.tablaSimbolos = tablaSimbolos;
     }
-    
-    public void ejecutarIntruccionesProceso(Proceso proceso){
+
+    public void ejecutarIntruccionesProceso(Proceso proceso) {
     }
-    
-    public Pagina getPageByID(int id){
-        for(Pagina page: tablaSimbolos){
-            if(page.id.equals(String.valueOf(id))){
+
+    public Pagina getPageByID(int id) {
+        for (Pagina page : tablaSimbolos) {
+            if (page.id.equals(String.valueOf(id))) {
                 return page;
             }
         }
         return null;
     }
-   
+
     public int fifo() {
         Pagina pageFIActual = tablaSimbolos.get(0);
-        for(Pagina page : tablaSimbolos){
+        for (Pagina page : tablaSimbolos) {
             //System.out.println("Comparando pagina elegida actual" + pageFIActual.id + " con la pagina " + page.id);
-            if(!pageFIActual.isLoaded() || page.loaded.equals("X") && esMasVieja(pageFIActual.timestamp, page.timestamp)){
+            if (!pageFIActual.isLoaded() || page.loaded.equals("X") && esMasVieja(pageFIActual.timestamp, page.timestamp)) {
                 //System.out.println("Se reemplazan");
                 pageFIActual = page;
-            }else{
+            } else {
                 //System.out.println("Se mantiene");
             }
         }
         return Integer.parseInt(pageFIActual.id);
     }
-    
+
     public int secondChance() {
         return -1;
     }
@@ -171,31 +198,53 @@ public class MemoryManagementUnit {
 
     public int random() {
         ArrayList<Pagina> paginas = new ArrayList();
-        for(Pagina page: tablaSimbolos){
-            if(page.isLoaded()){
+        for (Pagina page : tablaSimbolos) {
+            if (page.isLoaded()) {
                 paginas.add(page);
             }
         }
-        int index = Main.computadora.random.nextInt(paginas.size()-1);
+        int index = Main.computadora.random.nextInt(paginas.size() - 1);
         return Integer.parseInt(paginas.get(index).id);
     }
-    
-    public int optimum(){
-        return -1;
+
+    public int optimum() {
+        int distanciaMaxima = -1;
+        Pagina paginaRemplazable = null;
+        for (Pagina page : tablaSimbolos) { //Obtenemos 
+            int distancia = getDistanciaFutura(page);
+            if (distancia == -1) {
+                return Integer.parseInt(page.id);
+            } else if (distancia > distanciaMaxima) {
+                distanciaMaxima = distancia;
+                paginaRemplazable = page;
+            }
+
+        }
+        return Integer.parseInt(paginaRemplazable.id);
     }
-    
-    public int getDireccionLibre(){
+
+    private int getDistanciaFutura(Pagina page) {
+        for (Instruccion instr : futuresReferences) {
+            if (instr.esReferenciaAPagina(page, mapa)) {
+                return futuresReferences.indexOf(instr);
+            }
+        }
+        return -1; //No  va a ser referencia en un futuro
+
+    }
+
+    public int getDireccionLibre() {
         int dir;
-        for(dir = 0; dir <= 100; dir++){
-            if(Main.simulacion.getCellColorALG(0, dir) == Color.WHITE){
+        for (dir = 0; dir <= 100; dir++) {
+            if (Main.simulacion.getCellColorALG(0, dir) == Color.WHITE) {
                 return dir;
             }
         }
         return dir;
     }
-    
-    public int llamarAlgoritmo(){
-        switch(algoritmo){
+
+    public int llamarAlgoritmo() {
+        switch (algoritmo) {
             case SECOND_CHANCE:
                 return secondChance();
             case FIFO:
@@ -208,10 +257,10 @@ public class MemoryManagementUnit {
                 return optimum();
             default:
                 return -1;
-        
+
         }
     }
-    
+
     public static boolean esMasVieja(String fechaFIActual, String fecha2) {
         System.out.println("Fecha vieja: " + fechaFIActual + " Fecha nueva: " + fecha2);
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
@@ -227,8 +276,8 @@ public class MemoryManagementUnit {
         }
         return false;
     }
-    
-    public int intruccionNew(Instruccion instruccion) throws InterruptedException{
+
+        public int intruccionNew(Instruccion instruccion) throws InterruptedException{
         int numPaginas = ((Integer)Integer.parseInt(instruccion.getParametros().get(1))/4096) % 4 == 0 &&
                                 ((Integer)Integer.parseInt(instruccion.getParametros().get(1))/4096)  != 0? 
                                (Integer) Integer.parseInt(instruccion.getParametros().get(1))/4096
@@ -279,31 +328,83 @@ public class MemoryManagementUnit {
         Main.simulacion.showPages();
         return direccionRamActualID;
     }
-    
-    public int reemplazar(int idReemplazo){
+        
+       public int intruccionNewOPT(Instruccion instruccion) throws InterruptedException{
+        int numPaginas = ((Integer)Integer.parseInt(instruccion.getParametros().get(1))/4096) % 4 == 0 &&
+                                ((Integer)Integer.parseInt(instruccion.getParametros().get(1))/4096)  != 0? 
+                               (Integer) Integer.parseInt(instruccion.getParametros().get(1))/4096
+                                : (Integer) Integer.parseInt(instruccion.getParametros().get(1))/4096 + 1;
+        System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
+        ArrayList<Pagina> paginasValores = new ArrayList();
+        for(int i = 0; i < numPaginas; i++){
+            int dir = getDireccionLibre();
+            //System.out.println("Direccion libre: " + dir);
+            if(dir < 100){
+                System.out.println("HIT");
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+                String formattedDate = sdf.format(date);
+                Pagina pagina = new Pagina(String.valueOf(idActualOPT),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualOPT), String.valueOf(dir+1),"",formattedDate,"true");
+                paginasValores.add(pagina);
+                tablaSimbolosOPT.add(pagina);
+                direccionRamActualOPT++;
+                direccionVirtualActualOPT++;
+                idActualOPT++;
+                memoriaOcupadaOPT++;
+                TimeUnit.SECONDS.sleep(1);
+            
+            }else{
+                System.out.println("FAIL");
+                int idReemplazo = optimum();
+                System.out.println("Pagina a reemplazar: " + idReemplazo);
+                int direccionRAM = reemplazar(idReemplazo);
+                System.out.println("Direccion a usar : " + direccionRAM );
+                //LLAMA AL ALGORITMO
+                //DETERMINAR MARKING
+                Date date = new Date();
+                SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
+                String formattedDate = sdf.format(date);
+                Pagina pagina = new Pagina(String.valueOf(idActualOPT),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualOPT),String.valueOf(direccionRAM),String.valueOf(direccionDiscoActualOPT) ,formattedDate,"true");
+                paginasValores.add(pagina);
+                tablaSimbolosOPT.add(pagina);
+                direccionVirtualActualOPT++;
+                direccionDiscoActualOPT++;
+                idActualOPT++;
+                TimeUnit.SECONDS.sleep(5);
+            }
+        Main.simulacion.showPagesOpt();
+        }
+        String ptr = String.valueOf(punteroActualOPT);
+        punteroActualOPT++;
+        mapaOPT.put(ptr, paginasValores);
+        Main.simulacion.showPagesOpt();
+        return direccionRamActualOPT;
+    }
+
+    public int reemplazar(int idReemplazo) {
         getPageByID(idReemplazo).loaded = "";;
         int dir = Integer.parseInt(getPageByID(idReemplazo).direccionFisica);
         getPageByID(idReemplazo).direccionFisica = "";
         return dir;
     }
-    
-    public void guardarPuntero(String puntero){
+
+    public void guardarPuntero(String puntero) {
     }
-    
-    public String secondChanceMarking(){
+
+    public String secondChanceMarking() {
         return "";
     }
-    
-    public String mruMarking(){
+
+    public String mruMarking() {
         return "";
     }
-    
-    public String optimumMarking(){
+
+    public String optimumMarking() {
         return "";
     }
-    
-    public String determinarMarking(){
-        switch(algoritmo){
+
+    public String determinarMarking() {
+        switch (algoritmo) {
             case SECOND_CHANCE:
                 return secondChanceMarking();
             case FIFO:
@@ -316,88 +417,158 @@ public class MemoryManagementUnit {
                 return optimumMarking();
             default:
                 return "";
-        
+
         }
     }
-    
-    public void instruccionUse(Instruccion instruccion) throws InterruptedException{
-        if(mapa.get(instruccion.getParametros().get(0)) != null){
-            for(Pagina page : mapa.get(instruccion.getParametros().get(0))){ //Por cada una de las paginas asignadas a ese puntero
-                if(page.direccionFisica.equals("")){
+
+    public void instruccionUse(Instruccion instruccion) throws InterruptedException {
+        HashMap<String, ArrayList<Pagina>> mapa1;
+        if (isOpt) {
+            mapa1 = mapaOPT;
+        } else {
+            mapa1 = mapa;
+        }
+        if (mapa1.get(instruccion.getParametros().get(0)) != null) {
+            if (!futuresReferences.isEmpty()) {
+                futuresReferences.remove(instruccion);
+            }
+            for (Pagina page : mapa1.get(instruccion.getParametros().get(0))) { //Por cada una de las paginas asignadas a ese puntero
+
+                if (page.direccionFisica.equals("")) {
                     //System.out.println("No está en RAM");
                     //LLAMA AL ALGORITMO
                     //DETERMINAR EL MARKING
                     determinarMarking();
                     String direccion = "-1";
                     page.setDireccionFisica(direccion);
-                }
-                else{
+                } else {
                     //System.out.println("Si está en RAM");
                 }
                 TimeUnit.SECONDS.sleep(1);
-                Main.simulacion.showPages();
-            }
-            
-        }
-        
-    }
-    
-    public void instruccionDelete(Instruccion instruccion) throws InterruptedException{
-        System.out.println("Puntero a eliminar: " + instruccion.getParametros().get(0));
-        System.out.println(mapa.size());
-        ArrayList<Pagina> paginas = mapa.remove(instruccion.getParametros().get(0));
-        for (int i = 0; i < tablaSimbolos.size(); i++) {
-            for (int j = 0; j < paginas.size(); j++) {
-                if(tablaSimbolos.get(i).id.equals(paginas.get(j).id)){
-                    int ptr = Integer.parseInt(tablaSimbolos.get(i).direccionFisica)-1;
-                    tablaSimbolos.remove(i);
-                    Main.simulacion.setCellColorALG(0,ptr,Color.WHITE);
-                    TimeUnit.SECONDS.sleep(1);
-                    Main.simulacion.showPages();
-                                        
 
-                }
-            }
-        }
-    }
-    
-    public void deletePuntero(String puntero) throws InterruptedException{
-        System.out.println("Puntero a eliminar: " + puntero);
-        System.out.println(mapa.size());
-        ArrayList<Pagina> paginas = mapa.remove(puntero);
-        for (int i = 0; i < tablaSimbolos.size(); i++) {
-            for (int j = 0; j < paginas.size(); j++) {
-                if(tablaSimbolos.get(i).id.equals(paginas.get(j).id)){
-                    int ptr = Integer.parseInt(tablaSimbolos.get(i).direccionFisica)-1;
-                    tablaSimbolos.remove(i);
-                    Main.simulacion.setCellColorALG(0,ptr,Color.WHITE);
-                    TimeUnit.SECONDS.sleep(1);
+                if (isOpt) {
+                    Main.simulacion.showPagesOpt();
+                } else {
                     Main.simulacion.showPages();
-                                        
+                }
+            }
 
+        }
+
+    }
+
+    public void instruccionDelete(Instruccion instruccion) throws InterruptedException {
+//        System.out.println("Puntero a eliminar: " + instruccion.getParametros().get(0));
+//        System.out.println(mapa.size());
+        if (isOpt) {
+            ArrayList<Pagina> paginas = mapaOPT.remove(instruccion.getParametros().get(0));
+            for (int i = 0; i < tablaSimbolosOPT.size(); i++) {
+                for (int j = 0; j < paginas.size(); j++) {
+                    if (tablaSimbolosOPT.get(i).id.equals(paginas.get(j).id)) {
+                        int ptr = Integer.parseInt(tablaSimbolosOPT.get(i).direccionFisica) - 1;
+                        tablaSimbolosOPT.remove(i);
+                        Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
+                        TimeUnit.SECONDS.sleep(1);
+                        Main.simulacion.showPagesOpt();
+
+                    }
                 }
             }
-        }
-    }
-     
-    public void instruccionKill(Instruccion instruccion) throws InterruptedException{
-        Set<String> llavesSet = mapa.keySet();
-        ArrayList<String> llaves = new ArrayList<>(llavesSet);
-        for(String llave : llaves){
-            ArrayList<Pagina> paginas = mapa.get(llave);
-            for(int i = 0; i < paginas.size(); i++){
-                if(paginas.get(i).pid.equals(String.valueOf(instruccion.getParametros().get(0)))){
-                    deletePuntero(llave);
-                    break;
+        } else {
+            ArrayList<Pagina> paginas = mapa.remove(instruccion.getParametros().get(0));
+            for (int i = 0; i < tablaSimbolos.size(); i++) {
+                for (int j = 0; j < paginas.size(); j++) {
+                    if (tablaSimbolos.get(i).id.equals(paginas.get(j).id)) {
+                        int ptr = Integer.parseInt(tablaSimbolos.get(i).direccionFisica) - 1;
+                        tablaSimbolos.remove(i);
+                        Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
+                        TimeUnit.SECONDS.sleep(1);
+                        Main.simulacion.showPages();
+
+                    }
                 }
             }
+
         }
-        TimeUnit.SECONDS.sleep(1);
-        Main.simulacion.showPages();
+
     }
- 
+
+    public void deletePuntero(String puntero) throws InterruptedException {
+        if (isOpt) {
+            System.out.println("Puntero a eliminar: " + puntero);
+            System.out.println(mapaOPT.size());
+            ArrayList<Pagina> paginas = mapaOPT.remove(puntero);
+            for (int i = 0; i < tablaSimbolosOPT.size(); i++) {
+                for (int j = 0; j < paginas.size(); j++) {
+                    if (tablaSimbolosOPT.get(i).id.equals(paginas.get(j).id)) {
+                        int ptr = Integer.parseInt(tablaSimbolosOPT.get(i).direccionFisica) - 1;
+                        tablaSimbolosOPT.remove(i);
+                        Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
+                        TimeUnit.SECONDS.sleep(1);
+                        Main.simulacion.showPagesOpt();
+
+                    }
+                }
+            }
+
+        } else {
+            System.out.println("Puntero a eliminar: " + puntero);
+            System.out.println(mapa.size());
+            ArrayList<Pagina> paginas = mapa.remove(puntero);
+            for (int i = 0; i < tablaSimbolos.size(); i++) {
+                for (int j = 0; j < paginas.size(); j++) {
+                    if (tablaSimbolos.get(i).id.equals(paginas.get(j).id)) {
+                        int ptr = Integer.parseInt(tablaSimbolos.get(i).direccionFisica) - 1;
+                        tablaSimbolos.remove(i);
+                        Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
+                        TimeUnit.SECONDS.sleep(1);
+                        Main.simulacion.showPages();
+
+                    }
+                }
+            }
+
+        }
+
+    }
+
+    public void instruccionKill(Instruccion instruccion) throws InterruptedException {
+        if (isOpt) {
+            Set<String> llavesSet = mapaOPT.keySet();
+            ArrayList<String> llaves = new ArrayList<>(llavesSet);
+            for (String llave : llaves) {
+                ArrayList<Pagina> paginas = mapaOPT.get(llave);
+                for (int i = 0; i < paginas.size(); i++) {
+                    if (paginas.get(i).pid.equals(String.valueOf(instruccion.getParametros().get(0)))) {
+                        deletePuntero(llave);
+                        break;
+                    }
+                }
+            }
+            TimeUnit.SECONDS.sleep(1);
+            Main.simulacion.showPagesOpt();
+
+        } else {
+            Set<String> llavesSet = mapa.keySet();
+            ArrayList<String> llaves = new ArrayList<>(llavesSet);
+            for (String llave : llaves) {
+                ArrayList<Pagina> paginas = mapa.get(llave);
+                for (int i = 0; i < paginas.size(); i++) {
+                    if (paginas.get(i).pid.equals(String.valueOf(instruccion.getParametros().get(0)))) {
+                        deletePuntero(llave);
+                        break;
+                    }
+                }
+            }
+            TimeUnit.SECONDS.sleep(1);
+            Main.simulacion.showPages();
+
+        }
+
+    }
+
     private void sleep(int i) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-   
+
 }
