@@ -536,10 +536,6 @@ public class MemoryManagementUnit {
 
     public void instruccionUse(Instruccion instruccion) throws InterruptedException {
         if (mapa.get(instruccion.getParametros().get(0)) != null) {
-//            if (!futuresReferences.isEmpty()) {
-//                System.out.println("A eliminar: " + instruccion.getParametros());
-//                futuresReferences.remove(instruccion);
-//            }
             for (Pagina page : mapa.get(instruccion.getParametros().get(0))) { //Por cada una de las paginas asignadas a ese puntero
 
                 if (!page.isLoaded()) {
@@ -569,10 +565,10 @@ public class MemoryManagementUnit {
     public void instruccionUseOPT(Instruccion instruccion) throws InterruptedException {
 
         if (mapaOPT.get(instruccion.getParametros().get(0)) != null) {
-//            if (!futuresReferences.isEmpty()) {
-//                System.out.println("A eliminar: " + instruccion.getParametros());
-//                futuresReferences.remove(instruccion);
-//            }
+            if (!futuresReferences.isEmpty()) {
+               // System.out.println("A eliminar: " + instruccion.getParametros());
+                futuresReferences.remove(instruccion);
+            }
             for (Pagina page : mapaOPT.get(instruccion.getParametros().get(0))) { //Por cada una de las paginas asignadas a ese puntero
 
                 if (!page.isLoaded()) {

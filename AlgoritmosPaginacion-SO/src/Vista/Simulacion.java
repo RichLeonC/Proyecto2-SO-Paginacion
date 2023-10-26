@@ -5,7 +5,9 @@
  */
 package Vista;
 
+import Backend.Computadora;
 import Backend.TipoAlgoritmo;
+import Modelo.Estadisticas;
 import Modelo.MemoryManagementUnit;
 import Modelo.Pagina;
 import java.awt.Color;
@@ -142,8 +144,8 @@ public class Simulacion extends javax.swing.JFrame {
         Color color = getColorForNumber(pid);
         cellColorsOPT.put(new Point(column, row), color);
     }
-    
-        public void setCellColorOPT(int row, int column, Color color) {
+
+    public void setCellColorOPT(int row, int column, Color color) {
         cellColorsOPT.put(new Point(column, row), color);
     }
 
@@ -159,8 +161,8 @@ public class Simulacion extends javax.swing.JFrame {
     public Color getCellColorALG(int row, int column) {
         return cellColorsALG.get(new Point(column, row));
     }
-    
-        public Color getCellColorOPT(int row, int column) {
+
+    public Color getCellColorOPT(int row, int column) {
         return cellColorsOPT.get(new Point(column, row));
     }
 
@@ -985,27 +987,29 @@ public class Simulacion extends javax.swing.JFrame {
     }//GEN-LAST:event_txfSimTimeActionPerformed
 
     private void btnVolverActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVolverActionPerformed
-        Configuracion conf = new Configuracion();
-        conf.setVisible(true);
+       Main.computadora.cancel(true);
+        Main.computadora = new Computadora();
+        Main.configuracion = new Configuracion();
+        Main.estadisticasAlg = new Estadisticas();
+        Main.estadisticasOPT = new Estadisticas();
+        Main.simulacion = new Simulacion();
+        Main.configuracion.setVisible(true);
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
     private void btnPausarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPausarActionPerformed
 
-        System.out.println("Pausado: "+pausado);
-        if(pausado){
-            notify();
-        pausado = false;
-        } 
-        else{
-            try {
-                wait();
-            } catch (InterruptedException ex) {
-                Logger.getLogger(Simulacion.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        Main.computadora.cancel(pausado);
-        pausado = true;
-        } 
+        System.out.println("Pausado: " + pausado);
+        if (pausado) {
+            pausado = false;
+            Main.computadora.reanudar();
+
+        } else {
+            pausado = true;
+            Main.computadora.pausar();
+           
+
+        }
     }//GEN-LAST:event_btnPausarActionPerformed
 
     /**
@@ -1130,18 +1134,17 @@ public class Simulacion extends javax.swing.JFrame {
         }
         //ESTADISTICAS
         txfProcesses.setText(String.valueOf(Main.estadisticasAlg.nProcesos));
-        txfSimTime.setText(String.valueOf(Main.estadisticasAlg.simTiempo)+"s");
+        txfSimTime.setText(String.valueOf(Main.estadisticasAlg.simTiempo) + "s");
         txfPagesLoaded.setText(String.valueOf(Main.estadisticasAlg.paginasCargadas));
         txfPagesUnloaded.setText(String.valueOf(Main.estadisticasAlg.paginasSinCargar));
-        
+
         algorithmTable.repaint();
-       // OptTable.repaint();
+        // OptTable.repaint();
         tableRamALG.repaint();
         //tableRamOPT.repaint();
-        
 
     }
-    
+
     public void showPagesOpt() {
         MemoryManagementUnit mmu = Main.computadora.getMmu();
         // System.out.println(mmu.memoriaOcupada);
@@ -1165,13 +1168,13 @@ public class Simulacion extends javax.swing.JFrame {
         }
         //ESTADISTICAS
         txfProcessesOPT.setText(String.valueOf(Main.estadisticasOPT.nProcesos));
-        txfSimTimeOPT.setText(String.valueOf(Main.estadisticasOPT.simTiempo)+"s");
+        txfSimTimeOPT.setText(String.valueOf(Main.estadisticasOPT.simTiempo) + "s");
         txfPagesLoadedOPT.setText(String.valueOf(Main.estadisticasOPT.paginasCargadas));
         txfPagesUnloadedOPT.setText(String.valueOf(Main.estadisticasOPT.paginasSinCargar));
-        
-       // algorithmTable.repaint();
+
+        // algorithmTable.repaint();
         OptTable.repaint();
-      //  tableRamALG.repaint();
+        //  tableRamALG.repaint();
         tableRamOPT.repaint();
 
     }

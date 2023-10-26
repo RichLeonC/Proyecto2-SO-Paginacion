@@ -21,6 +21,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.SwingWorker;
@@ -44,6 +45,8 @@ public class Computadora extends SwingWorker<Void, Void> {
     private int nOperaciones;
     ArrayList<Instruccion> instrucciones;
 
+    private final Semaphore pauseSemaphore = new Semaphore(1);
+
     public Computadora() {
         nucleosProcesamiento = 1;
         instruccionesPorSegundo = 1;
@@ -59,7 +62,7 @@ public class Computadora extends SwingWorker<Void, Void> {
     }
 
     public void ejecutarProceso(int idProceso) {
-        if(!procesos.contains(idProceso)){
+        if (!procesos.contains(idProceso)) {
             procesos.add(idProceso);
         }
     }
@@ -94,6 +97,8 @@ public class Computadora extends SwingWorker<Void, Void> {
         ExecutorService executor = Executors.newFixedThreadPool(2); //PARA USAR HILOS
 
         for (Instruccion instr : instrucciones) {
+            pauseSemaphore.acquire();
+            pauseSemaphore.release();
             switch (instr.getTipoInstruccion()) {
                 case NEW:
                     System.out.println("New");
@@ -103,7 +108,7 @@ public class Computadora extends SwingWorker<Void, Void> {
                     Main.estadisticasAlg.nProcesos = procesos.size();
                     //ESTADISTICAS OPT
                     Main.estadisticasOPT.nProcesos = procesos.size();
-                    
+
                     //Hilo 1
                     Future<?> futureNew = executor.submit(() -> {
                         try {
@@ -137,7 +142,6 @@ public class Computadora extends SwingWorker<Void, Void> {
                         }
                     });
 
-    
                     Future<?> futureUseALG = executor.submit(() -> {
                         try {
                             mmu.instruccionUse(instr);
@@ -152,7 +156,7 @@ public class Computadora extends SwingWorker<Void, Void> {
                     break;
                 case DELETE:
                     //System.out.println("Delete");
-              
+
                     Future<?> futureDeleteOPT = executor.submit(() -> {
                         try {
                             mmu.instruccionDeleteOPT(instr);
@@ -160,7 +164,7 @@ public class Computadora extends SwingWorker<Void, Void> {
                             Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
-        
+
                     Future<?> futureDeleteALG = executor.submit(() -> {
                         try {
                             mmu.instruccionDelete(instr);
@@ -175,14 +179,14 @@ public class Computadora extends SwingWorker<Void, Void> {
                 case KILL:
                     //System.out.println("Kill");
                     //ESTADISTICAS ALG
-                    if(!procesos.isEmpty()){
+                    if (!procesos.isEmpty()) {
                         System.out.println("Entra a borrar");
                         procesos.remove(0);
                     }
                     Main.estadisticasAlg.nProcesos = procesos.size();
                     //ESTADISTICAS OPT
                     Main.estadisticasOPT.nProcesos = procesos.size();
-                   
+
                     Future<?> futureKillOPT = executor.submit(() -> {
                         try {
                             mmu.instruccionKillOPT(instr);
@@ -190,7 +194,7 @@ public class Computadora extends SwingWorker<Void, Void> {
                             Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
-                    
+
                     Future<?> futureKillALG = executor.submit(() -> {
                         try {
                             mmu.instruccionKill(instr);
@@ -266,11 +270,15 @@ public class Computadora extends SwingWorker<Void, Void> {
     }
 
     public void pausar() {
-
+        try {
+            pauseSemaphore.acquire();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 
     public void reanudar() {
-
+        pauseSemaphore.release();
     }
 
     public int getInstruccionesPorSegundo() {
