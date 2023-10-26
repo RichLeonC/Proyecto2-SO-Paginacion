@@ -851,7 +851,7 @@ public class Simulacion extends javax.swing.JFrame {
                                 .addGroup(txtPagesUnloadedLayout.createSequentialGroup()
                                     .addComponent(jLabel28)
                                     .addGap(6, 6, 6)
-                                    .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                         .addComponent(txfTrashingPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(txfTrashingTime, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
@@ -1102,10 +1102,15 @@ public class Simulacion extends javax.swing.JFrame {
             }
 
         }
+        //ESTADISTICAS
+        txfProcesses.setText(String.valueOf(Main.estadisticasAlg.nProcesos));
+        txfSimTime.setText(String.valueOf(Main.estadisticasAlg.simTiempo)+"s");
+        
         algorithmTable.repaint();
        // OptTable.repaint();
         tableRamALG.repaint();
         //tableRamOPT.repaint();
+        
 
     }
     
@@ -1130,6 +1135,10 @@ public class Simulacion extends javax.swing.JFrame {
             }
 
         }
+        //ESTADISTICAS
+        txfProcessesOPT.setText(String.valueOf(Main.estadisticasOPT.nProcesos));
+        txfSimTimeOPT.setText(String.valueOf(Main.estadisticasOPT.simTiempo)+"s");
+        
        // algorithmTable.repaint();
         OptTable.repaint();
       //  tableRamALG.repaint();

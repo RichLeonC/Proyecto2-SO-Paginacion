@@ -30,7 +30,7 @@ public class Computadora extends SwingWorker<Void, Void> {
     private MemoryManagementUnit mmu;
     private AdminOperaciones adminOperaciones;
     private int reloj;
-    private ArrayList<Proceso> procesos;
+    private ArrayList<Integer> procesos;
 
     private int semilla;
     public Random random;
@@ -52,8 +52,10 @@ public class Computadora extends SwingWorker<Void, Void> {
 
     }
 
-    public boolean ejecutarProceso(int idProceso) {
-        return true;
+    public void ejecutarProceso(int idProceso) {
+        if(!procesos.contains(idProceso)){
+            procesos.add(idProceso);
+        }
     }
 
     public void setFuturesReferences() {
@@ -86,16 +88,24 @@ public class Computadora extends SwingWorker<Void, Void> {
                 case NEW:
                     System.out.println("New");
                     System.out.println(instr.getParametros().get(0));
+                    ejecutarProceso(Integer.parseInt(instr.getParametros().get(0)));
+                    //ESTADISTICAS ALG
+                    Main.estadisticasAlg.nProcesos = procesos.size();
+                    //ESTADISTICAS OPT
+                    Main.estadisticasOPT.nProcesos = procesos.size();
+                    
                     mmu.intruccionNewOPT(instr);
-                    //mmu.intruccionNew(instr);
+                    
+                    mmu.intruccionNew(instr);
+                    
 
                     break;
                 case USE:
                     //System.out.println("Use");
                     mmu.isOpt = true;
                     mmu.instruccionUse(instr);
-                    //mmu.isOpt = false;
-                   // mmu.instruccionUse(instr);
+                    mmu.isOpt = false;
+                    mmu.instruccionUse(instr);
 
                     break;
                 case DELETE:
@@ -108,6 +118,14 @@ public class Computadora extends SwingWorker<Void, Void> {
                     break;
                 case KILL:
                     //System.out.println("Kill");
+                    //ESTADISTICAS ALG
+                    if(procesos.size()>0){
+                        procesos.remove(0);
+                    }
+                    Main.estadisticasAlg.nProcesos = procesos.size();
+                    //ESTADISTICAS OPT
+                    Main.estadisticasOPT.nProcesos = procesos.size();
+                    
                     mmu.isOpt = true;
                     mmu.instruccionKill(instr);
                     mmu.isOpt = false;
@@ -242,12 +260,8 @@ public class Computadora extends SwingWorker<Void, Void> {
         this.reloj = reloj;
     }
 
-    public ArrayList<Proceso> getProcesos() {
-        return procesos;
-    }
-
-    public void setProcesos(ArrayList<Proceso> procesos) {
-        this.procesos = procesos;
+    public int getProcesos() {
+        return procesos.size();
     }
 
 }

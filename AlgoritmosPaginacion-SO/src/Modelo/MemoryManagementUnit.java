@@ -330,7 +330,7 @@ public class MemoryManagementUnit {
         for(int i = 0; i < numPaginas; i++){
             int dir = getDireccionLibre();
             //System.out.println("Direccion libre: " + dir);
-            if(dir < 10){
+            if(dir < 100){
                 System.out.println("HIT");
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
@@ -344,7 +344,8 @@ public class MemoryManagementUnit {
                 direccionVirtualActualID++;
                 idActual++;
                 memoriaOcupada++;
-                TimeUnit.SECONDS.sleep(1);                   
+                TimeUnit.SECONDS.sleep(1);
+                Main.estadisticasAlg.simTiempo += 1;
                 
                 } if (algoritmo == TipoAlgoritmo.MRU){
                 Pagina pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,formattedDate);
@@ -354,7 +355,8 @@ public class MemoryManagementUnit {
                 direccionVirtualActualID++;
                 idActual++;
                 memoriaOcupada++;
-                TimeUnit.SECONDS.sleep(1);                   
+                TimeUnit.SECONDS.sleep(1);
+                Main.estadisticasAlg.simTiempo += 1;
                 
                 }
                 
@@ -367,6 +369,7 @@ public class MemoryManagementUnit {
                 idActual++;
                 memoriaOcupada++;
                 TimeUnit.SECONDS.sleep(1);
+                Main.estadisticasAlg.simTiempo += 1;
                 }
             
             }else{
@@ -387,6 +390,7 @@ public class MemoryManagementUnit {
                 direccionDiscoActualID++;
                 idActual++;
                 TimeUnit.SECONDS.sleep(5);
+                Main.estadisticasAlg.simTiempo += 5;
             }
         Main.simulacion.showPages();
         }
@@ -420,6 +424,7 @@ public class MemoryManagementUnit {
                 idActualOPT++;
                 memoriaOcupadaOPT++;
                 TimeUnit.SECONDS.sleep(1);
+                Main.estadisticasOPT.simTiempo += 1;
             
             }else{
                 System.out.println("FAIL");
@@ -439,6 +444,7 @@ public class MemoryManagementUnit {
                 direccionDiscoActualOPT++;
                 idActualOPT++;
                 TimeUnit.SECONDS.sleep(5);
+                Main.estadisticasOPT.simTiempo += 5;
             }
         Main.simulacion.showPagesOpt();
         }
@@ -520,16 +526,27 @@ public class MemoryManagementUnit {
             for (Pagina page : mapa1.get(instruccion.getParametros().get(0))) { //Por cada una de las paginas asignadas a ese puntero
 
                 if (page.direccionFisica.equals("")) {
-                    //System.out.println("No está en RAM");
+                    //System.out.println("No está en RAM"); //FALLO
                     //LLAMA AL ALGORITMO
                     //DETERMINAR EL MARKING
                     determinarMarking(page);
                     String direccion = "-1";
                     page.setDireccionFisica(direccion);
+                    if(isOpt){
+                        Main.estadisticasOPT.simTiempo += 5;
+                    }else{
+                        Main.estadisticasAlg.simTiempo += 5;
+                    }
                 } else {
-                    //System.out.println("Si está en RAM");
+                    //System.out.println("Si está en RAM"); //HIT
+                    if(isOpt){
+                        Main.estadisticasOPT.simTiempo += 1;
+                    }else{
+                        Main.estadisticasAlg.simTiempo += 1;
+                    }
                 }
                 TimeUnit.SECONDS.sleep(1);
+                
 
                 if (isOpt) {
                     Main.simulacion.showPagesOpt();
@@ -554,6 +571,7 @@ public class MemoryManagementUnit {
                         tablaSimbolosOPT.remove(i);
                         Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
                         TimeUnit.SECONDS.sleep(1);
+                        Main.estadisticasOPT.simTiempo += 1;
                         Main.simulacion.showPagesOpt();
 
                     }
@@ -568,6 +586,7 @@ public class MemoryManagementUnit {
                         tablaSimbolos.remove(i);
                         Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
                         TimeUnit.SECONDS.sleep(1);
+                        Main.estadisticasAlg.simTiempo += 1;
                         Main.simulacion.showPages();
 
                     }
@@ -590,6 +609,7 @@ public class MemoryManagementUnit {
                         tablaSimbolosOPT.remove(i);
                         Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
                         TimeUnit.SECONDS.sleep(1);
+                        Main.estadisticasOPT.simTiempo += 1;
                         Main.simulacion.showPagesOpt();
 
                     }
@@ -607,6 +627,7 @@ public class MemoryManagementUnit {
                         tablaSimbolos.remove(i);
                         Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
                         TimeUnit.SECONDS.sleep(1);
+                        Main.estadisticasAlg.simTiempo += 1;
                         Main.simulacion.showPages();
 
                     }
@@ -630,7 +651,6 @@ public class MemoryManagementUnit {
                     }
                 }
             }
-            TimeUnit.SECONDS.sleep(1);
             Main.simulacion.showPagesOpt();
 
         } else {
@@ -645,7 +665,6 @@ public class MemoryManagementUnit {
                     }
                 }
             }
-            TimeUnit.SECONDS.sleep(1);
             Main.simulacion.showPages();
 
         }
