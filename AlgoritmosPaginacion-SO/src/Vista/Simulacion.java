@@ -18,6 +18,8 @@ import javax.swing.JTable;
 import javax.swing.table.TableCellRenderer;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -33,6 +35,7 @@ public class Simulacion extends javax.swing.JFrame {
     private Map<Point, Color> cellColorsALG = new HashMap<>();
     private Map<Point, Color> cellColorsOPTPages = new HashMap<>();
     private Map<Point, Color> cellColorsALGPages = new HashMap<>();
+    private boolean pausado = false;
 
     public Simulacion() {
         initComponents();
@@ -245,7 +248,7 @@ public class Simulacion extends javax.swing.JFrame {
         jLabel33 = new javax.swing.JLabel();
         jLabel34 = new javax.swing.JLabel();
         btnVolver = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnPausar = new javax.swing.JButton();
         lblMmuALG = new javax.swing.JLabel();
         lblRamALG = new javax.swing.JLabel();
         jScrollPane4 = new javax.swing.JScrollPane();
@@ -559,8 +562,13 @@ public class Simulacion extends javax.swing.JFrame {
             }
         });
 
-        jButton2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
-        jButton2.setText("Pausar/Reanudar");
+        btnPausar.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        btnPausar.setText("Pausar/Reanudar");
+        btnPausar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPausarActionPerformed(evt);
+            }
+        });
 
         lblMmuALG.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         lblMmuALG.setForeground(new java.awt.Color(255, 255, 255));
@@ -618,7 +626,7 @@ public class Simulacion extends javax.swing.JFrame {
                                 .addGap(93, 93, 93))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(jButton2)
+                                .addComponent(btnPausar)
                                 .addGap(432, 432, 432)
                                 .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(100, 100, 100))
@@ -857,7 +865,7 @@ public class Simulacion extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
                 .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
-                        .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPausar, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(19, 19, 19))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, txtPagesUnloadedLayout.createSequentialGroup()
                         .addComponent(btnVolver, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -982,6 +990,24 @@ public class Simulacion extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnVolverActionPerformed
 
+    private void btnPausarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPausarActionPerformed
+
+        System.out.println("Pausado: "+pausado);
+        if(pausado){
+            notify();
+        pausado = false;
+        } 
+        else{
+            try {
+                wait();
+            } catch (InterruptedException ex) {
+                Logger.getLogger(Simulacion.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        Main.computadora.cancel(pausado);
+        pausado = true;
+        } 
+    }//GEN-LAST:event_btnPausarActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1020,8 +1046,8 @@ public class Simulacion extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable OptTable;
     private javax.swing.JTable algorithmTable;
+    private javax.swing.JButton btnPausar;
     private javax.swing.JButton btnVolver;
-    private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
