@@ -73,6 +73,7 @@ public class Computadora extends SwingWorker<Void, Void> {
     }
 
     public void inicializar() throws InterruptedException {
+        
         for (int dir = 0; dir <= 101; dir++) {
             Main.simulacion.setCellColorALG(0, dir, Color.WHITE);
             Main.simulacion.setCellColorOPT(0, dir, Color.WHITE);

@@ -354,40 +354,28 @@ public class MemoryManagementUnit {
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
-
-                if (algoritmo == TipoAlgoritmo.SECOND_CHANCE) {
-                    Pagina pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, "0");
-                    paginasValores.add(pagina);
-                    tablaSimbolos.add(pagina);
-                    direccionRamActualID++;
-                    direccionVirtualActualID++;
-                    idActual++;
-                    memoriaOcupada++;
-                    TimeUnit.SECONDS.sleep(1);
-
+                Pagina pagina = new Pagina();
+                if (algoritmo == TipoAlgoritmo.SECOND_CHANCE ){
+                 pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,"0");         
+                    System.out.println("SECOND");
+                
+                } if (algoritmo == TipoAlgoritmo.MRU){
+                 pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,formattedDate);                  
+                System.out.println("MRU");
                 }
-                if (algoritmo == TipoAlgoritmo.MRU) {
-                    Pagina pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, formattedDate);
-                    paginasValores.add(pagina);
-                    tablaSimbolos.add(pagina);
-                    direccionRamActualID++;
-                    direccionVirtualActualID++;
-                    idActual++;
-                    memoriaOcupada++;
-                    TimeUnit.SECONDS.sleep(1);
-
-                } else {
-                    Pagina pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, "true");
-                    paginasValores.add(pagina);
-                    tablaSimbolos.add(pagina);
-                    direccionRamActualID++;
-                    direccionVirtualActualID++;
-                    idActual++;
-                    memoriaOcupada++;
-                    TimeUnit.SECONDS.sleep(1);
+                
+                if (algoritmo == TipoAlgoritmo.RANDOM || algoritmo == TipoAlgoritmo.FIFO){
+                 pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,"true");
+                   System.out.println("cualquier otro");
                 }
-
-            } else {
+                paginasValores.add(pagina);
+                tablaSimbolos.add(pagina);
+                direccionRamActualID++;
+                direccionVirtualActualID++;
+                idActual++;
+                memoriaOcupada++;
+                TimeUnit.SECONDS.sleep(1);          
+            }else{
                 System.out.println("FAIL");
                 int idReemplazo = llamarAlgoritmo();
                 System.out.println("Pagina a reemplazar: " + idReemplazo);
@@ -552,6 +540,7 @@ public class MemoryManagementUnit {
                     determinarMarking(page);
                     String direccion = "-1";
                     page.setDireccionFisica(direccion);
+                    System.out.println("beening use");
                 } else {
                     //System.out.println("Si está en RAM");
                 }
