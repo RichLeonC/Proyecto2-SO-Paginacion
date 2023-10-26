@@ -21,6 +21,7 @@ public class Pagina {
     public String direccionDisco;
     public String timestamp;
     public String  marking;
+    public String size; 
 
     public Pagina() {
     }

@@ -1171,6 +1171,7 @@ public class Simulacion extends javax.swing.JFrame {
         txfSimTimeOPT.setText(String.valueOf(Main.estadisticasOPT.simTiempo) + "s");
         txfPagesLoadedOPT.setText(String.valueOf(Main.estadisticasOPT.paginasCargadas));
         txfPagesUnloadedOPT.setText(String.valueOf(Main.estadisticasOPT.paginasSinCargar));
+        txfRamKBOPT.setText(String.valueOf(Main.estadisticasOPT.ramKB));
 
         // algorithmTable.repaint();
         OptTable.repaint();

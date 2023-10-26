@@ -256,7 +256,8 @@ public class MemoryManagementUnit {
             if (page.isLoaded()) {
                 int distancia = getDistanciaFutura(page);
                 System.out.println("Dist: " + distancia);
-                //System.out.println("Distancia: " + distancia);
+                System.out.println("Max: "+distanciaMaxima);
+      
                 if (distancia == -1) {
                     System.out.println("page -1: " + page.id);
                     return Integer.parseInt(page.id);
@@ -421,6 +422,7 @@ public class MemoryManagementUnit {
                 ? (Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096
                 : (Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096 + 1;
         System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
+        Main.estadisticasOPT.ramKB += Integer.parseInt( instruccion.getParametros().get(1))/1024;
         ArrayList<Pagina> paginasValores = new ArrayList();
         for (int i = 0; i < numPaginas; i++) {
             int dir = getDireccionLibreOPT();
