@@ -356,24 +356,15 @@ public class MemoryManagementUnit {
                 String formattedDate = sdf.format(date);
                 Pagina pagina = new Pagina();
                 if (algoritmo == TipoAlgoritmo.SECOND_CHANCE ){
-                Pagina pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,"0");
-                paginasValores.add(pagina);
-                tablaSimbolos.add(pagina);
-                direccionRamActualID++;
-                direccionVirtualActualID++;
-                idActual++;
-                memoriaOcupada++;
-                TimeUnit.SECONDS.sleep(1);
-                Main.estadisticasAlg.simTiempo += 1;
+                    pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,"0");
                 
-                } if (algoritmo == TipoAlgoritmo.MRU){
-                 pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,formattedDate);                  
-                System.out.println("MRU");
-                }
-                
-                if (algoritmo == TipoAlgoritmo.RANDOM || algoritmo == TipoAlgoritmo.FIFO){
-                 pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,"true");
-                   System.out.println("cualquier otro");
+                }else if (algoritmo == TipoAlgoritmo.MRU){
+                    pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,formattedDate);                  
+                    System.out.println("MRU");
+                }                
+                else if (algoritmo == TipoAlgoritmo.RANDOM || algoritmo == TipoAlgoritmo.FIFO){
+                    pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,"true");
+                    System.out.println("cualquier otro");
                 }
                 paginasValores.add(pagina);
                 tablaSimbolos.add(pagina);
@@ -384,20 +375,6 @@ public class MemoryManagementUnit {
                 TimeUnit.SECONDS.sleep(1);
                 Main.estadisticasAlg.simTiempo += 1;
                 
-                }
-                
-                else{
-                Pagina pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,"true");
-                paginasValores.add(pagina);
-                tablaSimbolos.add(pagina);
-                direccionRamActualID++;
-                direccionVirtualActualID++;
-                idActual++;
-                memoriaOcupada++;
-                TimeUnit.SECONDS.sleep(1);
-                Main.estadisticasAlg.simTiempo += 1;
-                }
-            
             }else{
                 System.out.println("FAIL");
                 int idReemplazo = llamarAlgoritmo();

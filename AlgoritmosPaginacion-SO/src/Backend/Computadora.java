@@ -104,11 +104,6 @@ public class Computadora extends SwingWorker<Void, Void> {
                     //ESTADISTICAS OPT
                     Main.estadisticasOPT.nProcesos = procesos.size();
                     
-                    mmu.intruccionNewOPT(instr);
-                    
-                    mmu.intruccionNew(instr);
-                    
-
                     //Hilo 1
                     Future<?> futureNew = executor.submit(() -> {
                         try {
@@ -135,9 +130,6 @@ public class Computadora extends SwingWorker<Void, Void> {
                 case USE:
                     //System.out.println("Use");
                     mmu.isOpt = true;
-                    mmu.instruccionUse(instr);
-                    mmu.isOpt = false;
-                    mmu.instruccionUse(instr);
                     Future<?> futureUseOPT = executor.submit(() -> {
                         try {
                             mmu.instruccionUse(instr);
@@ -184,7 +176,7 @@ public class Computadora extends SwingWorker<Void, Void> {
                 case KILL:
                     //System.out.println("Kill");
                     //ESTADISTICAS ALG
-                    if(procesos.size()>0){
+                    if(!procesos.isEmpty()){
                         procesos.remove(0);
                     }
                     Main.estadisticasAlg.nProcesos = procesos.size();
@@ -192,7 +184,6 @@ public class Computadora extends SwingWorker<Void, Void> {
                     Main.estadisticasOPT.nProcesos = procesos.size();
                     
                     mmu.isOpt = true;
-
                     Future<?> futureKillOPT = executor.submit(() -> {
                         try {
                             mmu.instruccionKill(instr);
@@ -200,6 +191,7 @@ public class Computadora extends SwingWorker<Void, Void> {
                             Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
+                    
                     mmu.isOpt = false;
                     Future<?> futureKillALG = executor.submit(() -> {
                         try {
