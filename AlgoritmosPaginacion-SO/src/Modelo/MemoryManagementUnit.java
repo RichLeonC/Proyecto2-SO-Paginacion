@@ -535,12 +535,12 @@ public class MemoryManagementUnit {
             }
             for (Pagina page : mapa1.get(instruccion.getParametros().get(0))) { //Por cada una de las paginas asignadas a ese puntero
 
-                if (page.direccionFisica.equals("")) {
+                if (!page.isLoaded()) {
                     //System.out.println("No está en RAM"); //FALLO
                     //LLAMA AL ALGORITMO
                     //DETERMINAR EL MARKING
                     determinarMarking(page);
-                    String direccion = "-1";
+                    String direccion = "";
                     page.setDireccionFisica(direccion);
                     if(isOpt){
                         Main.estadisticasOPT.simTiempo += 5;
