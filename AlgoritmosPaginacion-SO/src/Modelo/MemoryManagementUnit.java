@@ -345,7 +345,7 @@ public class MemoryManagementUnit {
                 System.out.println("MRU");
                 }
                 
-                else{
+                if (algoritmo == TipoAlgoritmo.RANDOM || algoritmo == TipoAlgoritmo.FIFO){
                  pagina = new Pagina(String.valueOf(idActual),instruccion.getParametros().get(0),"X",String.valueOf(direccionVirtualActualID), String.valueOf(dir+1),"",formattedDate,"true");
                    System.out.println("cualquier otro");
                 }
