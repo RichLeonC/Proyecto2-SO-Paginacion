@@ -176,6 +176,7 @@ public class Computadora extends SwingWorker<Void, Void> {
                     //System.out.println("Kill");
                     //ESTADISTICAS ALG
                     if(!procesos.isEmpty()){
+                        System.out.println("Entra a borrar");
                         procesos.remove(0);
                     }
                     Main.estadisticasAlg.nProcesos = procesos.size();
