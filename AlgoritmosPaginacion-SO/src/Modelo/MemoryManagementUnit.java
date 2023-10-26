@@ -398,11 +398,10 @@ public class MemoryManagementUnit {
                 }
                 paginasValores.add(pagina);
                 tablaSimbolos.add(pagina);
-                direccionRamActualID++;
                 direccionVirtualActualID++;
+                direccionDiscoActualID++;
                 idActual++;
-                memoriaOcupada++;
-                TimeUnit.SECONDS.sleep(1);
+                TimeUnit.SECONDS.sleep(5);
                 Main.estadisticasAlg.simTiempo += 5;
             }
             Main.simulacion.showPages();
