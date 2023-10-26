@@ -71,6 +71,7 @@ public class Computadora extends SwingWorker<Void, Void> {
     }
 
     public void inicializar() throws InterruptedException {
+        
         for (int dir = 0; dir <= 101; dir++) {
             Main.simulacion.setCellColorALG(0, dir, Color.WHITE);
             Main.simulacion.setCellColorOPT(0, dir, Color.WHITE);
@@ -87,15 +88,15 @@ public class Computadora extends SwingWorker<Void, Void> {
                     System.out.println("New");
                     System.out.println(instr.getParametros().get(0));
                     mmu.intruccionNewOPT(instr);
-                    //mmu.intruccionNew(instr);
+                    mmu.intruccionNew(instr);
 
                     break;
                 case USE:
                     //System.out.println("Use");
                     mmu.isOpt = true;
                     mmu.instruccionUse(instr);
-                    //mmu.isOpt = false;
-                   // mmu.instruccionUse(instr);
+                    mmu.isOpt = false;
+                    mmu.instruccionUse(instr);
 
                     break;
                 case DELETE:
