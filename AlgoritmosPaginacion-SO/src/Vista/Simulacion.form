@@ -70,6 +70,13 @@
                                   <Component id="jScrollPane2" min="-2" pref="614" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="93" max="-2" attributes="0"/>
                               </Group>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
+                                  <Component id="jButton2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="432" max="-2" attributes="0"/>
+                                  <Component id="btnVolver" min="-2" pref="141" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
+                              </Group>
                               <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
                                       <Group type="102" alignment="0" attributes="0">
@@ -137,87 +144,68 @@
                                           <Group type="103" groupAlignment="0" attributes="0">
                                               <Component id="txfFragmentationOPT" min="-2" pref="67" max="-2" attributes="0"/>
                                               <Component id="jLabel11" min="-2" max="-2" attributes="0"/>
-                                              <Component id="btnIniciarSimulacion" alignment="0" min="-2" pref="141" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="103" alignment="1" groupAlignment="0" max="-2" attributes="0">
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace max="32767" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="txfProcesses" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
-                                                  <Component id="jLabel31" alignment="0" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel33" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="txfSimTime" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
-                                                  <Group type="103" alignment="0" groupAlignment="1" attributes="0">
+                                  <EmptySpace max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="1" attributes="0">
+                                      <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                                          <Component id="txfPagesLoaded" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
+                                          <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Component id="txfRamKB" alignment="1" min="-2" pref="67" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txfPagesUnloaded" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel28" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txfTrashingTime" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="44" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="txfTrashingPercent" min="-2" pref="67" max="-2" attributes="0"/>
+                                              <Component id="jLabel30" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                      </Group>
+                                      <Group type="102" alignment="0" attributes="0">
+                                          <EmptySpace pref="1" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="txfProcesses" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
+                                              <Component id="jLabel31" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          </Group>
+                                          <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
+                                          <Group type="103" groupAlignment="0" attributes="0">
+                                              <Component id="jLabel33" alignment="0" min="-2" max="-2" attributes="0"/>
+                                              <Component id="txfSimTime" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
+                                              <Group type="102" alignment="0" attributes="0">
+                                                  <Group type="103" groupAlignment="1" attributes="0">
                                                       <Component id="jLabel24" alignment="1" min="-2" max="-2" attributes="0"/>
                                                       <Component id="txfVramKB" alignment="1" min="-2" pref="67" max="-2" attributes="0"/>
                                                   </Group>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="299" max="-2" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <EmptySpace pref="50" max="32767" attributes="0"/>
-                                              <Group type="103" groupAlignment="1" attributes="0">
-                                                  <Component id="jLabel32" min="-2" max="-2" attributes="0"/>
-                                                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                                      <Component id="txfPagesLoaded" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
-                                                      <Component id="jLabel26" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="102" alignment="1" attributes="0">
-                                                      <Component id="jButton2" min="-2" max="-2" attributes="0"/>
-                                                      <EmptySpace min="-2" pref="7" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Component id="txfRamKB" alignment="1" min="-2" pref="67" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace min="-2" pref="42" max="-2" attributes="0"/>
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Group type="102" attributes="0">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="jLabel27" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="txfPagesUnloaded" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace min="-2" pref="53" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="jLabel28" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="txfTrashingTime" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace min="-2" pref="68" max="-2" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="txfTrashingPercent" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
-                                                          <Component id="jLabel30" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace max="32767" attributes="0"/>
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="txfFragmentation" alignment="0" min="-2" pref="67" max="-2" attributes="0"/>
-                                                          <Component id="jLabel29" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace min="-2" pref="20" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <Group type="102" attributes="0">
-                                                      <Group type="103" groupAlignment="0" attributes="0">
-                                                          <Component id="txfRamPercent" min="-2" pref="67" max="-2" attributes="0"/>
-                                                          <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                      <EmptySpace max="32767" attributes="0"/>
+                                                  <EmptySpace max="32767" attributes="0"/>
+                                                  <Group type="103" groupAlignment="0" attributes="0">
+                                                      <Component id="txfSimTime22" min="-2" pref="67" max="-2" attributes="0"/>
+                                                      <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
                                           </Group>
                                       </Group>
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace max="32767" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="txfSimTime22" min="-2" pref="67" max="-2" attributes="0"/>
-                                              <Component id="btnVolver" min="-2" pref="141" max="-2" attributes="0"/>
-                                              <Component id="jLabel25" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="100" max="-2" attributes="0"/>
-                                      </Group>
+                                      <Component id="txfRamPercent" min="-2" pref="67" max="-2" attributes="0"/>
+                                      <Component id="jLabel34" min="-2" max="-2" attributes="0"/>
                                   </Group>
+                                  <EmptySpace min="-2" pref="46" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txfFragmentation" min="-2" pref="67" max="-2" attributes="0"/>
+                                      <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="40" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                       </Group>
@@ -266,161 +254,155 @@
                   <Component id="lblSimulacion" min="-2" pref="52" max="-2" attributes="0"/>
                   <EmptySpace pref="47" max="32767" attributes="0"/>
                   <Component id="jScrollPane4" min="-2" pref="46" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jScrollPane6" min="-2" pref="46" max="-2" attributes="0"/>
+                      <Component id="lblRamALG" min="-2" pref="48" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                  <Component id="lblMmuALG" min="-2" pref="52" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
+                  <Group type="103" groupAlignment="1" attributes="0">
+                      <Component id="jScrollPane1" min="-2" pref="194" max="-2" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="194" max="-2" attributes="0"/>
+                  </Group>
+                  <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="jScrollPane6" min="-2" pref="46" max="-2" attributes="0"/>
-                              <Component id="lblRamALG" min="-2" pref="48" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
                           </Group>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                          <Component id="lblMmuALG" min="-2" pref="52" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="1" max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" alignment="1" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Component id="jScrollPane1" min="-2" pref="194" max="-2" attributes="0"/>
-                                      <Component id="jScrollPane2" min="-2" pref="194" max="-2" attributes="0"/>
-                                  </Group>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" attributes="0">
-                                          <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="jLabel1" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="txfProcessesOPT" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                              <Component id="txfSimTimeOPT" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="txfRamKBOPT" min="-2" pref="32" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Component id="txfRamPercentOPT" min="-2" pref="32" max="-2" attributes="0"/>
-                                              </Group>
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Group type="103" groupAlignment="3" attributes="0">
-                                                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="3" attributes="0">
-                                                      <Component id="txfVramKbOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                                      <Component id="txfVramPercentOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Group type="102" alignment="1" attributes="0">
-                                                  <Group type="103" groupAlignment="3" attributes="0">
-                                                      <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                  </Group>
-                                                  <EmptySpace max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="3" attributes="0">
-                                                      <Component id="txfPagesLoadedOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                                      <Component id="txfPagesUnloadedOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                                  </Group>
-                                              </Group>
-                                              <Group type="102" alignment="0" attributes="0">
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="jLabel10" alignment="1" min="-2" max="-2" attributes="0"/>
-                                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                                          <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                          <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                                  <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="txfFragmentationOPT" alignment="1" min="-2" pref="32" max="-2" attributes="0"/>
-                                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
-                                                          <Component id="txfTrashingPercentOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                                          <Component id="txfTrashingTimeOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                                      </Group>
-                                                  </Group>
-                                              </Group>
-                                          </Group>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="254" max="-2" attributes="0"/>
-                                          <Component id="jLabel29" min="-2" max="-2" attributes="0"/>
-                                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                          <Component id="txfFragmentation" min="-2" pref="32" max="-2" attributes="0"/>
-                                      </Group>
-                                  </Group>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="txfProcessesOPT" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              <Component id="txfSimTimeOPT" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txfRamKBOPT" min="-2" pref="32" max="-2" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="txfRamPercentOPT" min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
                               <Group type="102" alignment="1" attributes="0">
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="txfProcesses" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                      <Component id="txfSimTime" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel32" alignment="3" min="-2" max="-2" attributes="0"/>
-                                      <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel7" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel6" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="txfVramKB" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                      <Component id="txfSimTime22" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                      <Component id="txfRamKB" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                      <Component id="txfRamPercent" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Component id="txfVramKbOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Component id="txfVramPercentOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                          <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" alignment="1" attributes="0">
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="jLabel8" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="txfPagesLoadedOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Component id="txfPagesUnloadedOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                  </Group>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
                                   <Group type="103" groupAlignment="0" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="txfPagesLoaded" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                              <Component id="txfPagesUnloaded" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                          </Group>
+                                      <Component id="jLabel10" alignment="1" min="-2" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel11" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <Group type="103" groupAlignment="0" attributes="0">
-                                              <Component id="jLabel28" alignment="1" min="-2" max="-2" attributes="0"/>
-                                              <Component id="jLabel30" alignment="0" min="-2" max="-2" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="3" attributes="0">
-                                              <Component id="txfTrashingPercent" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                              <Component id="txfTrashingTime" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                          </Group>
+                                  </Group>
+                                  <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Component id="txfFragmentationOPT" alignment="1" min="-2" pref="32" max="-2" attributes="0"/>
+                                      <Group type="103" alignment="0" groupAlignment="3" attributes="0">
+                                          <Component id="txfTrashingPercentOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                          <Component id="txfTrashingTimeOPT" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
                               </Group>
                           </Group>
-                          <EmptySpace pref="45" max="32767" attributes="0"/>
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="btnIniciarSimulacion" alignment="3" min="-2" pref="43" max="-2" attributes="0"/>
-                              <Component id="jButton2" alignment="3" min="-2" pref="44" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="103" groupAlignment="1" attributes="0">
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel29" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel30" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                              <Component id="txfFragmentation" min="-2" pref="32" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" alignment="1" attributes="0">
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel31" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel33" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txfProcesses" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                                  <Component id="txfSimTime" alignment="3" min="-2" pref="30" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="38" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="jLabel25" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel24" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel32" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  <Component id="jLabel34" alignment="3" min="-2" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="3" attributes="0">
+                                  <Component id="txfVramKB" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Component id="txfSimTime22" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Component id="txfRamKB" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Component id="txfRamPercent" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                              </Group>
+                              <EmptySpace min="-2" pref="45" max="-2" attributes="0"/>
+                              <Group type="103" groupAlignment="0" attributes="0">
+                                  <Group type="102" alignment="1" attributes="0">
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="jLabel26" alignment="3" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel27" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      </Group>
+                                      <EmptySpace max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="txfPagesLoaded" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                          <Component id="txfPagesUnloaded" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <Component id="jLabel28" min="-2" max="-2" attributes="0"/>
+                                      <EmptySpace min="-2" pref="6" max="-2" attributes="0"/>
+                                      <Group type="103" groupAlignment="3" attributes="0">
+                                          <Component id="txfTrashingPercent" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
+                                          <Component id="txfTrashingTime" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                              </Group>
                           </Group>
                       </Group>
-                      <Group type="102" attributes="0">
-                          <EmptySpace max="32767" attributes="0"/>
+                  </Group>
+                  <EmptySpace pref="37" max="32767" attributes="0"/>
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="jButton2" min="-2" pref="44" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="19" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="1" attributes="0">
                           <Component id="btnVolver" min="-2" pref="44" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <EmptySpace max="-2" attributes="0"/>
               </Group>
               <Group type="103" rootIndex="1" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
@@ -1097,17 +1079,6 @@
             </Property>
             <Property name="text" type="java.lang.String" value="Pausar/Reanudar"/>
           </Properties>
-        </Component>
-        <Component class="javax.swing.JButton" name="btnIniciarSimulacion">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Tahoma" size="18" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Iniciar"/>
-          </Properties>
-          <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnIniciarSimulacionActionPerformed"/>
-          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="lblMmuALG">
           <Properties>

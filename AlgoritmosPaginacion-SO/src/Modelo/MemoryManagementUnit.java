@@ -273,6 +273,18 @@ public class MemoryManagementUnit {
         }
         return dir;
     }
+    
+        public int getDireccionLibreOPT() {
+        int dir;
+        for (dir = 0; dir <= 100; dir++) {
+            
+            if (Main.simulacion.getCellColorOPT(0, dir) == Color.WHITE) {
+                return dir;
+            }
+        }
+        return dir;
+    }
+
 
     public int llamarAlgoritmo() {
         switch (algoritmo) {
@@ -368,7 +380,7 @@ public class MemoryManagementUnit {
         System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
         ArrayList<Pagina> paginasValores = new ArrayList();
         for(int i = 0; i < numPaginas; i++){
-            int dir = getDireccionLibre();
+            int dir = getDireccionLibreOPT();
             //System.out.println("Direccion libre: " + dir);
             if(dir < 100){
                 System.out.println("HIT");

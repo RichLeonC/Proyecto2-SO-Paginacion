@@ -86,30 +86,33 @@ public class Computadora extends SwingWorker<Void, Void> {
                 case NEW:
                     System.out.println("New");
                     System.out.println(instr.getParametros().get(0));
-                    mmu.intruccionNew(instr);     
                     mmu.intruccionNewOPT(instr);
+                    //mmu.intruccionNew(instr);
 
                     break;
                 case USE:
                     //System.out.println("Use");
-                    mmu.isOpt = false;
-                    mmu.instruccionUse(instr);
                     mmu.isOpt = true;
-                   mmu.instruccionUse(instr);
+                    mmu.instruccionUse(instr);
+                    //mmu.isOpt = false;
+                   // mmu.instruccionUse(instr);
+
                     break;
                 case DELETE:
                     //System.out.println("Delete");
-                    mmu.isOpt = false;
-                    mmu.instruccionDelete(instr);
                     mmu.isOpt = true;
                     mmu.instruccionDelete(instr);
+                    mmu.isOpt = false;
+                    mmu.instruccionDelete(instr);
+
                     break;
                 case KILL:
                     //System.out.println("Kill");
-                    mmu.isOpt = false;
-                    mmu.instruccionKill(instr);
                     mmu.isOpt = true;
                     mmu.instruccionKill(instr);
+                    mmu.isOpt = false;
+                    mmu.instruccionKill(instr);
+
                     break;
                 default:
                     throw new AssertionError(instr.getTipoInstruccion().name());
