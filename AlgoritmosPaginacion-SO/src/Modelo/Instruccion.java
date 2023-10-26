@@ -56,7 +56,7 @@ public class Instruccion {
         
         ArrayList<Pagina> paginasAsociadas = mapa.get(parametros.get(0));
         if(paginasAsociadas == null) return false;
-        
+      
         return paginasAsociadas.contains(page);
    
     }

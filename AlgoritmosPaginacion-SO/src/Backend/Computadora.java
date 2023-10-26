@@ -17,6 +17,12 @@ import java.awt.Color;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.SwingWorker;
 
 public class Computadora extends SwingWorker<Void, Void> {
@@ -66,13 +72,16 @@ public class Computadora extends SwingWorker<Void, Void> {
         for (Instruccion instr : instrucciones) {
             if (instr.getTipoInstruccion().equals(USE)) {
                 mmu.futuresReferences.add(instr);
+                //  System.out.println("instr: "+instr.getTipoInstruccion()+" ("+instr.getParametros());
+
             }
 
         }
 
     }
 
-    public void inicializar() throws InterruptedException {
+    public void inicializar() throws InterruptedException, ExecutionException {
+
         for (int dir = 0; dir <= 101; dir++) {
             Main.simulacion.setCellColorALG(0, dir, Color.WHITE);
             Main.simulacion.setCellColorOPT(0, dir, Color.WHITE);
@@ -82,6 +91,7 @@ public class Computadora extends SwingWorker<Void, Void> {
             String operacionesString = adminOperaciones.generarOperaciones(nProcesos, nOperaciones);
             instrucciones = adminOperaciones.stringToOperaciones(operacionesString);
         }
+        ExecutorService executor = Executors.newFixedThreadPool(2); //PARA USAR HILOS
 
         for (Instruccion instr : instrucciones) {
             switch (instr.getTipoInstruccion()) {
@@ -99,6 +109,28 @@ public class Computadora extends SwingWorker<Void, Void> {
                     mmu.intruccionNew(instr);
                     
 
+                    //Hilo 1
+                    Future<?> futureNew = executor.submit(() -> {
+                        try {
+                            mmu.intruccionNew(instr);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+
+                    // Hilo 2
+                    Future<?> futureNewOpt = executor.submit(() -> {
+                        try {
+                            mmu.intruccionNewOPT(instr);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+
+                    //Esperar a que ambos hilos terminen
+                    futureNew.get();
+                    futureNewOpt.get();
+
                     break;
                 case USE:
                     //System.out.println("Use");
@@ -106,14 +138,47 @@ public class Computadora extends SwingWorker<Void, Void> {
                     mmu.instruccionUse(instr);
                     mmu.isOpt = false;
                     mmu.instruccionUse(instr);
+                    Future<?> futureUseOPT = executor.submit(() -> {
+                        try {
+                            mmu.instruccionUse(instr);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+
+                    mmu.isOpt = false;
+                    Future<?> futureUseALG = executor.submit(() -> {
+                        try {
+                            mmu.instruccionUse(instr);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+
+                    futureUseOPT.get();
+                    futureUseALG.get();
 
                     break;
                 case DELETE:
                     //System.out.println("Delete");
                     mmu.isOpt = true;
-                    mmu.instruccionDelete(instr);
+                    Future<?> futureDeleteOPT = executor.submit(() -> {
+                        try {
+                            mmu.instruccionDelete(instr);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
                     mmu.isOpt = false;
-                    mmu.instruccionDelete(instr);
+                    Future<?> futureDeleteALG = executor.submit(() -> {
+                        try {
+                            mmu.instruccionDelete(instr);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+                    futureDeleteOPT.get();
+                    futureDeleteALG.get();
 
                     break;
                 case KILL:
@@ -127,10 +192,24 @@ public class Computadora extends SwingWorker<Void, Void> {
                     Main.estadisticasOPT.nProcesos = procesos.size();
                     
                     mmu.isOpt = true;
-                    mmu.instruccionKill(instr);
-                    mmu.isOpt = false;
-                    mmu.instruccionKill(instr);
 
+                    Future<?> futureKillOPT = executor.submit(() -> {
+                        try {
+                            mmu.instruccionKill(instr);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+                    mmu.isOpt = false;
+                    Future<?> futureKillALG = executor.submit(() -> {
+                        try {
+                            mmu.instruccionKill(instr);
+                        } catch (InterruptedException ex) {
+                            Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
+                        }
+                    });
+                    futureKillOPT.get();
+                    futureKillALG.get();
                     break;
                 default:
                     throw new AssertionError(instr.getTipoInstruccion().name());
