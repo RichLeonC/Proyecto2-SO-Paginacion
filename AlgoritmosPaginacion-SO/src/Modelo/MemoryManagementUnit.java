@@ -613,11 +613,11 @@ public class MemoryManagementUnit {
                     Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasAlg.simTiempo += 1;
-                    if(tablaSimbolos.get(i).isLoaded()){
-                        Main.estadisticasAlg.paginasCargadas--;
-                    }else{
-                        Main.estadisticasAlg.paginasSinCargar--;
-                    }
+//                    if(tablaSimbolos.get(i).isLoaded()){
+//                        Main.estadisticasAlg.paginasCargadas--;
+//                    }else{
+//                        Main.estadisticasAlg.paginasSinCargar--;
+//                    }
                     Main.simulacion.showPages();
 
                 }
@@ -638,11 +638,11 @@ public class MemoryManagementUnit {
                     Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasOPT.simTiempo += 1;
-                    if(tablaSimbolos.get(i).isLoaded()){
-                        Main.estadisticasOPT.paginasCargadas--;
-                    }else{
-                        Main.estadisticasOPT.paginasSinCargar--;
-                    }
+//                    if(tablaSimbolosOPT.get(i).isLoaded()){
+//                        Main.estadisticasOPT.paginasCargadas--;
+//                    }else{
+//                        Main.estadisticasOPT.paginasSinCargar--;
+//                    }
                     Main.simulacion.showPagesOpt();
 
                 }
@@ -664,16 +664,17 @@ public class MemoryManagementUnit {
                     Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasAlg.simTiempo += 1;
-                    if(tablaSimbolos.get(i).isLoaded()){
-                        Main.estadisticasAlg.paginasCargadas--;
-                    }else{
-                        Main.estadisticasAlg.paginasSinCargar--;
-                    }
+//                    if(tablaSimbolos.get(i).isLoaded()){
+//                        Main.estadisticasAlg.paginasCargadas--;
+//                    }else{
+//                        Main.estadisticasAlg.paginasSinCargar--;
+//                    }
                     Main.simulacion.showPages();
 
                 }
             }
         }
+        System.out.println("Final DELETE");
 
     }
 
@@ -690,16 +691,17 @@ public class MemoryManagementUnit {
                     Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasOPT.simTiempo += 1;
-                    if(tablaSimbolos.get(i).isLoaded()){
-                        Main.estadisticasOPT.paginasCargadas--;
-                    }else{
-                        Main.estadisticasOPT.paginasSinCargar--;
-                    }
+//                    if(tablaSimbolosOPT.get(i).isLoaded()){
+//                        Main.estadisticasOPT.paginasCargadas--;
+//                    }else{
+//                        Main.estadisticasOPT.paginasSinCargar--;
+//                    }
                     Main.simulacion.showPagesOpt();
 
                 }
             }
         }
+        System.out.println("Final DELETE OPT");
 
     }
 
