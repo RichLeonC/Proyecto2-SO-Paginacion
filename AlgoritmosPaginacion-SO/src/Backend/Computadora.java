@@ -129,16 +129,15 @@ public class Computadora extends SwingWorker<Void, Void> {
                     break;
                 case USE:
                     //System.out.println("Use");
-                    mmu.isOpt = true;
                     Future<?> futureUseOPT = executor.submit(() -> {
                         try {
-                            mmu.instruccionUse(instr);
+                            mmu.instruccionUseOPT(instr);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
 
-                    mmu.isOpt = false;
+    
                     Future<?> futureUseALG = executor.submit(() -> {
                         try {
                             mmu.instruccionUse(instr);
@@ -153,15 +152,15 @@ public class Computadora extends SwingWorker<Void, Void> {
                     break;
                 case DELETE:
                     //System.out.println("Delete");
-                    mmu.isOpt = true;
+              
                     Future<?> futureDeleteOPT = executor.submit(() -> {
                         try {
-                            mmu.instruccionDelete(instr);
+                            mmu.instruccionDeleteOPT(instr);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
-                    mmu.isOpt = false;
+        
                     Future<?> futureDeleteALG = executor.submit(() -> {
                         try {
                             mmu.instruccionDelete(instr);
@@ -182,17 +181,15 @@ public class Computadora extends SwingWorker<Void, Void> {
                     Main.estadisticasAlg.nProcesos = procesos.size();
                     //ESTADISTICAS OPT
                     Main.estadisticasOPT.nProcesos = procesos.size();
-                    
-                    mmu.isOpt = true;
+                   
                     Future<?> futureKillOPT = executor.submit(() -> {
                         try {
-                            mmu.instruccionKill(instr);
+                            mmu.instruccionKillOPT(instr);
                         } catch (InterruptedException ex) {
                             Logger.getLogger(Computadora.class.getName()).log(Level.SEVERE, null, ex);
                         }
                     });
                     
-                    mmu.isOpt = false;
                     Future<?> futureKillALG = executor.submit(() -> {
                         try {
                             mmu.instruccionKill(instr);
