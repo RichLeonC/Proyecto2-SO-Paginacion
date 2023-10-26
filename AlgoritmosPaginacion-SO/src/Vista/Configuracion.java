@@ -33,8 +33,6 @@ public class Configuracion extends javax.swing.JFrame {
     public Configuracion() {
         initComponents();
         archivoSeleccionado = null;
-        algoritmoSeleccionado = TipoAlgoritmo.FIFO;
-         algoritmoSeleccionado = TipoAlgoritmo.SECOND_CHANCE;
         procesosSeleccionados = 10;
         operacionesSeleccionados = 500;
         semilla = 1;
@@ -112,6 +110,11 @@ public class Configuracion extends javax.swing.JFrame {
 
         cbAlgoritmo.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
         cbAlgoritmo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FIFO", "Second Chance", "MRU", "RND" }));
+        cbAlgoritmo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbAlgoritmoActionPerformed(evt);
+            }
+        });
 
         jLabel4.setFont(new java.awt.Font("Tahoma", 0, 20)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(255, 255, 255));
@@ -341,6 +344,10 @@ public class Configuracion extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txfSemillaPropertyChange
 
+    private void cbAlgoritmoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAlgoritmoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbAlgoritmoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -376,6 +383,10 @@ public class Configuracion extends javax.swing.JFrame {
         });
     }
 
+    public TipoAlgoritmo getAlgoritmoSeleccionado() {
+        return algoritmoSeleccionado;
+    }
+    
     public boolean validarDatos() {
         String algoritmo = (String) cbAlgoritmo.getSelectedItem();
         switch (algoritmo) {
