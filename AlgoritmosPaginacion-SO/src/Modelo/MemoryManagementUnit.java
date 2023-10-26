@@ -202,11 +202,11 @@ public class MemoryManagementUnit {
     public int secondChance() {
         Pagina pageSCActual = tablaSimbolos.get(0);
         for (Pagina page : tablaSimbolos) {
-            if (!pageSCActual.isLoaded() || (page.loaded.equals("X") && esMasVieja(pageSCActual.timestamp, page.timestamp) && "1".equals(page.getMarking()))) {
+            if (!pageSCActual.isLoaded() || (page.loaded.equals("X") && esMasVieja(pageSCActual.timestamp, page.timestamp) && "0".equals(page.getMarking()))) {
                 pageSCActual = page;
 
             } else {
-                System.out.println("MANTENER PERO OCUPA SER MARCADO COMO VISITADO ");
+               page.setMarking("0");
 
             }
         }
@@ -256,7 +256,8 @@ public class MemoryManagementUnit {
             if (page.isLoaded()) {
                 int distancia = getDistanciaFutura(page);
                 System.out.println("Dist: " + distancia);
-                //System.out.println("Distancia: " + distancia);
+                System.out.println("Max: "+distanciaMaxima);
+      
                 if (distancia == -1) {
                     System.out.println("page -1: " + page.id);
                     return Integer.parseInt(page.id);
@@ -425,6 +426,7 @@ public class MemoryManagementUnit {
                 ? (Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096
                 : (Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096 + 1;
         System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
+        Main.estadisticasOPT.ramKB += Integer.parseInt( instruccion.getParametros().get(1))/1024;
         ArrayList<Pagina> paginasValores = new ArrayList();
         Main.estadisticasOPT.fragmentacion += 4 - Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
         for (int i = 0; i < numPaginas; i++) {

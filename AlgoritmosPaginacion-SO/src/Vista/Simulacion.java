@@ -1184,6 +1184,8 @@ public class Simulacion extends javax.swing.JFrame {
         txfTrashingPercentOPT.setText(String.valueOf(Main.estadisticasOPT.desperdicioPorcentaje)+"%");
         txfFragmentationOPT.setText(String.valueOf(Main.estadisticasOPT.fragmentacion)+"KB");
         
+        txfRamKBOPT.setText(String.valueOf(Main.estadisticasOPT.ramKB));
+
         // algorithmTable.repaint();
         OptTable.repaint();
         //  tableRamALG.repaint();
