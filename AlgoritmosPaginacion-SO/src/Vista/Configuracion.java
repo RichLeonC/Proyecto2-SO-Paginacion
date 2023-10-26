@@ -9,6 +9,8 @@ import Backend.Computadora;
 import Backend.TipoAlgoritmo;
 import Modelo.Instruccion;
 import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.logging.Level;
@@ -39,6 +41,7 @@ public class Configuracion extends javax.swing.JFrame {
         txfArchivoSubido.setEditable(false);
         operacionesArchivoGenerado = "";
         instrucciones = new ArrayList();
+        btnDescargarArchivo.setEnabled(false);
         this.setLocationRelativeTo(this);
     }
 
@@ -173,6 +176,11 @@ public class Configuracion extends javax.swing.JFrame {
 
         btnDescargarArchivo.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
         btnDescargarArchivo.setText("Descargar Archivo");
+        btnDescargarArchivo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDescargarArchivoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -310,7 +318,7 @@ public class Configuracion extends javax.swing.JFrame {
             Main.simulacion.showPages();
             Main.simulacion.showPagesOpt();
             Main.simulacion.setAlgoritmoText(algoritmoSeleccionado);
-            
+
         }
     }//GEN-LAST:event_btnIniciarActionPerformed
 
@@ -330,16 +338,17 @@ public class Configuracion extends javax.swing.JFrame {
             procesosSeleccionados = Integer.parseInt(cbProcesos1.getSelectedItem().toString());
             operacionesArchivoGenerado = Main.computadora.getAdminOperaciones().generarOperaciones(procesosSeleccionados, operacionesSeleccionados, semilla);
             txaTextoArchivo.setText(operacionesArchivoGenerado);
+            btnDescargarArchivo.setEnabled(true);
         }
 
     }//GEN-LAST:event_btnCrearArchivoActionPerformed
 
     private void txfSemillaPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_txfSemillaPropertyChange
         // TODO add your handling code here:
-        if(!txfSemilla.getText().equals("")){
+        if (!txfSemilla.getText().equals("")) {
             semilla = Integer.parseInt(txfSemilla.getText());
             Main.computadora.setSemilla(semilla);
-        }else{
+        } else {
             Main.computadora.setSemilla(new Random().nextInt(10));
         }
     }//GEN-LAST:event_txfSemillaPropertyChange
@@ -347,6 +356,22 @@ public class Configuracion extends javax.swing.JFrame {
     private void cbAlgoritmoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbAlgoritmoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbAlgoritmoActionPerformed
+
+    private void btnDescargarArchivoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDescargarArchivoActionPerformed
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setSelectedFile(new File("semilla #" + semilla));
+        int userSelection = fileChooser.showSaveDialog(this);
+        if (userSelection == JFileChooser.APPROVE_OPTION) {
+            File fileToSave = fileChooser.getSelectedFile();
+
+            try (FileWriter writer = new FileWriter(fileToSave)) {
+                writer.write(operacionesArchivoGenerado);
+                JOptionPane.showMessageDialog(this, "Archivo descargado exitosamente!", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } catch (IOException ex) {
+                JOptionPane.showMessageDialog(this, "Error al guardar el archivo.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+        }
+    }//GEN-LAST:event_btnDescargarArchivoActionPerformed
 
     /**
      * @param args the command line arguments
@@ -386,7 +411,7 @@ public class Configuracion extends javax.swing.JFrame {
     public TipoAlgoritmo getAlgoritmoSeleccionado() {
         return algoritmoSeleccionado;
     }
-    
+
     public boolean validarDatos() {
         String algoritmo = (String) cbAlgoritmo.getSelectedItem();
         switch (algoritmo) {
