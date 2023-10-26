@@ -202,11 +202,11 @@ public class MemoryManagementUnit {
     public int secondChance() {
         Pagina pageSCActual = tablaSimbolos.get(0);
         for (Pagina page : tablaSimbolos) {
-            if (!pageSCActual.isLoaded() || (page.loaded.equals("X") && esMasVieja(pageSCActual.timestamp, page.timestamp) && "1".equals(page.getMarking()))) {
+            if (!pageSCActual.isLoaded() || (page.loaded.equals("X") && esMasVieja(pageSCActual.timestamp, page.timestamp) && "0".equals(page.getMarking()))) {
                 pageSCActual = page;
 
             } else {
-                System.out.println("MANTENER PERO OCUPA SER MARCADO COMO VISITADO ");
+               page.setMarking("0");
 
             }
         }
