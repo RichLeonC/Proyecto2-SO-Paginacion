@@ -74,8 +74,7 @@ public class Computadora extends SwingWorker<Void, Void> {
         }
         for (Instruccion instr : instrucciones) {
             if (instr.getTipoInstruccion().equals(USE)) {
-                mmu.futuresReferences.add(instr);
-                //  System.out.println("instr: "+instr.getTipoInstruccion()+" ("+instr.getParametros());
+                mmu.futuresReferences.add(instr);      
 
             }
 
