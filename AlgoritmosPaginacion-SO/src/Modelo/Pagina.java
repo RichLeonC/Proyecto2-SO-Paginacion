@@ -21,13 +21,13 @@ public class Pagina {
     public String direccionDisco;
     public String timestamp;
     public String  marking;
-    public String size; 
+    public int size; 
 
     public Pagina() {
     }
     
 
-    public Pagina(String id, String pid, String loaded, String direccionVirtual,String direccionFisica,  String direccionDisco, String timestamp,String marking) {
+    public Pagina(String id, String pid, String loaded, String direccionVirtual,String direccionFisica,  String direccionDisco, String timestamp,String marking, int size) {
         this.id = id;
         this.pid = pid;
         this.loaded = loaded;
@@ -36,6 +36,7 @@ public class Pagina {
         this.direccionDisco = direccionDisco;
         this.marking = marking;
         this.timestamp = timestamp;
+        this.size = size;
     }
 
     public String getId() {

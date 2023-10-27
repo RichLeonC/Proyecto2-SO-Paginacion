@@ -15,6 +15,8 @@ public class Estadisticas {
     public int simTiempo;
     public int ramKB ;
     public float ramPorcentaje;
+    public int virtualKB ;
+    public float virtualPorcentaje;
     public int paginasCargadas;
     public int paginasSinCargar;
     public int desperdicioTiempo;

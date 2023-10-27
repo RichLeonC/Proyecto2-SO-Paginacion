@@ -1144,6 +1144,8 @@ public class Simulacion extends javax.swing.JFrame {
         txfTrashingTime.setText(String.valueOf(Main.estadisticasAlg.desperdicioTiempo)+"s");
         txfTrashingPercent.setText(String.valueOf(Main.estadisticasAlg.desperdicioPorcentaje)+"%");
         txfFragmentation.setText(String.valueOf(Main.estadisticasAlg.fragmentacion)+"KB");
+        txfRamKB.setText(String.valueOf(Main.estadisticasAlg.ramKB)+"KB");
+        txfRamPercent.setText(String.valueOf(Main.estadisticasAlg.ramPorcentaje)+"%");
 
         algorithmTable.repaint();
         // OptTable.repaint();
@@ -1184,7 +1186,9 @@ public class Simulacion extends javax.swing.JFrame {
         txfTrashingPercentOPT.setText(String.valueOf(Main.estadisticasOPT.desperdicioPorcentaje)+"%");
         txfFragmentationOPT.setText(String.valueOf(Main.estadisticasOPT.fragmentacion)+"KB");
         
-        txfRamKBOPT.setText(String.valueOf(Main.estadisticasOPT.ramKB));
+        txfRamKBOPT.setText(String.valueOf(Main.estadisticasOPT.ramKB)+"KB");
+        txfRamPercentOPT.setText(String.valueOf(Main.estadisticasOPT.ramPorcentaje)+"%");
+        
 
         // algorithmTable.repaint();
         OptTable.repaint();
