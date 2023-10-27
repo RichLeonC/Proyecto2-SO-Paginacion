@@ -248,14 +248,15 @@ public class MemoryManagementUnit {
         return Integer.parseInt(paginas.get(index).id);
     }
 
-    public int optimum() {
+    public int optimum(ArrayList<Pagina> valores) {
         int distanciaMaxima = -1;
         Pagina paginaRemplazable = null;
         for (Pagina page : tablaSimbolosOPT) { //Obtenemos 
             System.out.println("page: " + page.id);
-            if (page.isLoaded()) {
+            
+            if (page.isLoaded()&&!valores.contains(page)) {
                 int distancia = getDistanciaFutura(page);
-                System.out.println("Dist: " + distancia);
+                System.out.println("Dist: " + distancia+" Page: "+page.pid);
                 System.out.println("Max: "+distanciaMaxima);
       
                 if (distancia == -1) {
@@ -277,7 +278,7 @@ public class MemoryManagementUnit {
 
             if (instr.esReferenciaAPagina(page, mapaOPT)) {
                 //   System.out.println("PageB:  " + page.id);
-                //  System.out.println("indexOf: "+futuresReferences.indexOf(instr));
+                  System.out.println("indexOf: "+futuresReferences.indexOf(instr));
                 return futuresReferences.indexOf(instr);
             }
         }
@@ -316,8 +317,6 @@ public class MemoryManagementUnit {
                 return mru();
             case RANDOM:
                 return random();
-            case OPT:
-                return optimum();
             default:
                 return -1;
 
@@ -445,7 +444,12 @@ public class MemoryManagementUnit {
 
             } else {
                 System.out.println("FAIL");
-                int idReemplazo = optimum();
+                ArrayList<Pagina> pagesA; 
+                int idReemplazo = optimum(paginasValores);
+//                while(paginasValores.contains(getPageByIDOPT(idReemplazo))){
+//                    
+//                
+//                }
                 System.out.println("Pagina a reemplazar: " + idReemplazo);
                 int direccionRAM = reemplazarOPT(idReemplazo);
                 System.out.println("Direccion a usar : " + direccionRAM);
