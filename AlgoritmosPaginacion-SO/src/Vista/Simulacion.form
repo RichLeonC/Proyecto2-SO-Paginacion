@@ -191,7 +191,7 @@
                                                   </Group>
                                                   <EmptySpace max="32767" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="txfSimTime22" min="-2" pref="67" max="-2" attributes="0"/>
+                                                      <Component id="txfVramPercent" min="-2" pref="67" max="-2" attributes="0"/>
                                                       <Component id="jLabel25" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
@@ -363,7 +363,7 @@
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="3" attributes="0">
                                   <Component id="txfVramKB" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
-                                  <Component id="txfSimTime22" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
+                                  <Component id="txfVramPercent" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                   <Component id="txfRamKB" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                                   <Component id="txfRamPercent" alignment="3" min="-2" pref="32" max="-2" attributes="0"/>
                               </Group>
@@ -863,7 +863,7 @@
             <Property name="text" type="java.lang.String" value="V-ram %"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JTextField" name="txfSimTime22">
+        <Component class="javax.swing.JTextField" name="txfVramPercent">
           <Properties>
             <Property name="editable" type="boolean" value="false"/>
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -871,7 +871,7 @@
             </Property>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfSimTime22ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txfVramPercentActionPerformed"/>
           </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel26">

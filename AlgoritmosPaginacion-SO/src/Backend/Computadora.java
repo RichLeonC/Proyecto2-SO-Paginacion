@@ -150,7 +150,7 @@ public class Computadora extends SwingWorker<Void, Void> {
                     });
 
                     futureUseOPT.get();
-                    futureUseALG.get();
+                    //futureUseALG.get();
 
                     break;
                 case DELETE:

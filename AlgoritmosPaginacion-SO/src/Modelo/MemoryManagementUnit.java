@@ -185,10 +185,12 @@ public class MemoryManagementUnit {
         return null;
     }
 
-    public int fifo() {
+    public int fifo(ArrayList<Pagina> familia) {
         Pagina pageFIActual = tablaSimbolos.get(0);
         for (Pagina page : tablaSimbolos) {
-            if (!pageFIActual.isLoaded() || page.loaded.equals("X") && esMasVieja(pageFIActual.timestamp, page.timestamp)) {
+            //System.out.println("Comparando pagina elegida actual" + pageFIActual.id + " con la pagina " + page.id);
+            if (familia.contains(pageFIActual) || !pageFIActual.isLoaded() || (page.loaded.equals("X") && esMasVieja(pageFIActual.timestamp, page.timestamp))) {
+                //System.out.println("Se reemplazan");
                 pageFIActual = page;
             } 
         }
@@ -197,12 +199,15 @@ public class MemoryManagementUnit {
 
     public int secondChance() {
         Pagina pageSCActual = tablaSimbolos.get(0);
+        System.out.println("entraaaaaaaa");
         for (Pagina page : tablaSimbolos) {
             if (!pageSCActual.isLoaded() || (page.loaded.equals("X") && esMasVieja(pageSCActual.timestamp, page.timestamp) && "0".equals(page.getMarking()))) {
                 pageSCActual = page;
+                System.out.println("se elimino" + Integer.parseInt(pageSCActual.id) );
 
             } else {
                page.setMarking("0");
+                System.out.println("se van a eliminar en la siguiente vuelta");
 
             }
         }
@@ -260,6 +265,7 @@ public class MemoryManagementUnit {
             }
 
         }
+        System.out.println(paginaRemplazable);
         return Integer.parseInt(paginaRemplazable.id);
     }
 
@@ -294,12 +300,12 @@ public class MemoryManagementUnit {
         return dir;
     }
 
-    public int llamarAlgoritmo() {
+    public int llamarAlgoritmo(ArrayList<Pagina> familia) {
         switch (algoritmo) {
             case SECOND_CHANCE:
                 return secondChance();
             case FIFO:
-                return fifo();
+                return fifo(familia);
             case MRU:
                 return mru();
             case RANDOM:
@@ -311,7 +317,7 @@ public class MemoryManagementUnit {
     }
 
     public static boolean esMasVieja(String fechaFIActual, String fecha2) {
-        System.out.println("Fecha vieja: " + fechaFIActual + " Fecha nueva: " + fecha2);
+        //System.out.println("Fecha vieja: " + fechaFIActual + " Fecha nueva: " + fecha2);
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
         try {
             Date date1 = sdf.parse(fechaFIActual);
@@ -334,23 +340,38 @@ public class MemoryManagementUnit {
         System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
         ArrayList<Pagina> paginasValores = new ArrayList();
         Main.estadisticasAlg.fragmentacion += 4 - Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
+        int espacioDisponible = 100;
+        for(Pagina page : tablaSimbolos){
+            if(!page.isLoaded()){
+                espacioDisponible--;
+            }
+        }
         for (int i = 0; i < numPaginas; i++) {
             int dir = getDireccionLibre();
             //System.out.println("Direccion libre: " + dir);
-            if (dir < 100) {
-                System.out.println("HIT");
+            if (dir < 100 && numPaginas < espacioDisponible) {
+                //System.out.println("HIT");
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
                 Pagina pagina = new Pagina();
+                int paginaSize = 0;
+                if(i == numPaginas-1){
+                    paginaSize = Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
+                    System.out.println("tamaño de página: " + paginaSize);
+                }else{
+                    paginaSize = 4;
+                }
+                Main.estadisticasAlg.ramKB +=  paginaSize;
+                
                 if (algoritmo == TipoAlgoritmo.SECOND_CHANCE) {
-                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, "0");
+                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, "0",paginaSize);
 
                 } else if (algoritmo == TipoAlgoritmo.MRU) {
-                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, formattedDate);
+                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, formattedDate,paginaSize);
                     System.out.println("MRU");
                 } else if (algoritmo == TipoAlgoritmo.RANDOM || algoritmo == TipoAlgoritmo.FIFO) {
-                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, "true");
+                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, "true",paginaSize);
                     System.out.println("cualquier otro");
                 }
                 paginasValores.add(pagina);
@@ -365,25 +386,35 @@ public class MemoryManagementUnit {
                 Main.estadisticasAlg.paginasCargadas++;
 
             } else {
-                System.out.println("FAIL");
-                int idReemplazo = llamarAlgoritmo();
-                System.out.println("Pagina a reemplazar: " + idReemplazo);
+                //System.out.println("FAIL");
+                int idReemplazo = llamarAlgoritmo(paginasValores);
+                //System.out.println("ALG Pagina a reemplazar: " + idReemplazo);
                 int direccionRAM = reemplazar(idReemplazo);
-                System.out.println("Direccion a usar : " + direccionRAM);
+                //System.out.println("Direccion a usar : " + direccionRAM);
                 //LLAMA AL ALGORITMO
                 //DETERMINAR MARKING
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
                 Pagina pagina = new Pagina();
+                
+                int paginaSize = 0;
+                if(i == numPaginas-1){
+                    paginaSize = Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
+                    System.out.println("tamaño de página: " + paginaSize);
+                }else{
+                    paginaSize = 4;
+                }
+                Main.estadisticasAlg.ramKB += paginaSize;
+                
                 if (algoritmo == TipoAlgoritmo.SECOND_CHANCE) {
-                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(direccionRAM), "", formattedDate, "0");
+                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(direccionRAM), "", formattedDate, "0",paginaSize);
 
                 } else if (algoritmo == TipoAlgoritmo.MRU) {
-                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(direccionRAM), "", formattedDate, formattedDate);
+                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(direccionRAM), "", formattedDate, formattedDate,paginaSize);
                     System.out.println("MRU");
                 } else if (algoritmo == TipoAlgoritmo.RANDOM || algoritmo == TipoAlgoritmo.FIFO) {
-                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(direccionRAM), "", formattedDate, "true");
+                    pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(direccionRAM), "", formattedDate, "true",paginaSize);
                     System.out.println("cualquier otro");
                 }
                 paginasValores.add(pagina);
@@ -399,6 +430,7 @@ public class MemoryManagementUnit {
             }
             Main.simulacion.showPages();
         }
+        Main.estadisticasAlg.ramPorcentaje = Main.estadisticasAlg.ramKB * 100 / 400;
         String ptr = String.valueOf(punteroActual);
         punteroActual++;
         mapa.put(ptr, paginasValores);
@@ -411,19 +443,35 @@ public class MemoryManagementUnit {
                 && ((Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096) != 0
                 ? (Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096
                 : (Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096 + 1;
-        System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
-        Main.estadisticasOPT.ramKB += Integer.parseInt( instruccion.getParametros().get(1))/1024;
+        //System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
+        //Main.estadisticasOPT.ramKB += Integer.parseInt( instruccion.getParametros().get(1))/1024;
         ArrayList<Pagina> paginasValores = new ArrayList();
         Main.estadisticasOPT.fragmentacion += 4 - Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
+        int espacioDisponible = 100;
+        for(Pagina page : tablaSimbolosOPT){
+            if(!page.isLoaded()){
+                espacioDisponible--;
+            }
+        }
         for (int i = 0; i < numPaginas; i++) {
             int dir = getDireccionLibreOPT();
             //System.out.println("Direccion libre: " + dir);
-            if (dir < 100) {
-                System.out.println("HIT");
+            if (dir < 100  && numPaginas < espacioDisponible) {
+                //System.out.println("HIT");
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
-                Pagina pagina = new Pagina(String.valueOf(idActualOPT), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualOPT), String.valueOf(dir + 1), "", formattedDate, "true");
+                
+                int paginaSize = 0;
+                if(i == numPaginas-1){
+                    paginaSize = Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
+                    System.out.println("tamaño de página: " + paginaSize);
+                }else{
+                    paginaSize = 4;
+                }
+                Main.estadisticasOPT.ramKB += paginaSize;
+                
+                Pagina pagina = new Pagina(String.valueOf(idActualOPT), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualOPT), String.valueOf(dir + 1), "", formattedDate, "",paginaSize);
                 paginasValores.add(pagina);
                 tablaSimbolosOPT.add(pagina);
                 direccionRamActualOPT++;
@@ -443,15 +491,23 @@ public class MemoryManagementUnit {
 //                    
 //                
 //                }
-                System.out.println("Pagina a reemplazar: " + idReemplazo);
+                //System.out.println("Pagina a reemplazar: " + idReemplazo);
                 int direccionRAM = reemplazarOPT(idReemplazo);
-                System.out.println("Direccion a usar : " + direccionRAM);
+                //System.out.println("Direccion a usar : " + direccionRAM);
 
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
-                System.out.println("Param: " + instruccion.getParametros().get(0));
-                Pagina pagina = new Pagina(String.valueOf(idActualOPT), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualOPT), String.valueOf(direccionRAM), String.valueOf(direccionDiscoActualOPT), formattedDate, "true");
+                //System.out.println("Param: " + instruccion.getParametros().get(0));
+                int paginaSize = 0;
+                if(i == numPaginas-1){
+                    paginaSize = Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
+                    System.out.println("tamaño de página: " + paginaSize);
+                }else{
+                    paginaSize = 4;
+                }
+                Main.estadisticasOPT.ramKB += paginaSize;
+                Pagina pagina = new Pagina(String.valueOf(idActualOPT), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualOPT), String.valueOf(direccionRAM), "", formattedDate, "",paginaSize);
                 paginasValores.add(pagina);
                 tablaSimbolosOPT.add(pagina);
                 direccionVirtualActualOPT++;
@@ -465,6 +521,7 @@ public class MemoryManagementUnit {
             }
             Main.simulacion.showPagesOpt();
         }
+        Main.estadisticasOPT.ramPorcentaje = Main.estadisticasOPT.ramKB * 100 / 400;
         String ptr = String.valueOf(punteroActualOPT);
         punteroActualOPT++;
         mapaOPT.put(ptr, paginasValores);
@@ -475,13 +532,23 @@ public class MemoryManagementUnit {
     public int reemplazar(int idReemplazo) {
         getPageByID(idReemplazo).loaded = "";
         int dir = Integer.parseInt(getPageByID(idReemplazo).direccionFisica);
+        Main.estadisticasAlg.ramKB -= getPageByID(idReemplazo).size;
+        Main.estadisticasAlg.ramPorcentaje = Main.estadisticasAlg.ramKB * 100 / 400;
+        Main.estadisticasAlg.virtualKB += getPageByID(idReemplazo).size;
+        Main.estadisticasAlg.virtualPorcentaje = Main.estadisticasAlg.virtualKB * 100 / 400;
         getPageByID(idReemplazo).direccionFisica = "";
+        getPageByID(idReemplazo).direccionDisco = String.valueOf(Main.computadora.random.nextInt(0,1000));
         return dir;
     }
 
     public int reemplazarOPT(int idReemplazo) {
         getPageByIDOPT(idReemplazo).loaded = "";
         int dir = Integer.parseInt(getPageByIDOPT(idReemplazo).direccionFisica);
+        Main.estadisticasOPT.ramKB -= getPageByIDOPT(idReemplazo).size;
+        Main.estadisticasOPT.ramPorcentaje = Main.estadisticasOPT.ramKB * 100 / 400;
+        Main.estadisticasOPT.virtualKB += getPageByID(idReemplazo).size;
+        Main.estadisticasOPT.virtualPorcentaje = Main.estadisticasOPT.virtualKB * 100 / 400;
+        getPageByIDOPT(idReemplazo).direccionDisco = String.valueOf(Main.computadora.random.nextInt(0,1000));
         getPageByIDOPT(idReemplazo).direccionFisica = "";
         return dir;
     }
@@ -505,7 +572,7 @@ public class MemoryManagementUnit {
         String formattedDate = sdf.format(date);
         if (pagina.loaded.equals("X")) {
             pagina.setMarking(formattedDate);
-            System.out.println("Marcado fecha nueva" + formattedDate);
+            //System.out.println("Marcado fecha nueva" + formattedDate);
         } else {
 
         }
@@ -527,8 +594,6 @@ public class MemoryManagementUnit {
                 return mruMarking(pagina);
             case RANDOM:
                 return "";
-            case OPT:
-                return optimumMarking();
             default:
                 return "";
 
@@ -540,10 +605,23 @@ public class MemoryManagementUnit {
             for (Pagina page : mapa.get(instruccion.getParametros().get(0))) { //Por cada una de las paginas asignadas a ese puntero
 
                 if (!page.isLoaded()) {
-                    //System.out.println("No está en RAM"); //FALLO
+                    System.out.println("No está en RAM"); //FALLO
                     //LLAMA AL ALGORITMO
+                    /*System.out.println("ALG Pagina a reemplazar: " + mapa.get(instruccion.getParametros().get(0)).size());
+                    System.out.println("ALG Pagina a reemplazar: " + idReemplazo);
+                    //System.out.println("Pagina a reemplazar: " + idReemplazo);
+                    int direccionRAM = reemplazar(idReemplazo);*/
+                    int idReemplazo = llamarAlgoritmo(mapa.get(instruccion.getParametros().get(0)));
+                    Main.estadisticasAlg.virtualKB += getPageByID(idReemplazo).size;
+                    Main.estadisticasAlg.ramKB += page.size;
+                    Main.estadisticasAlg.ramPorcentaje = Main.estadisticasAlg.ramKB * 100 / 400;
+                    Main.estadisticasAlg.virtualKB -= page.size;
+                    Main.estadisticasAlg.virtualPorcentaje = Main.estadisticasAlg.virtualKB * 100 / 400;
+                    
+                    /*page.loaded = "X";
+                    page.direccionFisica = String.valueOf(direccionRAM);*/
                     //DETERMINAR EL MARKING
-                    determinarMarking(page);
+                    //determinarMarking(page);
                     String direccion = "";
                     page.setDireccionFisica(direccion);
 
@@ -554,6 +632,7 @@ public class MemoryManagementUnit {
 
                 } else {
                     //System.out.println("Si está en RAM"); //HIT
+                    determinarMarking(page);
                     Main.estadisticasAlg.simTiempo += 1;
                     Main.estadisticasAlg.desperdicioPorcentaje = Main.estadisticasAlg.desperdicioTiempo * 100 / Main.estadisticasAlg.simTiempo;
 
@@ -579,6 +658,17 @@ public class MemoryManagementUnit {
                 if (!page.isLoaded()) {
                     //System.out.println("No está en RAM"); //FALLO
                     //LLAMA AL ALGORITMO
+                    //int idReemplazo = optimum(mapaOPT.get(instruccion.getParametros().get(0)));
+                    //System.out.println("Pagina a reemplazar: " + idReemplazo);
+                    Main.estadisticasOPT.ramKB += page.size;
+                    Main.estadisticasOPT.ramPorcentaje = Main.estadisticasOPT.ramKB * 100 / 400;
+                    
+                    Main.estadisticasOPT.virtualKB -= page.size;
+                    Main.estadisticasOPT.virtualPorcentaje = Main.estadisticasOPT.virtualKB * 100 / 400;
+                    /*int direccionRAM = reemplazarOPT(idReemplazo);
+                    page.loaded = "X";
+                    page.direccionFisica = String.valueOf(direccionRAM);*/
+                    
                     //DETERMINAR EL MARKING
                     determinarMarking(page);
                     String direccion = "";
@@ -614,9 +704,16 @@ public class MemoryManagementUnit {
                 if (tablaSimbolos.get(i).id.equals(paginas.get(j).id)) {
                     if(tablaSimbolos.get(i).isLoaded()){
                         Main.estadisticasAlg.paginasCargadas--;
+                        Main.estadisticasAlg.ramKB -= tablaSimbolos.get(i).size;
+                        Main.estadisticasAlg.ramPorcentaje = Main.estadisticasAlg.ramKB * 100 / 400;
                     }else{
                         Main.estadisticasAlg.paginasSinCargar--;
                     }
+                    
+                    if(tablaSimbolos.get(i).size != 4){
+                        Main.estadisticasAlg.fragmentacion -= 4 - tablaSimbolos.get(i).size;
+                    }
+                    
                     int ptr = Integer.parseInt(tablaSimbolos.get(i).direccionFisica) - 1;
                     tablaSimbolos.remove(i);
                     Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
@@ -642,8 +739,14 @@ public class MemoryManagementUnit {
                         Main.estadisticasOPT.paginasCargadas--;
                         int ptr = Integer.parseInt(tablaSimbolosOPT.get(i).direccionFisica) - 1;
                         Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
+                        Main.estadisticasOPT.ramKB -= tablaSimbolosOPT.get(i).size;
+                        Main.estadisticasOPT.ramPorcentaje = Main.estadisticasOPT.ramKB * 100 / 400;
                     }else{
                         Main.estadisticasOPT.paginasSinCargar--;
+                    }
+                    
+                    if(tablaSimbolosOPT.get(i).size != 4){
+                        Main.estadisticasOPT.fragmentacion -= 4 - tablaSimbolosOPT.get(i).size;
                     }
                     
                     tablaSimbolosOPT.remove(i);
@@ -671,9 +774,16 @@ public class MemoryManagementUnit {
                         Main.estadisticasAlg.paginasCargadas--;
                         int ptr = Integer.parseInt(tablaSimbolos.get(i).direccionFisica) - 1;
                         Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
+                        Main.estadisticasAlg.ramKB -= tablaSimbolos.get(i).size;
+                        Main.estadisticasAlg.ramPorcentaje = Main.estadisticasAlg.ramKB * 100 / 400;
                     }else{
                         Main.estadisticasAlg.paginasSinCargar--;
                     }
+                    
+                    if(tablaSimbolos.get(i).size != 4){
+                        Main.estadisticasAlg.fragmentacion -= 4-tablaSimbolos.get(i).size;
+                    }
+                    
                     tablaSimbolos.remove(i);
                     System.out.println("Entra a borrar no opt1");
                     System.out.println("Entra a borrar no opt2");
@@ -703,9 +813,16 @@ public class MemoryManagementUnit {
                         Main.estadisticasOPT.paginasCargadas--;
                         int ptr = Integer.parseInt(tablaSimbolosOPT.get(i).direccionFisica) - 1;
                         Main.simulacion.setCellColorOPT(0, ptr, Color.WHITE);
+                        Main.estadisticasOPT.ramKB -= tablaSimbolosOPT.get(i).size;
+                        Main.estadisticasOPT.ramPorcentaje = Main.estadisticasOPT.ramKB * 100 / 400;
                     }else{
                         Main.estadisticasOPT.paginasSinCargar--;
                     }
+                    
+                    if(tablaSimbolosOPT.get(i).size != 4){
+                        Main.estadisticasOPT.fragmentacion-= 4-tablaSimbolosOPT.get(i).size;
+                    }
+                    
                     System.out.println("Entra a borrar opt");
                     
                     tablaSimbolosOPT.remove(i);
