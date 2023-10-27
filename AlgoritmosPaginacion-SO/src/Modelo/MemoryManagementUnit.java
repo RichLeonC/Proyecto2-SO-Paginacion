@@ -188,13 +188,9 @@ public class MemoryManagementUnit {
     public int fifo() {
         Pagina pageFIActual = tablaSimbolos.get(0);
         for (Pagina page : tablaSimbolos) {
-            //System.out.println("Comparando pagina elegida actual" + pageFIActual.id + " con la pagina " + page.id);
             if (!pageFIActual.isLoaded() || page.loaded.equals("X") && esMasVieja(pageFIActual.timestamp, page.timestamp)) {
-                //System.out.println("Se reemplazan");
                 pageFIActual = page;
-            } else {
-                //System.out.println("Se mantiene");
-            }
+            } 
         }
         return Integer.parseInt(pageFIActual.id);
     }
@@ -251,7 +247,7 @@ public class MemoryManagementUnit {
     public int optimum(ArrayList<Pagina> valores) {
         int distanciaMaxima = -1;
         Pagina paginaRemplazable = null;
-        for (Pagina page : tablaSimbolosOPT) { //Obtenemos 
+        for (Pagina page : tablaSimbolosOPT) { 
             if (page.isLoaded()&&!valores.contains(page)) {
                 int distancia = getDistanciaFutura(page);
   
