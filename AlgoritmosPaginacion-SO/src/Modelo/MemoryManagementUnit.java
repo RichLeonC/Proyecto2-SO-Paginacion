@@ -201,11 +201,16 @@ public class MemoryManagementUnit {
 
     public int secondChance() {
         Pagina pageSCActual = tablaSimbolos.get(0);
+        System.out.println("entraaaaaaaa");
         for (Pagina page : tablaSimbolos) {
             if (!pageSCActual.isLoaded() || (page.loaded.equals("X") && esMasVieja(pageSCActual.timestamp, page.timestamp) && "0".equals(page.getMarking()))) {
                 pageSCActual = page;
+                System.out.println("se elimino" + Integer.parseInt(pageSCActual.id) );
+
             } else {
-                page.setMarking("0");
+               page.setMarking("0");
+                System.out.println("se van a eliminar en la siguiente vuelta");
+
             }
         }
 
