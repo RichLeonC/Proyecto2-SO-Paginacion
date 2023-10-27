@@ -1,7 +1,0 @@
-new(3,3072)
-new(3,3072)
-new(3,11264)
-use(1)
-delete(1)
-delete(2)
-delete(3)

@@ -539,7 +539,7 @@ public class MemoryManagementUnit {
         Main.estadisticasAlg.virtualKB += getPageByID(idReemplazo).size;
         Main.estadisticasAlg.virtualPorcentaje = Main.estadisticasAlg.virtualKB * 100 / 400;
         getPageByID(idReemplazo).direccionFisica = "";
-        getPageByID(idReemplazo).direccionDisco = String.valueOf(Main.computadora.random.nextInt(0,1000));
+        getPageByID(idReemplazo).direccionDisco = String.valueOf(Main.computadora.random.nextInt(1000));
         return dir;
     }
 
@@ -550,7 +550,7 @@ public class MemoryManagementUnit {
         Main.estadisticasOPT.ramPorcentaje = Main.estadisticasOPT.ramKB * 100 / 400;
         Main.estadisticasOPT.virtualKB += getPageByID(idReemplazo).size;
         Main.estadisticasOPT.virtualPorcentaje = Main.estadisticasOPT.virtualKB * 100 / 400;
-        getPageByIDOPT(idReemplazo).direccionDisco = String.valueOf(Main.computadora.random.nextInt(0,1000));
+        getPageByIDOPT(idReemplazo).direccionDisco = String.valueOf(Main.computadora.random.nextInt(1000));
         getPageByIDOPT(idReemplazo).direccionFisica = "";
         return dir;
     }
