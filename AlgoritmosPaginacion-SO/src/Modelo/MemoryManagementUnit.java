@@ -252,15 +252,10 @@ public class MemoryManagementUnit {
         int distanciaMaxima = -1;
         Pagina paginaRemplazable = null;
         for (Pagina page : tablaSimbolosOPT) { //Obtenemos 
-            System.out.println("page: " + page.id);
-            
             if (page.isLoaded()&&!valores.contains(page)) {
                 int distancia = getDistanciaFutura(page);
-                System.out.println("Dist: " + distancia+" Page: "+page.pid);
-                System.out.println("Max: "+distanciaMaxima);
-      
+  
                 if (distancia == -1) {
-                    System.out.println("page -1: " + page.id);
                     return Integer.parseInt(page.id);
                 } else if (distancia > distanciaMaxima) {
                     distanciaMaxima = distancia;
@@ -274,11 +269,7 @@ public class MemoryManagementUnit {
 
     private int getDistanciaFutura(Pagina page) {
         for (Instruccion instr : futuresReferences) {
-            // System.out.println("PageA:  " + page.id);
-
             if (instr.esReferenciaAPagina(page, mapaOPT)) {
-                //   System.out.println("PageB:  " + page.id);
-                  System.out.println("indexOf: "+futuresReferences.indexOf(instr));
                 return futuresReferences.indexOf(instr);
             }
         }
