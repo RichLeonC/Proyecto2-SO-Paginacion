@@ -185,12 +185,12 @@ public class MemoryManagementUnit {
         return null;
     }
 
-    public int fifo() {
+    public int fifo(ArrayList<Pagina> familia) {
         Pagina pageFIActual = tablaSimbolos.get(0);
         for (Pagina page : tablaSimbolos) {
-            //System.out.println("Comparando pagina elegida actual" + pageFIActual.id + " con la pagina " + page.id);
-            if (!pageFIActual.isLoaded() || page.loaded.equals("X") && esMasVieja(pageFIActual.timestamp, page.timestamp)) {
-                //System.out.println("Se reemplazan");
+            System.out.println("Comparando pagina elegida actual" + pageFIActual.id + " con la pagina " + page.id);
+            if (familia.contains(pageFIActual) || !pageFIActual.isLoaded() || page.loaded.equals("X") && esMasVieja(pageFIActual.timestamp, page.timestamp)) {
+                System.out.println("Se reemplazan");
                 pageFIActual = page;
             } else {
                 //System.out.println("Se mantiene");
@@ -296,12 +296,12 @@ public class MemoryManagementUnit {
         return dir;
     }
 
-    public int llamarAlgoritmo() {
+    public int llamarAlgoritmo(ArrayList<Pagina> familia) {
         switch (algoritmo) {
             case SECOND_CHANCE:
                 return secondChance();
             case FIFO:
-                return fifo();
+                return fifo(familia);
             case MRU:
                 return mru();
             case RANDOM:
@@ -313,7 +313,7 @@ public class MemoryManagementUnit {
     }
 
     public static boolean esMasVieja(String fechaFIActual, String fecha2) {
-        System.out.println("Fecha vieja: " + fechaFIActual + " Fecha nueva: " + fecha2);
+        //System.out.println("Fecha vieja: " + fechaFIActual + " Fecha nueva: " + fecha2);
         SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
         try {
             Date date1 = sdf.parse(fechaFIActual);
@@ -342,7 +342,6 @@ public class MemoryManagementUnit {
                 espacioDisponible--;
             }
         }
-        int sumaKB = 0;
         for (int i = 0; i < numPaginas; i++) {
             int dir = getDireccionLibre();
             //System.out.println("Direccion libre: " + dir);
@@ -359,7 +358,7 @@ public class MemoryManagementUnit {
                 }else{
                     paginaSize = 4;
                 }
-                sumaKB += paginaSize;
+                Main.estadisticasAlg.ramKB +=  paginaSize;
                 
                 if (algoritmo == TipoAlgoritmo.SECOND_CHANCE) {
                     pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(dir + 1), "", formattedDate, "0",paginaSize);
@@ -384,7 +383,7 @@ public class MemoryManagementUnit {
 
             } else {
                 //System.out.println("FAIL");
-                int idReemplazo = llamarAlgoritmo();
+                int idReemplazo = llamarAlgoritmo(paginasValores);
                 //System.out.println("Pagina a reemplazar: " + idReemplazo);
                 int direccionRAM = reemplazar(idReemplazo);
                 //System.out.println("Direccion a usar : " + direccionRAM);
@@ -402,7 +401,7 @@ public class MemoryManagementUnit {
                 }else{
                     paginaSize = 4;
                 }
-                sumaKB += paginaSize;
+                Main.estadisticasAlg.ramKB += paginaSize;
                 
                 if (algoritmo == TipoAlgoritmo.SECOND_CHANCE) {
                     pagina = new Pagina(String.valueOf(idActual), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualID), String.valueOf(direccionRAM), "", formattedDate, "0",paginaSize);
@@ -427,7 +426,6 @@ public class MemoryManagementUnit {
             }
             Main.simulacion.showPages();
         }
-        Main.estadisticasAlg.ramKB += sumaKB;
         Main.estadisticasAlg.ramPorcentaje = Main.estadisticasAlg.ramKB * 100 / 400;
         String ptr = String.valueOf(punteroActual);
         punteroActual++;
@@ -445,7 +443,6 @@ public class MemoryManagementUnit {
         //Main.estadisticasOPT.ramKB += Integer.parseInt( instruccion.getParametros().get(1))/1024;
         ArrayList<Pagina> paginasValores = new ArrayList();
         Main.estadisticasOPT.fragmentacion += 4 - Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
-        int sumaKB = 0;
         int espacioDisponible = 100;
         for(Pagina page : tablaSimbolosOPT){
             if(!page.isLoaded()){
@@ -468,7 +465,7 @@ public class MemoryManagementUnit {
                 }else{
                     paginaSize = 4;
                 }
-                sumaKB += paginaSize;
+                Main.estadisticasOPT.ramKB += paginaSize;
                 
                 Pagina pagina = new Pagina(String.valueOf(idActualOPT), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualOPT), String.valueOf(dir + 1), "", formattedDate, "true",paginaSize);
                 paginasValores.add(pagina);
@@ -505,7 +502,7 @@ public class MemoryManagementUnit {
                 }else{
                     paginaSize = 4;
                 }
-                sumaKB += paginaSize;
+                Main.estadisticasOPT.ramKB += paginaSize;
                 Pagina pagina = new Pagina(String.valueOf(idActualOPT), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualOPT), String.valueOf(direccionRAM), String.valueOf(direccionDiscoActualOPT), formattedDate, "true",paginaSize);
                 paginasValores.add(pagina);
                 tablaSimbolosOPT.add(pagina);
@@ -520,7 +517,6 @@ public class MemoryManagementUnit {
             }
             Main.simulacion.showPagesOpt();
         }
-        Main.estadisticasOPT.ramKB += sumaKB;
         Main.estadisticasOPT.ramPorcentaje = Main.estadisticasOPT.ramKB * 100 / 400;
         String ptr = String.valueOf(punteroActualOPT);
         punteroActualOPT++;
@@ -534,6 +530,8 @@ public class MemoryManagementUnit {
         int dir = Integer.parseInt(getPageByID(idReemplazo).direccionFisica);
         Main.estadisticasAlg.ramKB -= getPageByID(idReemplazo).size;
         Main.estadisticasAlg.ramPorcentaje = Main.estadisticasAlg.ramKB * 100 / 400;
+        Main.estadisticasAlg.virtualKB += getPageByID(idReemplazo).size;
+        Main.estadisticasAlg.virtualPorcentaje = Main.estadisticasAlg.virtualKB * 100 / 400;
         getPageByID(idReemplazo).direccionFisica = "";
         return dir;
     }
@@ -543,6 +541,8 @@ public class MemoryManagementUnit {
         int dir = Integer.parseInt(getPageByIDOPT(idReemplazo).direccionFisica);
         Main.estadisticasOPT.ramKB -= getPageByIDOPT(idReemplazo).size;
         Main.estadisticasOPT.ramPorcentaje = Main.estadisticasOPT.ramKB * 100 / 400;
+        Main.estadisticasOPT.virtualKB += getPageByID(idReemplazo).size;
+        Main.estadisticasOPT.virtualPorcentaje = Main.estadisticasOPT.virtualKB * 100 / 400;
         getPageByIDOPT(idReemplazo).direccionFisica = "";
         return dir;
     }
@@ -588,8 +588,6 @@ public class MemoryManagementUnit {
                 return mruMarking(pagina);
             case RANDOM:
                 return "";
-            case OPT:
-                return optimumMarking();
             default:
                 return "";
 
@@ -603,11 +601,14 @@ public class MemoryManagementUnit {
                 if (!page.isLoaded()) {
                     System.out.println("No está en RAM"); //FALLO
                     //LLAMA AL ALGORITMO
-                    int idReemplazo = llamarAlgoritmo();
+                    int idReemplazo = llamarAlgoritmo(mapa.get(instruccion.getParametros()));
                     //System.out.println("Pagina a reemplazar: " + idReemplazo);
                     int direccionRAM = reemplazar(idReemplazo);
                     Main.estadisticasAlg.ramKB += page.size;
                     Main.estadisticasAlg.ramPorcentaje = Main.estadisticasAlg.ramKB * 100 / 400;
+                    Main.estadisticasAlg.virtualKB -= page.size;
+                    Main.estadisticasAlg.virtualPorcentaje = Main.estadisticasAlg.virtualKB * 100 / 400;
+                    
                     page.loaded = "X";
                     page.direccionFisica = String.valueOf(direccionRAM);
                     //DETERMINAR EL MARKING
@@ -652,6 +653,9 @@ public class MemoryManagementUnit {
                     //System.out.println("Pagina a reemplazar: " + idReemplazo);
                     Main.estadisticasOPT.ramKB += page.size;
                     Main.estadisticasOPT.ramPorcentaje = Main.estadisticasOPT.ramKB * 100 / 400;
+                    
+                    Main.estadisticasOPT.virtualKB -= page.size;
+                    Main.estadisticasOPT.virtualPorcentaje = Main.estadisticasOPT.virtualKB * 100 / 400;
                     int direccionRAM = reemplazarOPT(idReemplazo);
                     page.loaded = "X";
                     page.direccionFisica = String.valueOf(direccionRAM);

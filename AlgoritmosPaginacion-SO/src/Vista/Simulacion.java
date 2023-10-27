@@ -231,7 +231,7 @@ public class Simulacion extends javax.swing.JFrame {
         jLabel24 = new javax.swing.JLabel();
         txfVramKB = new javax.swing.JTextField();
         jLabel25 = new javax.swing.JLabel();
-        txfSimTime22 = new javax.swing.JTextField();
+        txfVramPercent = new javax.swing.JTextField();
         jLabel26 = new javax.swing.JLabel();
         txfPagesLoaded = new javax.swing.JTextField();
         jLabel27 = new javax.swing.JLabel();
@@ -448,11 +448,11 @@ public class Simulacion extends javax.swing.JFrame {
         jLabel25.setForeground(new java.awt.Color(255, 255, 255));
         jLabel25.setText("V-ram %");
 
-        txfSimTime22.setEditable(false);
-        txfSimTime22.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
-        txfSimTime22.addActionListener(new java.awt.event.ActionListener() {
+        txfVramPercent.setEditable(false);
+        txfVramPercent.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        txfVramPercent.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txfSimTime22ActionPerformed(evt);
+                txfVramPercentActionPerformed(evt);
             }
         });
 
@@ -720,7 +720,7 @@ public class Simulacion extends javax.swing.JFrame {
                                                     .addComponent(txfVramKB, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE))
                                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                                 .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txfSimTime22, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                    .addComponent(txfVramPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                                     .addComponent(jLabel25)))))
                                     .addComponent(txfRamPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 67, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel34))
@@ -845,7 +845,7 @@ public class Simulacion extends javax.swing.JFrame {
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addGroup(txtPagesUnloadedLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(txfVramKB, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(txfSimTime22, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txfVramPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txfRamKB, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txfRamPercent, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGap(45, 45, 45)
@@ -950,9 +950,9 @@ public class Simulacion extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txfVramKBActionPerformed
 
-    private void txfSimTime22ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfSimTime22ActionPerformed
+    private void txfVramPercentActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfVramPercentActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txfSimTime22ActionPerformed
+    }//GEN-LAST:event_txfVramPercentActionPerformed
 
     private void txfPagesLoadedActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txfPagesLoadedActionPerformed
         // TODO add your handling code here:
@@ -1099,7 +1099,6 @@ public class Simulacion extends javax.swing.JFrame {
     private javax.swing.JTextField txfRamPercent;
     private javax.swing.JTextField txfRamPercentOPT;
     private javax.swing.JTextField txfSimTime;
-    private javax.swing.JTextField txfSimTime22;
     private javax.swing.JTextField txfSimTimeOPT;
     private javax.swing.JTextField txfTrashingPercent;
     private javax.swing.JTextField txfTrashingPercentOPT;
@@ -1107,6 +1106,7 @@ public class Simulacion extends javax.swing.JFrame {
     private javax.swing.JTextField txfTrashingTimeOPT;
     private javax.swing.JTextField txfVramKB;
     private javax.swing.JTextField txfVramKbOPT;
+    private javax.swing.JTextField txfVramPercent;
     private javax.swing.JTextField txfVramPercentOPT;
     private javax.swing.JPanel txtPagesUnloaded;
     // End of variables declaration//GEN-END:variables
@@ -1146,6 +1146,8 @@ public class Simulacion extends javax.swing.JFrame {
         txfFragmentation.setText(String.valueOf(Main.estadisticasAlg.fragmentacion)+"KB");
         txfRamKB.setText(String.valueOf(Main.estadisticasAlg.ramKB)+"KB");
         txfRamPercent.setText(String.valueOf(Main.estadisticasAlg.ramPorcentaje)+"%");
+        txfVramKB.setText(String.valueOf(Main.estadisticasAlg.virtualKB)+"KB");
+        txfVramPercent.setText(String.valueOf(Main.estadisticasAlg.virtualPorcentaje)+"%");
 
         algorithmTable.repaint();
         // OptTable.repaint();
@@ -1188,7 +1190,8 @@ public class Simulacion extends javax.swing.JFrame {
         
         txfRamKBOPT.setText(String.valueOf(Main.estadisticasOPT.ramKB)+"KB");
         txfRamPercentOPT.setText(String.valueOf(Main.estadisticasOPT.ramPorcentaje)+"%");
-        
+        txfVramKbOPT.setText(String.valueOf(Main.estadisticasOPT.virtualKB)+"KB");
+        txfVramPercentOPT.setText(String.valueOf(Main.estadisticasOPT.virtualPorcentaje)+"%");
 
         // algorithmTable.repaint();
         OptTable.repaint();
