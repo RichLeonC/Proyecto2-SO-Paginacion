@@ -338,11 +338,18 @@ public class MemoryManagementUnit {
         System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
         ArrayList<Pagina> paginasValores = new ArrayList();
         Main.estadisticasAlg.fragmentacion += 4 - Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
+        int espacioDisponible = 100;
+        for(Pagina page : tablaSimbolos){
+            if(!page.isLoaded()){
+                espacioDisponible--;
+            }
+        }
+        
         for (int i = 0; i < numPaginas; i++) {
             int dir = getDireccionLibre();
             //System.out.println("Direccion libre: " + dir);
-            if (dir < 100) {
-                System.out.println("HIT");
+            if (dir < 100 && numPaginas < espacioDisponible) {
+                //System.out.println("HIT");
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
@@ -369,11 +376,11 @@ public class MemoryManagementUnit {
                 Main.estadisticasAlg.paginasCargadas++;
 
             } else {
-                System.out.println("FAIL");
+                //System.out.println("FAIL");
                 int idReemplazo = llamarAlgoritmo();
-                System.out.println("Pagina a reemplazar: " + idReemplazo);
+                //System.out.println("Pagina a reemplazar: " + idReemplazo);
                 int direccionRAM = reemplazar(idReemplazo);
-                System.out.println("Direccion a usar : " + direccionRAM);
+                //System.out.println("Direccion a usar : " + direccionRAM);
                 //LLAMA AL ALGORITMO
                 //DETERMINAR MARKING
                 Date date = new Date();
@@ -415,15 +422,22 @@ public class MemoryManagementUnit {
                 && ((Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096) != 0
                 ? (Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096
                 : (Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096 + 1;
-        System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
+        //System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
         Main.estadisticasOPT.ramKB += Integer.parseInt( instruccion.getParametros().get(1))/1024;
         ArrayList<Pagina> paginasValores = new ArrayList();
         Main.estadisticasOPT.fragmentacion += 4 - Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
+        
+        int espacioDisponible = 100;
+        for(Pagina page : tablaSimbolosOPT){
+            if(!page.isLoaded()){
+                espacioDisponible--;
+            }
+        }
         for (int i = 0; i < numPaginas; i++) {
             int dir = getDireccionLibreOPT();
             //System.out.println("Direccion libre: " + dir);
-            if (dir < 100) {
-                System.out.println("HIT");
+            if (dir < 100  && numPaginas < espacioDisponible) {
+                //System.out.println("HIT");
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
@@ -447,14 +461,14 @@ public class MemoryManagementUnit {
 //                    
 //                
 //                }
-                System.out.println("Pagina a reemplazar: " + idReemplazo);
+                //System.out.println("Pagina a reemplazar: " + idReemplazo);
                 int direccionRAM = reemplazarOPT(idReemplazo);
-                System.out.println("Direccion a usar : " + direccionRAM);
+                //System.out.println("Direccion a usar : " + direccionRAM);
 
                 Date date = new Date();
                 SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy h:mm:ss a");
                 String formattedDate = sdf.format(date);
-                System.out.println("Param: " + instruccion.getParametros().get(0));
+                //System.out.println("Param: " + instruccion.getParametros().get(0));
                 Pagina pagina = new Pagina(String.valueOf(idActualOPT), instruccion.getParametros().get(0), "X", String.valueOf(direccionVirtualActualOPT), String.valueOf(direccionRAM), String.valueOf(direccionDiscoActualOPT), formattedDate, "true");
                 paginasValores.add(pagina);
                 tablaSimbolosOPT.add(pagina);
@@ -509,7 +523,7 @@ public class MemoryManagementUnit {
         String formattedDate = sdf.format(date);
         if (pagina.loaded.equals("X")) {
             pagina.setMarking(formattedDate);
-            System.out.println("Marcado fecha nueva" + formattedDate);
+            //System.out.println("Marcado fecha nueva" + formattedDate);
         } else {
 
         }
@@ -544,10 +558,15 @@ public class MemoryManagementUnit {
             for (Pagina page : mapa.get(instruccion.getParametros().get(0))) { //Por cada una de las paginas asignadas a ese puntero
 
                 if (!page.isLoaded()) {
-                    //System.out.println("No está en RAM"); //FALLO
+                    System.out.println("No está en RAM"); //FALLO
                     //LLAMA AL ALGORITMO
+                    int idReemplazo = llamarAlgoritmo();
+                    //System.out.println("Pagina a reemplazar: " + idReemplazo);
+                    int direccionRAM = reemplazar(idReemplazo);
+                    page.loaded = "X";
+                    page.direccionFisica = String.valueOf(direccionRAM);
                     //DETERMINAR EL MARKING
-                    determinarMarking(page);
+                    //determinarMarking(page);
                     String direccion = "";
                     page.setDireccionFisica(direccion);
 
@@ -558,6 +577,7 @@ public class MemoryManagementUnit {
 
                 } else {
                     //System.out.println("Si está en RAM"); //HIT
+                    determinarMarking(page);
                     Main.estadisticasAlg.simTiempo += 1;
                     Main.estadisticasAlg.desperdicioPorcentaje = Main.estadisticasAlg.desperdicioTiempo * 100 / Main.estadisticasAlg.simTiempo;
 
@@ -583,6 +603,12 @@ public class MemoryManagementUnit {
                 if (!page.isLoaded()) {
                     //System.out.println("No está en RAM"); //FALLO
                     //LLAMA AL ALGORITMO
+                    int idReemplazo = optimum(mapaOPT.get(instruccion.getParametros().get(0)));
+                    //System.out.println("Pagina a reemplazar: " + idReemplazo);
+                    int direccionRAM = reemplazarOPT(idReemplazo);
+                    page.loaded = "X";
+                    page.direccionFisica = String.valueOf(direccionRAM);
+                    
                     //DETERMINAR EL MARKING
                     determinarMarking(page);
                     String direccion = "";
