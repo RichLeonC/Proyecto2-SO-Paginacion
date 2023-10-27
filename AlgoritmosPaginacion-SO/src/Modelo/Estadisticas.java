@@ -19,6 +19,7 @@ public class Estadisticas {
     public int paginasSinCargar;
     public int desperdicioTiempo;
     public float desperdicioPorcentaje;
+    public float fragmentacion;
 
     public Estadisticas(){
     }

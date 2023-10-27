@@ -1111,6 +1111,8 @@ public class Simulacion extends javax.swing.JFrame {
     private javax.swing.JPanel txtPagesUnloaded;
     // End of variables declaration//GEN-END:variables
 
+    
+    
     public void showPages() {
         MemoryManagementUnit mmu = Main.computadora.getMmu();
         // System.out.println(mmu.memoriaOcupada);
@@ -1137,6 +1139,11 @@ public class Simulacion extends javax.swing.JFrame {
         txfSimTime.setText(String.valueOf(Main.estadisticasAlg.simTiempo) + "s");
         txfPagesLoaded.setText(String.valueOf(Main.estadisticasAlg.paginasCargadas));
         txfPagesUnloaded.setText(String.valueOf(Main.estadisticasAlg.paginasSinCargar));
+        
+        
+        txfTrashingTime.setText(String.valueOf(Main.estadisticasAlg.desperdicioTiempo)+"s");
+        txfTrashingPercent.setText(String.valueOf(Main.estadisticasAlg.desperdicioPorcentaje)+"%");
+        txfFragmentation.setText(String.valueOf(Main.estadisticasAlg.fragmentacion)+"KB");
 
         algorithmTable.repaint();
         // OptTable.repaint();
@@ -1171,6 +1178,12 @@ public class Simulacion extends javax.swing.JFrame {
         txfSimTimeOPT.setText(String.valueOf(Main.estadisticasOPT.simTiempo) + "s");
         txfPagesLoadedOPT.setText(String.valueOf(Main.estadisticasOPT.paginasCargadas));
         txfPagesUnloadedOPT.setText(String.valueOf(Main.estadisticasOPT.paginasSinCargar));
+        
+        
+        txfTrashingTimeOPT.setText(String.valueOf(Main.estadisticasOPT.desperdicioTiempo)+"s");
+        txfTrashingPercentOPT.setText(String.valueOf(Main.estadisticasOPT.desperdicioPorcentaje)+"%");
+        txfFragmentationOPT.setText(String.valueOf(Main.estadisticasOPT.fragmentacion)+"KB");
+        
         txfRamKBOPT.setText(String.valueOf(Main.estadisticasOPT.ramKB));
 
         // algorithmTable.repaint();

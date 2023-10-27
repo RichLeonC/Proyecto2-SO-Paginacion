@@ -346,6 +346,7 @@ public class MemoryManagementUnit {
                 : (Integer) Integer.parseInt(instruccion.getParametros().get(1)) / 4096 + 1;
         System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
         ArrayList<Pagina> paginasValores = new ArrayList();
+        Main.estadisticasAlg.fragmentacion += 4 - Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
         for (int i = 0; i < numPaginas; i++) {
             int dir = getDireccionLibre();
             //System.out.println("Direccion libre: " + dir);
@@ -373,6 +374,7 @@ public class MemoryManagementUnit {
                 memoriaOcupada++;
                 TimeUnit.SECONDS.sleep(1);
                 Main.estadisticasAlg.simTiempo += 1;
+                Main.estadisticasAlg.desperdicioPorcentaje = Main.estadisticasAlg.desperdicioTiempo * 100 / Main.estadisticasAlg.simTiempo;
                 Main.estadisticasAlg.paginasCargadas++;
 
             } else {
@@ -404,6 +406,8 @@ public class MemoryManagementUnit {
                 idActual++;
                 TimeUnit.SECONDS.sleep(5);
                 Main.estadisticasAlg.simTiempo += 5;
+                Main.estadisticasAlg.desperdicioTiempo += 5;
+                Main.estadisticasAlg.desperdicioPorcentaje = Main.estadisticasAlg.desperdicioTiempo * 100 / Main.estadisticasAlg.simTiempo;
                 Main.estadisticasAlg.paginasSinCargar++;
             }
             Main.simulacion.showPages();
@@ -423,6 +427,7 @@ public class MemoryManagementUnit {
         System.out.println("Al proceso " + instruccion.getParametros().get(0) + " Numero de paginas a crear: " + numPaginas);
         Main.estadisticasOPT.ramKB += Integer.parseInt( instruccion.getParametros().get(1))/1024;
         ArrayList<Pagina> paginasValores = new ArrayList();
+        Main.estadisticasOPT.fragmentacion += 4 - Integer.parseInt(instruccion.getParametros().get(1))/1024%4;
         for (int i = 0; i < numPaginas; i++) {
             int dir = getDireccionLibreOPT();
             //System.out.println("Direccion libre: " + dir);
@@ -440,6 +445,7 @@ public class MemoryManagementUnit {
                 memoriaOcupadaOPT++;
                 TimeUnit.SECONDS.sleep(1);
                 Main.estadisticasOPT.simTiempo += 1;
+                Main.estadisticasOPT.desperdicioPorcentaje = Main.estadisticasOPT.desperdicioTiempo * 100 / Main.estadisticasOPT.simTiempo;
                 Main.estadisticasOPT.paginasCargadas++;
 
             } else {
@@ -465,7 +471,9 @@ public class MemoryManagementUnit {
                 direccionDiscoActualOPT++;
                 idActualOPT++;
                 TimeUnit.SECONDS.sleep(5);
+                Main.estadisticasOPT.desperdicioTiempo += 5;
                 Main.estadisticasOPT.simTiempo += 5;
+                Main.estadisticasOPT.desperdicioPorcentaje = Main.estadisticasOPT.desperdicioTiempo * 100 / Main.estadisticasOPT.simTiempo;
                 Main.estadisticasOPT.paginasSinCargar++;
             }
             Main.simulacion.showPagesOpt();
@@ -553,10 +561,14 @@ public class MemoryManagementUnit {
                     page.setDireccionFisica(direccion);
 
                     Main.estadisticasAlg.simTiempo += 5;
+                    Main.estadisticasAlg.desperdicioTiempo += 5;
+                    Main.estadisticasAlg.desperdicioPorcentaje = Main.estadisticasAlg.desperdicioTiempo * 100 / Main.estadisticasAlg.simTiempo;
+                    
 
                 } else {
                     //System.out.println("Si está en RAM"); //HIT
                     Main.estadisticasAlg.simTiempo += 1;
+                    Main.estadisticasAlg.desperdicioPorcentaje = Main.estadisticasAlg.desperdicioTiempo * 100 / Main.estadisticasAlg.simTiempo;
 
                 }
                 TimeUnit.SECONDS.sleep(1);
@@ -586,11 +598,14 @@ public class MemoryManagementUnit {
                     page.setDireccionFisica(direccion);
 
                     Main.estadisticasOPT.simTiempo += 5;
+                    Main.estadisticasOPT.desperdicioTiempo += 5;
+                    Main.estadisticasOPT.desperdicioPorcentaje = Main.estadisticasOPT.desperdicioTiempo * 100 / Main.estadisticasOPT.simTiempo;
 
                 } else {
                     //System.out.println("Si está en RAM"); //HIT
 
                     Main.estadisticasOPT.simTiempo += 1;
+                    Main.estadisticasOPT.desperdicioPorcentaje = Main.estadisticasOPT.desperdicioTiempo * 100 / Main.estadisticasOPT.simTiempo;
 
                 }
                 TimeUnit.SECONDS.sleep(1);
@@ -620,6 +635,7 @@ public class MemoryManagementUnit {
                     Main.simulacion.setCellColorALG(0, ptr, Color.WHITE);
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasAlg.simTiempo += 1;
+                    Main.estadisticasAlg.desperdicioPorcentaje = Main.estadisticasAlg.desperdicioTiempo * 100 / Main.estadisticasAlg.simTiempo;
                     Main.simulacion.showPages();
 
                 }
@@ -647,6 +663,7 @@ public class MemoryManagementUnit {
                     
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasOPT.simTiempo += 1;
+                    Main.estadisticasOPT.desperdicioPorcentaje = Main.estadisticasOPT.desperdicioTiempo * 100 / Main.estadisticasOPT.simTiempo;
                     Main.simulacion.showPagesOpt();
 
                 }
@@ -676,6 +693,7 @@ public class MemoryManagementUnit {
                     TimeUnit.SECONDS.sleep(1);
                     System.out.println("Entra a borrar no opt");
                     Main.estadisticasAlg.simTiempo += 1;
+                    Main.estadisticasAlg.desperdicioPorcentaje = Main.estadisticasAlg.desperdicioTiempo * 100 / Main.estadisticasAlg.simTiempo;
                     System.out.println("Entra a borrar no opt");
                     Main.simulacion.showPages();
 
@@ -707,6 +725,7 @@ public class MemoryManagementUnit {
                     
                     TimeUnit.SECONDS.sleep(1);
                     Main.estadisticasOPT.simTiempo += 1;
+                    Main.estadisticasOPT.desperdicioPorcentaje = Main.estadisticasOPT.desperdicioTiempo * 100 / Main.estadisticasOPT.simTiempo;
                     Main.simulacion.showPagesOpt();
 
                 }
